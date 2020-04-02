@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 
@@ -19,12 +20,6 @@ public class Tube extends RadialGeometry {
      * @param pt ray
      */
 
-
-    //function getNormal which return a vector perpendicular to given point
-    @Override
-    public Vector getNormal(Point3D pt) {
-        return null;
-    }
 
     //Constructor of class Tube with parameters of double and Ray
     public Tube(double _radius, Ray _axisRay) {
@@ -44,5 +39,25 @@ public class Tube extends RadialGeometry {
         return "Tube{" +
                 "_axisRay=" + _axisRay + "_center"+super.toString()+
                 '}';
+    }
+    @Override
+    public Vector getNormal(Point3D point)
+    {
+        //The vector from the point of the cylinder to the given point
+        Point3D point1 = _axisRay.getPoint();
+        Vector vector1 = _axisRay.getVector();
+        Vector vector2 = point.subtract(point1);
+
+        //We need the projection to multiply the _direction unit vector
+        double projection = vector2.dotProduct(vector1);
+        if(!Util.isZero(projection))
+        {
+            // projection of P-O on the ray:
+            point1.add(vector1.Scale(projection));
+        }
+
+        //This vector is orthogonal to the _direction vector.
+        Vector check = point.subtract(point1);
+        return check.normalize();
     }
 }
