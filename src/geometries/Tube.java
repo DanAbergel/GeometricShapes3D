@@ -16,7 +16,7 @@ public class Tube extends RadialGeometry {
 
     /**
      * builds tube out of a ray
-     * @param _axisRay ray
+     * @param pt ray
      */
 
 

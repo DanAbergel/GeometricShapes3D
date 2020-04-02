@@ -13,8 +13,13 @@ public class Plane implements Geometry {
 
     /**Constructor of Plane class with parameters : 3 points Point3D**/
     public Plane(Point3D point1,Point3D point2,Point3D point3)
-    {
-
+    {//02/04
+        _p=new Point3D(point1);
+        Vector U =new Vector(point1,point2);
+        Vector V=new Vector(point1,point3);
+        Vector N=U.crossProduct(V);
+        N.normalize();
+        _normal=N.Scale(-1);
     }
     /**Constructor of Plane class with parameters : one point Point3D and one vector Vector**/
     public Plane(Point3D _p, Vector _normal) {
@@ -25,7 +30,12 @@ public class Plane implements Geometry {
     /**override method of function getNormal which return a vector perpendicular to the given point**/
     @Override
     public Vector getNormal(Point3D pt) {
-        return null;
+        return _normal;
+    }
+
+    //because polygon
+    public Vector getNormal() {
+        return getNormal(null);
     }
 
     /**override method of toString function of the Plane class**/

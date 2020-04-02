@@ -1,8 +1,11 @@
 package geometries;
 
+import primitives.Point3D;
+import primitives.Vector;
+
 import java.util.List;
-import primitives.*;
-import static primitives.Util.*;
+
+import static primitives.Util.isZero;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
@@ -38,7 +41,7 @@ public class Polygon implements Geometry {
      *                                  <li>Three consequent vertices lay in the
      *                                  same line (180&#176; angle between two
      *                                  consequent edges)
-     *                                  <li>The polygon is concave (not convex></li>
+     *                                  <li>The polygon is concave (not convex)</li>
      *                                  </ul>
      */
     public Polygon(Point3D... vertices) {
@@ -51,7 +54,7 @@ public class Polygon implements Geometry {
         _plane = new Plane(vertices[0], vertices[1], vertices[2]);
         if (vertices.length == 3) return; // no need for more tests for a Triangle
 
-        Vector n = _plane.getNormal(new Point3D(vertices[0]));
+        Vector n = _plane.getNormal(null);
 
         // Subtracting any subsequent points will throw an IllegalArgumentException
         // because of Zero Vector if they are in the same point
@@ -82,6 +85,6 @@ public class Polygon implements Geometry {
 
     @Override
     public Vector getNormal(Point3D point) {
-        return _plane.getNormal(point);
+        return _plane.getNormal(null);
     }
 }

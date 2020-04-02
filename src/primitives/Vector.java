@@ -52,6 +52,9 @@ public class Vector
         }
         this.Point=new Point3D(point.x._coord,point.y._coord,point.z._coord);
     }
+    public Vector(Point3D p1, Point3D p2) {//02/04
+        this(p1.subtract(p2));
+    }
     /**
      *
      * @param vector vector with head coordinates to set this vector from the same coordinates
@@ -142,8 +145,9 @@ public class Vector
      */
     public Double dotProduct(Vector vect3)
     {
-        return this.Point.x._coord*vect3.Point.x._coord+this.Point.y._coord*vect3.Point.y._coord+this.Point.z._coord*vect3.Point.z._coord;
+        return (this.Point.x._coord*vect3.Point.x._coord+this.Point.y._coord*vect3.Point.y._coord+this.Point.z._coord*vect3.Point.z._coord);
     }
+
     /**
      *
      * @param vect4 other vector
