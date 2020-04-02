@@ -9,7 +9,7 @@ class VectorTest
 {
 
      @Test
-     public void testConstructorUsesCoordinates()
+     public void testConstructor()
      {
          // ============ Boundary Value Analysis ==============
          // test zero vector c-tor with coordinates
@@ -20,6 +20,7 @@ class VectorTest
          {
          }
      }
+
     @Test
     void add()
     {
@@ -29,8 +30,10 @@ class VectorTest
        Vector v3=v1.add(v2);
        assertEquals(new Vector(1.0,1.0,0.0),v3);
     }
-    @Test
-    void testscale() {
+
+        @Test
+        void testScale()
+        {
         Vector v1=new Vector(1.0,1.0,1.0);
         Vector v=v1.Scale(1);
         assertEquals(v,v1);
@@ -38,20 +41,20 @@ class VectorTest
         assertEquals(new Vector(2.0,2.0,2.0),v1);
         v1=v1.Scale(-2);
         assertEquals(new Vector(-4.0,-4.0,-4.0),v1);
-    }
-    @Test
-    void subtract()
-    {
+        }
 
+        @Test
+        void subtract()
+        {
         Vector v1=new Vector(1.0,1.0,1.0);
         Vector v2=new Vector(-1.0,-1.0,-1.0);
         v1=v1.substract(v2);
         System.out.println("v1 = "+v1.toString());
         assertEquals(new Vector(2.0,2.0,2.0),v1);
-    }
+         }
 
         @Test
-    public void dotProduct()
+        public void dotProduct()
         {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
@@ -98,7 +101,8 @@ class VectorTest
 
     }
     @Test
-    public void lengthSquared() {
+    public void lengthSquared()
+    {
         Vector v1 = new Vector(1, 2, 3);
         assertTrue( isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
     }

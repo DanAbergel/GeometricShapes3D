@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlaneTest {
 
-  
+
     @Test
     void getNormal() {
         Plane p1=new Plane(new Point3D(0,1,0),new Point3D(1,0,0),new Point3D(0,0,1));
