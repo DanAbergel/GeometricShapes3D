@@ -120,7 +120,7 @@ public class Vector
      * @param vect2 vector to add to current
      * @return new vector with addition of two vectors
      */
-    public Vector Odd(Vector vect2)throws IllegalArgumentException
+    public Vector add(Vector vect2)throws IllegalArgumentException
     {
 
         Coordinate newX=new Coordinate(this.Point.x._coord+vect2.Point.x._coord);
@@ -183,7 +183,8 @@ public class Vector
      *
      * @return current vector with normalized length.
      */
-    public Vector normalize() {
+    public Vector normalize()
+    {
 
         double x = this.Point.x._coord;
         double y = this.Point.y._coord;

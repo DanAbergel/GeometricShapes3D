@@ -23,15 +23,15 @@ class VectorTest
          }
      }
 
-    @Test
-    void add()
-    {
+        @Test
+        void testadd()
+        {
        Vector v1=new Vector(0.0,1.0,0.0);
        Vector v2=new Vector(1.0,0.0,0.0);
 
        Vector v3=v1.add(v2);
        assertEquals(new Vector(1.0,1.0,0.0),v3);
-    }
+        }
 
         @Test
         void testScale()
@@ -87,7 +87,7 @@ class VectorTest
         assertTrue(isZero(vr.dotProduct(v3)), "crossProduct() result is not orthogonal to 2nd operand");
 
         // =============== Boundary Values Tests ==================
-        // test zero vector from cross-productof co-lined vectors
+        // test zero vector from cross-product of co-lined vectors
         try {
             v1.crossProduct(v2);
             fail("crossProduct() for parallel vectors does not throw an exception");
@@ -98,7 +98,7 @@ class VectorTest
     public void length()
     {
        // Vector v1 = new Vector(1, 2, 3);
-        // test length
+        // test length in main
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
 
     }
@@ -112,11 +112,10 @@ class VectorTest
     public void normalize()
     {
         // test vector normalization vs vector length and cross-product
-        Vector v = new Vector(1, 2, 3);
-        Vector vCopy = new Vector(v);
-        Vector vCopyNormalize = vCopy.normalize();
-        assertEquals ( vCopy, vCopyNormalize, "ERROR: normalize() function creates a new vector");
-        assertTrue(isZero(vCopyNormalize.length() - 1), "ERROR: normalize() result is not a unit vector");
+        Vector v2 = new Vector(1,2,3);
+        assertEquals(v2.normalize(),new Vector(1/Math.sqrt(14),2/Math.sqrt(14),3/Math.sqrt(14)),"ERROR the function not work");
+        assertEquals(v2, v2.normalize(), "ERROR: normalize() function creates a new vector");
+        assertTrue(isZero(v2.normalize().length() - 1), "ERROR: normalize() result is not a unit vector");
         //uses isZero function to compare with more accuracy
 
     }
