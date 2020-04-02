@@ -6,7 +6,9 @@ import primitives.Ray;
 import primitives.Vector;
 
 import static org.junit.Assert.*;
-
+/**
+ * @author yeoshua and Dan
+ */
 public class SphereTest {
 
     @Test
