@@ -9,7 +9,6 @@ import static primitives.Util.isZero;
  */
 class VectorTest
 {
-
      @Test
      public void testConstructor()
      {

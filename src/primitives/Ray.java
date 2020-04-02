@@ -40,8 +40,8 @@ public class Ray
 
     /**
      * builds ray from point and directon
-     * @param _dir ray's direction
-     * @param _p point that ray starts from
+     * @param direction ray's direction
+     * @param pointe point that ray starts from
      */
 
 
