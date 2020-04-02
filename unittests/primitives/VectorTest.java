@@ -13,7 +13,9 @@ class VectorTest
      {
          // ============ Boundary Value Analysis ==============
          // test zero vector c-tor with coordinates
-         try {
+         try
+         {
+             new Vector(0.0,0.0,0.0);
              new Vector(new Coordinate(0), new Coordinate(0), new Coordinate(0));
              fail("ERROR: zero vector does not throw an exception");
          } catch (Exception e)
