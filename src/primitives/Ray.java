@@ -19,6 +19,7 @@ public class Ray
         point=new Point3D(rayon.point);
 
     }
+
     /**
      *
      * @return ray direction in new vector so the direction can't be changed
@@ -43,14 +44,10 @@ public class Ray
      * @param _p point that ray starts from
      */
 
-    public Ray(Point3D _p, Vector _dir) throws IllegalArgumentException
-    {
 
-        if(vector.lenght != 1.0)
-            throw new IllegalArgumentException("Vector is not normalized");
-
-        this.point = new Point3D(_p);
-        this.vector= new Vector(_dir);
+    public Ray(Point3D pointe, Vector direction) {
+        point = new Point3D(pointe);
+        vector = new Vector(direction).normalized();
     }
 
     /**
