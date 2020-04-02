@@ -114,12 +114,13 @@ public class Vector
 
         return new Vector(newX,newY,newZ);
     }
+    
     /**
      *
      * @param vect2 vector to add to current
      * @return new vector with addition of two vectors
      */
-    public Vector add(Vector vect2)throws IllegalArgumentException
+    public Vector Odd(Vector vect2)throws IllegalArgumentException
     {
 
         Coordinate newX=new Coordinate(this.Point.x._coord+vect2.Point.x._coord);
@@ -191,7 +192,7 @@ public class Vector
         double length = this.length();
 
         if (length == 0)
-            throw new ArithmeticException("divide by Zero");
+            throw new ArithmeticException("divide by Zero in trying of normalise a vector");
 
         this.Point.x = new Coordinate(x / length);
         this.Point.y = new Coordinate(y / length);

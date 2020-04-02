@@ -2,6 +2,7 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 
@@ -34,9 +35,28 @@ public class Cylinder extends Tube {
     }
 
     /**override method for getNormal which return a vector perpendicular to the given point in parameters**/
-    @Override
-    public Vector getNormal(Point3D pt) {
-        return super.getNormal(pt);
-    }
+
+        @Override
+        public Vector getNormal(Point3D point) {
+            Point3D o = _axisRay.getPoint();
+            Vector v = _axisRay.getVector();
+
+            // projection of P-O on the ray:
+            double t;
+            try {
+                t = Util.alignZero(point.subtract(o).dotProduct(v));
+            } catch (IllegalArgumentException e) { // P = O
+                return v;
+            }
+
+            // if the point is at a base
+            if (t == 0 || Util.isZero(_height - t)) // if it's close to 0, we'll get ZERO vector exception
+                return v;
+
+            o = o.add(v.Scale(t));
+            return point.subtract(o).normalize();
+        }
+
+
 
 }

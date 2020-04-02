@@ -29,14 +29,11 @@ public class Plane implements Geometry {
 
     /**override method of function getNormal which return a vector perpendicular to the given point**/
     @Override
-    public Vector getNormal(Point3D pt) {
-        return _normal;
+    public Vector getNormal(Point3D pt)
+    {
+        return _normal.crossProduct(pt.subtract(Point3D.ZERO));
     }
 
-    //because polygon
-    public Vector getNormal() {
-        return getNormal(null);
-    }
 
     /**override method of toString function of the Plane class**/
     @Override
