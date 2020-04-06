@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * class representing a Triangle which is a polygon but have a restriction for having only three points and thats why is herits from polygon class
@@ -17,5 +20,10 @@ public class Triangle extends Polygon {
     @Override
     public String toString() {
         return "Triangle{}"+super.toString();
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return super.findIntsersections(ray);
     }
 }

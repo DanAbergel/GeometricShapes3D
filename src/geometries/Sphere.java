@@ -1,7 +1,10 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 public class Sphere extends RadialGeometry {
     Point3D _center;
@@ -24,5 +27,10 @@ public class Sphere extends RadialGeometry {
         return "Sphere{" +
                 "_center=" + _center +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return super.findIntsersections(ray);
     }
 }

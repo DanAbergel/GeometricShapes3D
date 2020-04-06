@@ -1,5 +1,10 @@
 package geometries;
 
+import primitives.Point3D;
+import primitives.Ray;
+
+import java.util.List;
+
 public abstract class RadialGeometry implements Geometry {
     private double _radius;
 
@@ -10,5 +15,10 @@ public abstract class RadialGeometry implements Geometry {
     public RadialGeometry(double _radius)
     {
         this._radius = _radius;
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
     }
 }

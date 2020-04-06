@@ -5,6 +5,8 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
+import java.util.List;
+
 
 /**
  * class representing a Cylinder which is an extends class of Tube class
@@ -58,5 +60,8 @@ public class Cylinder extends Tube {
         }
 
 
-
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        return null;
+    }
 }
