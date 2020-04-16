@@ -1,4 +1,7 @@
 package primitives;
+
+import static primitives.Util.isZero;
+
 /**
  * class representing a partial vector with a direction and the point that it starts from using 3D Cartesian coordinates
  * @author Yeoshua and Dan
@@ -18,6 +21,9 @@ public class Ray
         vector=new Vector(rayon.vector);
         point=new Point3D(rayon.point);
 
+    }
+    public Point3D getTargetPoint(double length) {
+        return isZero(length ) ? point : new Point3D(point).add(vector.Scale(length));
     }
 
     /**

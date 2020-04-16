@@ -65,6 +65,6 @@ public class Tube extends RadialGeometry {
 
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
-        return super.findIntsersections(ray);
+        return null;
     }
 }

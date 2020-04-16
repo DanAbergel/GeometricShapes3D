@@ -17,8 +17,4 @@ public abstract class RadialGeometry implements Geometry {
         this._radius = _radius;
     }
 
-    @Override
-    public List<Point3D> findIntsersections(Ray ray) {
-        return null;
-    }
 }

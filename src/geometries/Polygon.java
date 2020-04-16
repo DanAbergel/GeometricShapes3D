@@ -91,6 +91,6 @@ public class Polygon implements Geometry {
 
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
-        return null;
+        return _plane.findIntsersections(ray);
     }
 }

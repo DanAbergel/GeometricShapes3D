@@ -26,4 +26,5 @@ public class Triangle extends Polygon {
     public List<Point3D> findIntsersections(Ray ray) {
         return super.findIntsersections(ray);
     }
+
 }
