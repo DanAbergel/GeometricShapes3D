@@ -22,7 +22,7 @@ public class Plane implements Geometry {
         Vector V=new Vector(point1,point3);
         Vector N=U.crossProduct(V);
         N.normalize();
-        _normal=N.Scale(-1);
+        _normal = N;
     }
     /**Constructor of Plane class with parameters : one point Point3D and one vector Vector**/
     public Plane(Point3D _p, Vector _normal) {
@@ -49,6 +49,7 @@ public class Plane implements Geometry {
 
     @Override
     public List<Point3D> findIntsersections(Ray ray) {
-        return null;
+        double t=(_normal.Scale(-1).dotProduct(ray.getPoint().subtract(_p)))/(_normal.dotProduct(ray.getVector()));
+        return List.of( ray.getPoint().add(ray.getVector().Scale(t)));
     }
 }
