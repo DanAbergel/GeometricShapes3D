@@ -78,9 +78,6 @@ public class SphereTest {
 //        Point3D p2 = new Point3D(0, 0, 0);
 //        Ray ray2=new Ray(new Point3D(-1, 0, 0), new Vector(1, 0, 0));
 //        List<Point3D> result2 = sphere.findIntersections(ray2);
-//        System.out.println(ray2.getTargetPoint(2));
-//        System.out.println(sphere._center);
-//        System.out.println(result2);
 //        assertEquals(" don't goes through the center",ray2.getTargetPoint(2),sphere._center);
 //        assertEquals("Wrong number of points", 2, result2.size());
 //        assertEquals("Ray crosses sphere two time", List.of(p2,p1), result2);
