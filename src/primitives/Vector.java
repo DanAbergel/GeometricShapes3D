@@ -19,7 +19,7 @@ public class Vector
 
         if(x.get()==0&&y.get()==0&&z.get()==0)
         {
-            throw new IllegalArgumentException("Cannot Create Vector with Given Vector 0");
+           throw new IllegalArgumentException("Cannot Create Vector with Given Vector 0");
         }
         this.Point = new Point3D(x,y,z);
         this.lenght=Math.sqrt(Math.pow(x._coord,2)+Math.pow(y._coord,2)+Math.pow(z._coord,2));
@@ -54,7 +54,7 @@ public class Vector
         }
         this.Point=new Point3D(point.x._coord,point.y._coord,point.z._coord);
     }
-    public Vector(Point3D p1, Point3D p2) {//02/04
+    public Vector(Point3D p1, Point3D p2) {
         this(p1.subtract(p2));
     }
     /**
@@ -98,10 +98,7 @@ public class Vector
     @Override
     public String toString()
     {
-        return "Vector{" +
-                "point=" + Point.toString() +
-                ", length=" + lenght +
-                '}';
+        return "Vector{"+Point.toString() +'}';
     }
     /**
      *

@@ -31,7 +31,7 @@ public class Sphere extends RadialGeometry {
     }
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         Vector L=_center.subtract(ray.getPoint());
         Vector V=ray.getVector();
         double tm=(L.dotProduct(V));
@@ -43,11 +43,12 @@ public class Sphere extends RadialGeometry {
         double t2=alignZero(tm+th);
         Point3D point1=ray.getTargetPoint(t1);
         Point3D point2=ray.getTargetPoint(t2);
-        if (t1>0 && t2>0 )
+        if (t1>0 && t2>0 ){
             if (ray.getPoint()!=point1 && ray.getPoint()!=point2)
                 return List.of(point1,point2);
             else
                 return null;
+        }
         if (t1<=0&&t2<=0)
             return null ;
         if (t1 > 0 )
@@ -60,7 +61,5 @@ public class Sphere extends RadialGeometry {
                 return List.of(ray.getTargetPoint(t2));
             else
                 return null;
-
-
     }
 }

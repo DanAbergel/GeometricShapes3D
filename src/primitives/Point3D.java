@@ -61,11 +61,9 @@ public class Point3D
     @Override
     public String toString()
     {
-        return "Point3D{" +
-                "x=" + x +
-                ", y=" + y +
-                ", z=" + z +
-                '}';
+        return "x:" + x +
+                " y:" + y +
+                " z:" + z;
     }
 
 
