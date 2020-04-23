@@ -24,4 +24,9 @@ class PlaneTest {
         assertEquals(v1,v3);//pas la meme direction
         assertNotEquals(v1,v2);
     }
+
+
+    @Test
+    void TestFindIntersections() {
+    }
 }
