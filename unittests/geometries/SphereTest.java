@@ -14,13 +14,13 @@ import static org.junit.Assert.*;
 public class SphereTest
 {
 
-    @Test
-    public void getNormal() {
-        Sphere sphere = new Sphere(Point3D.ZERO, 5);
-        Vector normal = sphere.getNormal(new Point3D(1, 1, 1));
-        assertEquals("error", normal, new Vector(1/Math.sqrt(3),1/Math.sqrt(3),1/Math.sqrt(3)));
-    }
 
+    @Test
+   public void getNormalTest() {
+        Sphere sp = new Sphere(new Point3D(0,0,1), 1);
+        assertNotEquals(new Vector(0,0,1),sp.getNormal(new Point3D(0,1,1)));
+        System.out.println(sp.getNormal(new Point3D(0,1,1)));
+    }
     @Test
     public void TestFindIntersections() {
         Sphere sphere = new Sphere(new Point3D(1, 0, 0),1d);
