@@ -19,7 +19,7 @@ public class Vector
 
         if(x.get()==0&&y.get()==0&&z.get()==0)
         {
-          // throw new IllegalArgumentException("Cannot Create Vector with Given Vector 0");
+         //  throw new IllegalArgumentException("Cannot Create Vector with Given Vector 0");
         }
         this.Point = new Point3D(x,y,z);
         this.lenght=Math.sqrt(Math.pow(x._coord,2)+Math.pow(y._coord,2)+Math.pow(z._coord,2));

@@ -11,7 +11,8 @@ import static org.junit.Assert.*;
 /**
  * @author yeoshua and Dan
  */
-public class SphereTest {
+public class SphereTest
+{
 
     @Test
     public void getNormal() {
@@ -81,7 +82,7 @@ public class SphereTest {
         assertEquals("Wrong number of points", 2, result13.size());
         assertEquals("Ray crosses sphere two time", List.of(p13b,p13a), result13);
 
-         // TC14: Ray starts at sphere and goes inside (1 points)
+        // TC14: Ray starts at sphere and goes inside (1 points)
         Point3D p14 = new Point3D(2, 0, 0);
         Ray ray14=new Ray(new Point3D(0, 0, 0), new Vector(1, 0, 0));
         List<Point3D> result14 = sphere.findIntersections(ray14);
