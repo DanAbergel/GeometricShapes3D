@@ -95,5 +95,6 @@ class PolygonTest {
         // two opposite normals.
        // assertTrue(expected.equals(pl.getNormal(null)) || expected.equals(pl.getNormal(null).Scale(-1)));
      assertEquals( new Vector(sqrt3, sqrt3, sqrt3).Scale(-1), pl.getNormal(new Point3D(0, 0, 1)),"Bad normal to triangle");
+
     }
 }
