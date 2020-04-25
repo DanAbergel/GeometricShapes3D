@@ -14,8 +14,9 @@ import static org.junit.Assert.*;
 public class SphereTest
 {
 
+
     @Test
-    public void getNormalTest() {
+   public void getNormalTest() {
         Sphere sp = new Sphere(new Point3D(0,0,1), 1);
         assertNotEquals(new Vector(0,0,1),sp.getNormal(new Point3D(0,1,1)));
         System.out.println(sp.getNormal(new Point3D(0,1,1)));
@@ -100,7 +101,7 @@ public class SphereTest
         Ray ray16=new Ray(new Point3D(1,0,0),new Vector(1,0,0));
         List<Point3D> result16=sphere.findIntersections(ray16);
         assertEquals("don't have the correct number of points",1,result16.size());
-        assertEquals("not correct Intersection points ",List.of(p16),result16);
+        assertEquals("uncorrect Intersection points ",List.of(p16),result16);
 
 
         // TC17: Ray starts at sphere and goes outside (0 points)
