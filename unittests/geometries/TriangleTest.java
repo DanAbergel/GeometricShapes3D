@@ -45,39 +45,39 @@ public void testEquals() {
             t1.findIntersections(r2).size();
         }
         catch (NullPointerException e){
-            System.out.println(e+ "r2 no Intersections with t1");
+            System.out.println(e+ "good , r2 no Intersections with t1");
         }
 
         try {
             t1.findIntersections(r3).size();
         }
         catch (NullPointerException e){
-            System.out.println("r3 no Intersections with t1");
+            System.out.println("good , r3 no Intersections with t1");
         }
 
         try {
             t1.findIntersections(r4).size();
         }
         catch (NullPointerException e){
-            System.out.println("r4 no Intersections with t1");
+            System.out.println("good , r4 no Intersections with t1");
         }
         try{
             t2.findIntersections(r1).size();
         }
         catch (NullPointerException e){
-            System.out.println("r1 no Intersections with t2");
+            System.out.println("good , r1 no Intersections with t2");
         }
         try{
             t2.findIntersections(r2).size();
         }
         catch (NullPointerException e){
-            System.out.println("r2 no Intersections with t2");
+            System.out.println("good , r2 no Intersections with t2");
         }
         try{
             t2.findIntersections(r3).size();
         }
         catch (NullPointerException e){
-            System.out.println("r3 no Intersections with t2");
+            System.out.println("good , r3 no Intersections with t2");
         }
 
         try{
@@ -86,7 +86,7 @@ public void testEquals() {
 
         }
         catch (NullPointerException e){
-            System.out.println("r4 no Intersections with t2");
+            System.out.println("good , r4 no Intersections with t2");
         }
     }
 }
