@@ -24,9 +24,24 @@ public class Geometries implements Intersectable {
         }
     }
     @Override
-    public List<Point3D> findIntersections (Ray ray)
-    {
-        return null;
+    /*
+    in first we create a list which will contain the points of intersection with the plane which composed by all these shapes
+    2) we will checked at each shape intersections's points
+    finally return the list of points resulted by this research
+    * */
+    public List<Point3D> findIntersections(Ray ray) {
+        List<Point3D> intersections = null;
+
+        for (Intersectable geometry : list) {
+            List<Point3D> tempIntersections = geometry.findIntersections(ray);
+            if (tempIntersections != null) {
+                if (intersections == null)
+                    intersections = new ArrayList<Point3D>();
+                intersections.addAll(tempIntersections);
+            }
+        }
+        return intersections;
+
     }
 
 
