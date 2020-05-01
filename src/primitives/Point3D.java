@@ -1,7 +1,10 @@
 package primitives;
 import static java.lang.System.out;
 import java.util.Objects;
-
+/**
+ *
+ * @author Dan Abergel and Joss Lalou
+ */
 public class Point3D
 {
     static public final Point3D ZERO = new Point3D(0.0,0.0,0.0);

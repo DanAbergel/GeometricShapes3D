@@ -5,7 +5,10 @@ import primitives.Ray;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *
+ * @author Dan Abergel and Joss Lalou
+ */
 public class Geometries implements Intersectable {
 
     List<Intersectable> list;

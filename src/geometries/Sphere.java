@@ -6,7 +6,10 @@ import primitives.Vector;
 import primitives.Util;
 import java.util.List;
 import static primitives.Util.alignZero;
-
+/**
+ *
+ * @author Dan Abergel and Joss Lalou
+ */
 public class Sphere extends RadialGeometry {
     Point3D _center;
     public Sphere(Point3D point, double rayon)
