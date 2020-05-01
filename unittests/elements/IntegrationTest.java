@@ -1,4 +1,4 @@
-package unittests;
+package elements;
 
 import org.junit.Test;
 
@@ -36,7 +36,7 @@ public class IntegrationTest {
                     count += results.size();
             }
         }
-        assertEquals("fail", 0, count);
+        assertEquals("fail", 2, count);
 
     }
     @Test
