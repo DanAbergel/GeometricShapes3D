@@ -83,13 +83,11 @@ public class Vector
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vector vector = (Vector) o;
-        return Double.compare(vector.lenght, lenght) == 0 &&
-                Objects.equals(Point, vector.Point);
+        return getPoint().equals(vector.getPoint());
     }
     /**
      *

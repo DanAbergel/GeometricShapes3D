@@ -12,13 +12,27 @@ public class Ray
     Point3D point;
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null){
+            return  false;
+        }
+        if (!(obj instanceof Ray)) {
+            return false;
+        }
+        if (this == obj)
+            return true;
+        Ray other = (Ray)obj;
+        return (point.equals(other.point) &&
+                vector.equals(other.vector));
+    }
     /**
      * sets this directon and head based on r's direction and head
      * @param rayon ray to copy information from
      */
     public Ray(Ray rayon)
     {
-        vector=new Vector(rayon.vector);
+        vector=new Vector(rayon.vector).normalize();
         point=new Point3D(rayon.point);
 
     }
@@ -51,9 +65,10 @@ public class Ray
      */
 
 
-    public Ray(Point3D pointe, Vector direction) {
+    public Ray(Point3D pointe, Vector direction)
+    {
         point = new Point3D(pointe);
-        vector = new Vector(direction).normalized();
+        vector = new Vector(direction).normalize();
     }
 
     /**
@@ -67,5 +82,8 @@ public class Ray
                 "vector=" + vector +
                 ", point=" + point +
                 '}';
+    }
+    public Point3D getPoint(double length) {
+        return isZero(length ) ? point : new Point3D(point).add(vector.Scale(length));
     }
 }

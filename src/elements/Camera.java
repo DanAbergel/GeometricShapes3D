@@ -4,73 +4,97 @@ import static primitives.Util.isZero;
 /**
  * this class is to realize the camera to determine how we will show the form
  */
-public class Camera {
-    Point3D P0;
-    Vector Vt0;
-    Vector Vup;
-    Vector Vright;
 
+public class Camera {
+    private Point3D place;
+    private Vector vto;
+    private Vector vup;
+    private Vector vright;
+
+    // ****************************** Getters *****************************/
     /**
-     * its the constructor that create a new camera with the position choosed
-     * @param _p0:center of the camera
-     * @param _vTo:axe toward
-     * @param _vUp:axe in up
+     * Camera getter
+     *
+     * @return place
      */
-    public Camera(Point3D _p0, Vector _vTo, Vector _vUp) {
-        if (_vUp.dotProduct(_vTo) != 0)
-            throw new IllegalArgumentException ("the vectors must be orthogonal");
-        this.P0 =  new Point3D(_p0);
-        this.Vt0 = _vTo.normalized();
-        this.Vup = _vUp.normalized();
-        Vright = this.Vt0.crossProduct(this.Vup).normalize();
+    public Point3D getPlace() {
+        return place;
     }
 
     /**
-     *construct the view plane and will return the ray that past against the view plane
-     * @param nX:int
-     * @param nY:int
-     * @param j:int
-     * @param i:int
-     * @param screenDistance:distance between the view plane and the center of the camera
-     * @param screenWidth:widht of the view plane
-     * @param screenHeight:height of the view plane
-     * @return
+     * Camera getter
+     *
+     * @return vto
      */
-    public Ray constructRayThroughPixel(int nX, int nY,
-                                        int j, int i, double screenDistance,
-                                        double screenWidth, double screenHeight)
-    {
-        if (isZero(screenDistance))
-        {
-            throw new IllegalArgumentException("distance cannot be 0");
+    public Vector getVto() {
+        return vto;
+    }
+
+    /**
+     * Camera getter
+     *
+     * @return vup
+     */
+    public Vector getVup() {
+        return vup;
+    }
+
+    /**
+     * Camera getter
+     *
+     * @return vright
+     */
+    public Vector getVright() {
+        return vright;
+    }
+
+    // ****************************** Constructors *****************************/
+    /**
+     * constructor for camera with params
+     *
+     * @param _place place of camera
+     * @param _vto   forward vector
+     * @param _vup   up vector
+     */
+    public Camera(Point3D _place, Vector _vto, Vector _vup) {
+        if (isZero(_vto.dotProduct(_vup))) {
+            place = _place;
+            vto = _vto.normalized();
+            vup = _vup.normalized();
+            vright = new Vector(_vto.crossProduct(_vup));
+        } else
+            throw new IllegalArgumentException("Illegal args");
+    }
+
+    /**
+     * func constructRayThroughPixel
+     *
+     * @param nX             pixels on width
+     * @param nY             pixels on height
+     * @param j              Pixel column
+     * @param i              pixel row
+     * @param screenDistance dst from view plane
+     * @param screenWidth    screen width
+     * @param screenHeight   screen height
+     * @return ray
+     */
+    public Ray constructRayThroughPixel(int nX, int nY, int j, int i,
+                                        double screenDistance, double screenWidth, double screenHeight) {
+        if (isZero(screenDistance)) {
+            throw new IllegalArgumentException("distance from cam cannot be 0");
         }
-        Point3D Pc = P0.add(Vt0.Scale(screenDistance));
-        double Ry = screenHeight/nY;
-        double Rx = screenWidth/nX;
-        double yi =  ((i - nY/2d)*Ry + Ry/2d);
-        double xj=   ((j - nX/2d)*Rx + Rx/2d);
+        // pixel of image center
+        Point3D Pc = place.add(vto.Scale(screenDistance));
+        double Ry = screenHeight / nY;
+        double Rx = screenWidth / nX;
+        double yi = ((i - nY / 2d) * Ry + Ry / 2d);
+        double xj = ((j - nX / 2d) * Rx + Rx / 2d);
         Point3D Pij = Pc;
         if (!isZero(xj))
-        {
-            Pij = Pij.add(Vright.Scale(xj));
-        }
+            Pij = Pij.add(vright.Scale(xj));
         if (!isZero(yi))
-        {
-            Pij = Pij.subtract(Vup.Scale(yi).getPoint()).getPoint(); // Pij.add(_vUp.scale(-yi))
-        }
-        Vector Vij = Pij.subtract(P0);
-        return new Ray(P0,Vij);
-    }
-    public Point3D get_p0() {
-        return new Point3D(P0);
-    }
-    public Vector get_vTo() {
-        return new Vector(Vt0);
-    }
-    public Vector get_vUp() {
-        return new Vector(Vup);
-    }
-    public Vector get_vRight() {
-        return new Vector(Vright);
+            Pij = Pij.add(vup.Scale(-yi));
+        Vector Vij = Pij.subtract(place);
+        return new Ray(place, Vij.normalize());
     }
 }

@@ -7,13 +7,13 @@ import java.util.Objects;
  */
 public class Point3D
 {
-    static public final Point3D ZERO = new Point3D(0.0,0.0,0.0);
+    //static public final Point3D ZERO = new Point3D(0.0,0.0,0.0);
 
     Coordinate x;
     Coordinate y;
     Coordinate z;
 
-    //final Point3D ZERO =new Point3D(new Coordinate(0),new Coordinate(0),new Coordinate(0));
+  static  public final Point3D ZERO =new Point3D(new Coordinate(0),new Coordinate(0),new Coordinate(0));
 
     public Point3D(double x,double y,double z)
     {
@@ -52,13 +52,13 @@ public class Point3D
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj) return true;
-        if (obj == null) return false;
-        if (!(obj instanceof Point3D)) return false;
-        Point3D oth = (Point3D) obj;
-        return x.equals(oth.x) && y.equals(oth.y) && z.equals(oth.z);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point3D point3D = (Point3D) o;
+        return x.equals(point3D.x) &&
+                y.equals(point3D.y) &&
+                z.equals(point3D.z);
     }
 
     @Override
@@ -99,4 +99,9 @@ public class Point3D
         return Math.sqrt(distanceSquared(point3));
     }
 
+    public Point3D subtract(Vector v) {
+        return new Point3D(this.x._coord - v.getPoint().x._coord,
+            this.y._coord - v.getPoint().y._coord,
+            this.z._coord - v.getPoint().z._coord);
+    }
 }
