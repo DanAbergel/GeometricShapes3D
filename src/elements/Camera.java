@@ -2,6 +2,7 @@ package elements;
 import primitives.*;
 import static primitives.Util.isZero;
 /**
+ * Dan Abergel and Joss lalou
  * this class is to realize the camera to determine how we will show the form
  */
 
