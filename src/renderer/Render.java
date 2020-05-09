@@ -50,11 +50,11 @@ public class Render {
                 Ray ray=scene.getCamera().constructRayThroughPixel(image.getNx(),image.getNy(),j,i,scene.getDistance(),image.getWidth(),image.getHeight());
                 List<Point3D> intersectionPoints=scene.getGeometries().findIntersections(ray);
                 if (intersectionPoints==null)
-                    image.writePixel(j,i,scene.getBackground());
+                    image.writePixel(j,i,scene.getBackground().getColor());
                 else
                 {
                     Point3D closestPoint=getClosestPoint(intersectionPoints);
-                    image.writePixel(j,i,calcColor(closestPoint));
+                    image.writePixel(j,i,calcColor(closestPoint).getColor());
                 }
             }
         }
