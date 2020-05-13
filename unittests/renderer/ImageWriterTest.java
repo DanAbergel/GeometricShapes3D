@@ -20,6 +20,7 @@ public class ImageWriterTest {
         {
             for(int j=0;j<Ny;j++)
             {
+                //if it is the pixel on the grid color it in different color than interior of the case
                 if (i % 50 == 0 || j % 50 == 0) {
                     image.writePixel(i, j, Color.PINK);
                 } else {
