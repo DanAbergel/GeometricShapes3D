@@ -3,8 +3,6 @@ package renderer;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-
-
 public class ImageWriterTest {
 
     @Test
@@ -31,9 +29,5 @@ public class ImageWriterTest {
         }
         image.writeToImage();
     }
-
-
-
-
 
     }

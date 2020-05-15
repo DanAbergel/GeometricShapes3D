@@ -18,6 +18,9 @@ public class Render {
         this.image = _imageWriter;
         this.scene = _scene;
    }
+    public void writeToImage() {
+        image.writeToImage();
+    }
     /**
      * Calculate the color intensity in a point
      *
