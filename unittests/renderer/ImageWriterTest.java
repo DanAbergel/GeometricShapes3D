@@ -29,6 +29,7 @@ public class ImageWriterTest {
 
             }
         }
+        image.writeToImage();
     }
 
 
