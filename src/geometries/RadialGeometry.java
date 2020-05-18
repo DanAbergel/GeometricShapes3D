@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author Dan Abergel and Joss Lalou
  */
-public abstract class RadialGeometry implements Geometry {
+public abstract class RadialGeometry extends Geometry {
     private double _radius;
 
     public double get_radius()

@@ -13,7 +13,7 @@ import static primitives.Util.isZero;
  * class representing a Plane which is representated by one point Point3D and one vector Vector
  * @author yeoshua and Dan
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     Point3D _p;
     Vector _normal;
 
