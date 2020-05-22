@@ -1,9 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -16,10 +13,24 @@ import java.util.List;
 
 public class Cylinder extends Tube {
     double _height;
-    /**Constructor of Cylinder class with parameters : 2 doubles==>for radius and height , and one Ray*/
+    /**
+     * Constructor of Cylinder Class with 3 parameters
+     * @param _radius : radius of the cylinder
+     * @param _axisRay : ray which the cylinder is based on
+     * @param _height : height of the cylinder**/
     public Cylinder(double _radius, Ray _axisRay, double _height) {
-        super(_radius, _axisRay);
-        this._height = _height;
+       this(Color.BLACK,_radius,_axisRay,_height);
+    }
+    /**
+     * Constructor of Cylinder Class with 4 parameters which also colors the cylinder
+     * @param color : color of the cylinder of class
+     * @param _radius : radius of the cylinder
+     * @param _axisRay : ray which the cylinder is based on
+     * @param _height : height of the cylinder**/
+    public Cylinder(Color color,double _radius, Ray _axisRay, double _height){
+        super(color,_radius,_axisRay);
+        this._height=_height;
+
     }
 
     /**function which return the height of Cylinder**/
@@ -36,8 +47,8 @@ public class Cylinder extends Tube {
                 '}';
     }
 
-    /**override method for getNormal which return a vector perpendicular to the given point in parameters**/
-
+    /**override method for getNormal which return a vector perpendicular to the given point in parameters
+     * @param point : the point which we calculate the normal of the cylinder**/
         @Override
         public Vector getNormal(Point3D point) {
             Point3D o = _axisRay.getPoint();
@@ -61,7 +72,7 @@ public class Cylinder extends Tube {
 
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         return null;
     }
 }

@@ -12,7 +12,8 @@ import java.util.List;
 public class Geometries implements Intersectable {
 
     List<Intersectable> list;
-
+/**
+ * Constructor of the class Geometries**/
     public Geometries() {
         list = new ArrayList<Intersectable>();
     }
@@ -33,15 +34,15 @@ public class Geometries implements Intersectable {
     2) we will checked at each shape intersections's points
     finally return the list of points resulted by this research
     * */
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> intersections = null;
+    public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> intersections = null;
 
         for (Intersectable geometry : list) {
-            List<Point3D> tempIntersections = geometry.findIntersections(ray);
-            if (tempIntersections != null) {
+            List<GeoPoint> tmpIntersections = geometry.findIntersections(ray);
+            if (tmpIntersections != null) {
                 if (intersections == null)
-                    intersections = new ArrayList<Point3D>();
-                intersections.addAll(tempIntersections);
+                    intersections = new ArrayList<GeoPoint>();
+                intersections.addAll(tmpIntersections);
             }
         }
         return intersections;

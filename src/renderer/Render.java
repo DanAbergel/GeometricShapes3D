@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.Intersectable;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
@@ -52,15 +53,15 @@ public class Render {
      *                           this list the closet point to P0 of the camera in the scene.
      * @return the closest point to the camera
      */
-    private Point3D getClosestPoint(List<Point3D> intersectionsPoints){
+    private Intersectable.GeoPoint getClosestPoint(List<Intersectable.GeoPoint> intersectionsPoints){
        double distance=Double.MAX_VALUE;
        Point3D P0=scene.getCamera().getPlace();
-       Point3D minDistancePoint=null;
-       for (Point3D point:intersectionsPoints){
-           if(P0.distance(point)<distance)
+       Intersectable.GeoPoint minDistancePoint=null;
+       for ( Intersectable.GeoPoint point:intersectionsPoints){
+           if(P0.distance(point.point)<distance)
            {
-               minDistancePoint=new Point3D(point);
-               distance=P0.distance(point);
+               minDistancePoint=point;
+               distance=P0.distance(point.point);
            }
        }
        return minDistancePoint;
@@ -77,13 +78,13 @@ public class Render {
             for (int j=0;j<image.getNy();j++)
             {
                 Ray ray=scene.getCamera().constructRayThroughPixel(image.getNx(),image.getNy(),j,i,scene.getDistance(),image.getWidth(),image.getHeight());
-                List<Point3D> intersectionPoints=scene.getGeometries().findIntersections(ray);
+                List<Intersectable.GeoPoint> intersectionPoints=scene.getGeometries().findIntersections(ray);
                 if (intersectionPoints==null)
                     image.writePixel(j,i,scene.getBackground().getColor());
                 else
                 {
-                    Point3D closestPoint=getClosestPoint(intersectionPoints);
-                    image.writePixel(j,i,calcColor(closestPoint).getColor());
+                    Intersectable.GeoPoint closestPoint=getClosestPoint(intersectionPoints);
+                    image.writePixel(j,i,calcColor(closestPoint.point).getColor());
                 }
             }
         }

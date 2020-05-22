@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Color;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
@@ -18,26 +19,42 @@ public class Plane extends Geometry {
     Vector _normal;
 
     /**Constructor of Plane class with parameters : 3 points Point3D**/
-    public Plane(Point3D point1,Point3D point2,Point3D point3)
-    {//02/04
+    public Plane(Color color,Point3D point1,Point3D point2,Point3D point3)
+    {
+        super(color);
         _p=new Point3D(point1);
         Vector U =new Vector(point1,point2);
         Vector V=new Vector(point1,point3);
         Vector N=U.crossProduct(V);
         N.normalize();
         _normal = N;
+        _normal = N.Scale(-1);
+    }
+    public Plane(Point3D point1,Point3D point2,Point3D point3){
+        this(Color.BLACK,point1,point2,point3);
     }
     /**Constructor of Plane class with parameters : one point Point3D and one vector Vector**/
     public Plane(Point3D _p, Vector _normal) {
+        this(Color.BLACK,_p,_normal);
+    }
+    /**
+     * Constructor of the class Plane with color of the plane**/
+    public Plane(Color color, Point3D _p, Vector _normal){
+        super(color);
         this._p = new Point3D(_p);
         this._normal =new Vector( _normal);
+    }
+
+    /**because polygon needs geNormal without parameter**/
+    public Vector getNormal() {
+        return getNormal(null);
     }
 
     /**override method of function getNormal which return a vector perpendicular to the given point**/
     @Override
     public Vector getNormal(Point3D pt)
     {
-        return _normal.crossProduct(pt.subtract(Point3D.ZERO));
+        return _normal;
     }
 
 
@@ -50,14 +67,8 @@ public class Plane extends Geometry {
                 '}';
     }
 
-   /*/ @Override
-    public List<Point3D> findIntsersections(Ray ray) {
-        double t=(_normal.Scale(-1).dotProduct(ray.getPoint().subtract(_p)))/(_normal.dotProduct(ray.getVector()));
-        return List.of( ray.getPoint().add(ray.getVector().Scale(t)));
-    }/*///de Dan
-
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         Vector p0Q;
         try {
             p0Q = _p.subtract(ray.getPoint());
@@ -68,7 +79,7 @@ public class Plane extends Geometry {
         if (isZero(nv)) // ray is parallel to the plane - no intersections
             return null;
         double t = alignZero(_normal.dotProduct(p0Q) / nv);
-        Point3D newPoint=ray.getTargetPoint(t);
-        return t <= 0 || newPoint==ray.getPoint() ? null : List.of(newPoint);//if the point of intersection is the same point than the point of ray return null
+        GeoPoint newPoint=new GeoPoint(this,ray.getTargetPoint(t));
+        return t <= 0 || newPoint.point==ray.getPoint() ? null : List.of(newPoint);//if the point of intersection is the same point than the point of ray return null
     }
 }
