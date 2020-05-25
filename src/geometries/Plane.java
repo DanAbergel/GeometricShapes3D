@@ -1,8 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -28,9 +26,10 @@ public class Plane extends Geometry {
         _normal = N;
     }
     /**Constructor of Plane class with parameters : one point Point3D and one vector Vector**/
-    public Plane(Point3D _p, Vector _normal) {
-        this._p = new Point3D(_p);
-        this._normal =new Vector( _normal);
+    public Plane(Color emission, Material material, Point3D _point, Vector _normal) {
+        super(emission, material);
+        this._p = _point;
+        this._normal = _normal.normalize();
     }
 
     /**override method of function getNormal which return a vector perpendicular to the given point**/

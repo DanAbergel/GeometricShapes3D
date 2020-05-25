@@ -1,9 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -24,9 +21,12 @@ public class Tube extends RadialGeometry {
 
 
     //Constructor of class Tube with parameters of double and Ray
-    public Tube(double _radius, Ray _axisRay) {
-        super(_radius);
-        this._axisRay =new Ray(_axisRay);
+    public Tube(Color emission, Material material, double _radius, Ray _axisRay) {
+        super(emission, material, _radius);
+        this._axisRay = _axisRay;
+    }
+    public Tube(Color emission, double _radius, Ray _ray) {
+        this(emission, new Material(0,0,0), _radius, _ray);
     }
 
     //function which return the ray _axisRay

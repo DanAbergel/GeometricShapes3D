@@ -1,8 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 
@@ -14,10 +12,9 @@ import static primitives.Util.isZero;
  */
 public class Triangle extends Polygon {
     //Constructor of Triangle with parameters : 3 points Point3D
-    public Triangle(Point3D point1,Point3D point2,Point3D point3) {
-        super(point1,point2,point3);
+    public Triangle(Color emission, Material material, Point3D _point1, Point3D _point2, Point3D _point3) {
+        super(emission, material, new Point3D[]{_point1, _point2, _point3});
     }
-
     //override method for toString method of triange
     @Override
     public String toString() {
