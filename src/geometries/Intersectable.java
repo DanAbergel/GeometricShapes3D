@@ -10,14 +10,14 @@ import java.util.Objects;
  */
 public interface Intersectable {
 
-    List<Point3D> findIntersections(Ray ray);
+    List<GeoPoint> findIntersections(Ray ray);
     public static class GeoPoint{
         public Geometry geometry;
         public Point3D point;
 
         /**
          * Constructor of the class GeoPoint
-         * @param _geometry for copy from it to the variable geometry
+         * @param  _geometry for copy from it to the variable geometry
          * @param  _point  for copy from it to the variable point
          * */
         public GeoPoint(Geometry _geometry, Point3D _point) {

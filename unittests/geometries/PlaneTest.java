@@ -38,8 +38,8 @@ class PlaneTest {
         Plane plane=new Plane(new Point3D(1,0,1),new Vector(1,1,1));
         Point3D trueResult1=new Point3D(1,0,1);
         Ray ray1=new Ray(new Point3D(-1,0,0),new Vector(2,0,1));
-        List<Point3D> result1=plane.findIntersections(ray1);
-        assertEquals(List.of(trueResult1),result1);
+        Intersectable.GeoPoint result1=plane.findIntersections(ray1).get(0);
+        assertEquals(trueResult1,result1.point);
 
         //TC02 The ray is parallel to the plane (0 points)
         Plane plane2= new Plane(new Point3D(0,0,0),new Point3D(1,0,0),new Point3D(0,1,0));
@@ -58,7 +58,7 @@ class PlaneTest {
         // TC05 : cast 1: before the plane ray orthogonal to  the plane
         Ray ray5=new Ray(new Point3D(1,1,-2),new Vector(1,1,2));
         Point3D point5=new Point3D(2.0,2.0,0.0);
-        assertEquals(point5, plane2.findIntersections(ray5).get(0));
+        assertEquals(point5, plane2.findIntersections(ray5).get(0).point);
 
         // TC06 : cast 2: after the plane ray orthogonal to  the plane (0 points)
         Ray ray6=new Ray(new Point3D(1,1,2),new Vector(1,1,4));

@@ -25,7 +25,7 @@ public class IntegrationTest {
     public void WithSphere1() {
         //TC01 first cast of maavada we need to find 3 intection with the sphere with radius 1
         Sphere sphere = new Sphere( new Point3D(0, 0, 3),1);
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -43,7 +43,7 @@ public class IntegrationTest {
     public void WithSphere2() {
         //TC02 second  cast of maavada we need to find 18 intections with the sphere with radius 2.5
         Sphere sphere = new Sphere( new Point3D(0, 0, 2.5),2.5);
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -61,7 +61,7 @@ public class IntegrationTest {
     public void WithSphere3() {
         //TC03 third  cast of maavada we need to find 10 intections with the sphere with radius 2
         Sphere sphere = new Sphere( new Point3D(0, 0, 2),2);
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -79,7 +79,7 @@ public class IntegrationTest {
     public void Withsphere4() {
         //TC04 fourth   cast of maavada we need to find  intections with the sphere with radius 4
         Sphere sphere = new Sphere( new Point3D(0, 0, 2),4);
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -97,7 +97,7 @@ public class IntegrationTest {
     public void Withsphere5() {
         //TC05 fifth   cast of maavada we need to find  intections with the sphere with radius 0.5
         Sphere sphere = new Sphere( new Point3D(0, 0, -1),0.5);
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -116,7 +116,7 @@ public class IntegrationTest {
     public void WithPlane() {
         //TC01 first  cast of maavada we need to find  intections with the plane
         Plane plane = new Plane(new Point3D(0,0,1),new Point3D(1,1,1),new Point3D(1,0,1));
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -134,7 +134,7 @@ public class IntegrationTest {
     public void WithPlane3() {
         //TC03 Third  cast of maavada we need to find  intections with the plane
         Plane plane = new Plane(new Point3D(0,0,1),new Point3D(1,1,-1),new Point3D(1,0,1));
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -152,7 +152,7 @@ public class IntegrationTest {
     public void WithPlane2() {
         //TC02 second  cast of maavada we need to find  intections with the plane
         Plane plane = new Plane(new Point3D(0,0,1),new Point3D(1,1,0.5),new Point3D(1,0,1));
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -171,7 +171,7 @@ public class IntegrationTest {
     public void Withtriangle() {
         //TC01 first  cast of maavada we need to find  intections with the triangle
         Triangle triangle = new Triangle(new Point3D(0,-1,2),new Point3D(1,1,2),new Point3D(-1,1,2));
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
@@ -189,7 +189,7 @@ public class IntegrationTest {
     public void Withtriangle2() {
         //TC02 second  cast of maavada we need to find  intections with the plane
         Triangle triangle = new Triangle(new Point3D(0,-20,2),new Point3D(1,1,2),new Point3D(-1,1,2));
-        List<Point3D> results;
+        List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
         int Ny = 3;
