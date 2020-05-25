@@ -56,7 +56,7 @@ public class Plane extends Geometry {
     }/*///de Dan
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         Vector p0Q;
         try {
             p0Q = _p.subtract(ray.getPoint());
@@ -68,6 +68,6 @@ public class Plane extends Geometry {
             return null;
         double t = alignZero(_normal.dotProduct(p0Q) / nv);
         Point3D newPoint=ray.getTargetPoint(t);
-        return t <= 0 || newPoint==ray.getPoint() ? null : List.of(newPoint);//if the point of intersection is the same point than the point of ray return null
+        return t <= 0 || newPoint==ray.getPoint() ? null : List.of(new GeoPoint(this,newPoint));//if the point of intersection is the same point than the point of ray return null
     }
 }
