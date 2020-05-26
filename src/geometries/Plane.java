@@ -16,8 +16,9 @@ public class Plane extends Geometry {
     Vector _normal;
 
     /**Constructor of Plane class with parameters : 3 points Point3D**/
-    public Plane(Point3D point1,Point3D point2,Point3D point3)
-    {//02/04
+    public Plane(Color emission, Material material,Point3D point1,Point3D point2,Point3D point3)
+    {
+        super(emission,material);
         _p=new Point3D(point1);
         Vector U =new Vector(point1,point2);
         Vector V=new Vector(point1,point3);
@@ -25,13 +26,19 @@ public class Plane extends Geometry {
         N.normalize();
         _normal = N;
     }
+    public Plane(Point3D point1,Point3D point2,Point3D point3){
+        this(Color.BLACK,new Material(0,0,0),point1,point2,point3);
+    }
     /**Constructor of Plane class with parameters : one point Point3D and one vector Vector**/
-    public Plane(Color emission, Material material, Point3D _point, Vector _normal) {
-        super(emission, material);
+    public Plane(Color color,Material material, Point3D _point, Vector _normal) {
+        super(color,material);
         this._p = _point;
         this._normal = _normal.normalize();
     }
 
+    public Plane( Point3D _point, Vector _normal){
+        this(Color.BLACK,new Material(0,0,0),_point,_normal);
+    }
     /**override method of function getNormal which return a vector perpendicular to the given point**/
     @Override
     public Vector getNormal(Point3D pt)
