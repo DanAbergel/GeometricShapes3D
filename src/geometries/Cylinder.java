@@ -18,6 +18,9 @@ public class Cylinder extends Tube {
         super(emission, material, _radius, _ray);
         this._height = _height;
     }
+    public Cylinder(double _radius, Ray _ray, double _height){
+        this(Color.BLACK,new Material(0,0,0),_radius,_ray,_height);
+    }
 
     /**function which return the height of Cylinder**/
     public double get_height() {
