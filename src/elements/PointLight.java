@@ -27,6 +27,7 @@ public class PointLight extends Light implements LightSource {
         this._kQ = _kQ;
     }
 
+
     /**
      * @param p
      * @return the intensity at the point p

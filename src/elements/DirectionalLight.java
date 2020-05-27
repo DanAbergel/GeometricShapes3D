@@ -11,6 +11,8 @@ public class DirectionalLight extends Light implements LightSource {
         super(_intensity, a);
         this.direction = direction;
     }
+   
+
 
     /**
      * @param p the lighted point is not used he is mentioned

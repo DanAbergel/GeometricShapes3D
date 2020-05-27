@@ -24,7 +24,7 @@ public void testEquals() {
         // ============ Equivalence Partitions Tests ==============
 
         Triangle t= new Triangle(new Point3D(1,0,0),new Point3D(0,1,0),new Point3D(0,0,1));
-        assertEquals(t.getNormal(null),new Vector(new Point3D(-0.5773502691896258, -0.5773502691896258, -0.5773502691896258)));
+        assertEquals(t.getNormal(null),new Vector(new Point3D(0.5773502691896258, 0.5773502691896258, 0.5773502691896258)));
     }
 
     Triangle t1=new Triangle(new Point3D(0,0,4),new Point3D(0,0,0),new Point3D(4,0,0));
