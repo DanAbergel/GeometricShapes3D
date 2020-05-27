@@ -16,13 +16,12 @@ public abstract class RadialGeometry extends Geometry {
         super(emission, material);
         this._radius = _radius;
     }
+    public RadialGeometry(double _radius){
+        this(Color.BLACK,new Material(0,0,0),_radius);
+    }
     public double get_radius()
     {
         return _radius;
-    }
-    public RadialGeometry(double _radius)
-    {
-        this._radius = _radius;
     }
 
 }

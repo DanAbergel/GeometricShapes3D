@@ -83,6 +83,9 @@ public class Polygon extends Geometry {
     }
 
 
+    public Polygon( Point3D... vertices){
+        this(Color.BLACK,new Material(0,0,0),vertices);
+    }
 
 
     @Override
