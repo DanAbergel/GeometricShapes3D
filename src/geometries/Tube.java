@@ -25,8 +25,9 @@ public class Tube extends RadialGeometry {
         super(emission, material, _radius);
         this._axisRay = _axisRay;
     }
-    public Tube(Color emission, double _radius, Ray _ray) {
-        this(emission, new Material(0,0,0), _radius, _ray);
+    public Tube(double _radius, Ray _ray)
+    {
+        this(Color.BLACK, new Material(0,0,0), _radius, _ray);
     }
 
     //function which return the ray _axisRay
