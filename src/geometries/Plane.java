@@ -43,7 +43,7 @@ public class Plane extends Geometry {
     @Override
     public Vector getNormal(Point3D pt)
     {
-        return _normal.crossProduct(pt.subtract(Point3D.ZERO));
+        return _normal;
     }
 
 
