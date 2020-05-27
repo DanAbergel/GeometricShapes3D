@@ -15,6 +15,12 @@ public class Triangle extends Polygon {
     public Triangle(Color emission, Material material, Point3D _point1, Point3D _point2, Point3D _point3) {
         super(emission, material, new Point3D[]{_point1, _point2, _point3});
     }
+
+    public Triangle( Point3D _point1, Point3D _point2, Point3D _point3) {
+        super( new Point3D[]{_point1, _point2, _point3});
+    }
+
+
     //override method for toString method of triange
     @Override
     public String toString() {

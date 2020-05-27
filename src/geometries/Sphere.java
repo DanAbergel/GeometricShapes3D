@@ -14,6 +14,12 @@ public class Sphere extends RadialGeometry {
         super(emission, material, _radius);
         this._center = _center;
     }
+
+    public Sphere(double _radius, Point3D _center) {
+        super(_radius);
+        this._center = _center;
+    }
+
     @Override
     public Vector getNormal(Point3D point){
 

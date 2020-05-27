@@ -24,7 +24,7 @@ public class IntegrationTest {
     @Test
     public void WithSphere1() {
         //TC01 first cast of maavada we need to find 3 intection with the sphere with radius 1
-        Sphere sphere = new Sphere( new Point3D(0, 0, 3),1);
+        Sphere sphere = new Sphere(1, new Point3D(0, 0, 3));
         List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
@@ -42,7 +42,7 @@ public class IntegrationTest {
     @Test
     public void WithSphere2() {
         //TC02 second  cast of maavada we need to find 18 intections with the sphere with radius 2.5
-        Sphere sphere = new Sphere( new Point3D(0, 0, 2.5),2.5);
+        Sphere sphere = new Sphere(2.5, new Point3D(0, 0, 2.5));
         List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
@@ -60,7 +60,7 @@ public class IntegrationTest {
     @Test
     public void WithSphere3() {
         //TC03 third  cast of maavada we need to find 10 intections with the sphere with radius 2
-        Sphere sphere = new Sphere( new Point3D(0, 0, 2),2);
+        Sphere sphere = new Sphere(2, new Point3D(0, 0, 2));
         List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
@@ -78,7 +78,7 @@ public class IntegrationTest {
     @Test
     public void Withsphere4() {
         //TC04 fourth   cast of maavada we need to find  intections with the sphere with radius 4
-        Sphere sphere = new Sphere( new Point3D(0, 0, 2),4);
+        Sphere sphere = new Sphere(4, new Point3D(0, 0, 2));
         List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
@@ -96,7 +96,7 @@ public class IntegrationTest {
     @Test
     public void Withsphere5() {
         //TC05 fifth   cast of maavada we need to find  intections with the sphere with radius 0.5
-        Sphere sphere = new Sphere( new Point3D(0, 0, -1),0.5);
+        Sphere sphere = new Sphere(0.5, new Point3D(0, 0, -1));
         List<Intersectable.GeoPoint> results;
         int count = 0;
         int Nx = 3;
