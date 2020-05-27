@@ -24,7 +24,7 @@ public class Plane extends Geometry {
         Vector V=new Vector(point1,point3);
         Vector N=U.crossProduct(V);
         N.normalize();
-        _normal = N.Scale(-1);
+        _normal = N;
     }
     public Plane(Point3D point1,Point3D point2,Point3D point3){
         this(Color.BLACK,new Material(0,0,0),point1,point2,point3);
