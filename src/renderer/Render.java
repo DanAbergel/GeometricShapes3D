@@ -27,32 +27,39 @@ public class Render {
      * @param geoPoint intersection the point for which the color is required
      * @return the color intensity
      */
-//    private Color calcColor(Intersectable.GeoPoint geoPoint) {
-//        Color resultColor;
-//        Color ambientLight = scene.getAmbientLight().get_intensity();
-//        Color emissionLight = geoPoint.geometry.getEmission();
-//        resultColor = ambientLight;
-//        resultColor = resultColor.add(emissionLight);
-//        List<LightSource> lights = scene.get_lights();
-//        Material material = geoPoint.geometry.getMaterial();
-//        Vector v = geoPoint.point.subtract(scene.getCamera().getPlace()).normalize();
-//        Vector n = geoPoint.geometry.getNormal(geoPoint.point).normalize();
-//        int nShininess = material.get_nShininess();
-//        double kd = material.get_kD();
-//        double ks = material.get_kS();
-//        if (lights != null) {
-//            for (LightSource lightSource : lights) {
-//                Vector l = lightSource.getL(geoPoint.point).normalize();
-//                if (n.dotProduct(l)*n.dotProduct(v) > 0) {
-//                    Color lightIntensity = lightSource.getIntensity(geoPoint.point);
-//                    Color diffuse = calcDiffusive(kd, l, n, lightIntensity);
-//                    Color specular = calcSpecular(ks, l, n, v, nShininess, lightIntensity);
-//                    resultColor = resultColor.add(diffuse,specular);
-//                }
-//            }
-//        }
-//        return resultColor;
-//    }
+    private Color calcColor(Intersectable.GeoPoint geoPoint) {
+        Color resultColor;
+        Color ambientLight = scene.getAmbientLight().getIntensity();
+        Color emissionLight = geoPoint.geometry.getEmission();
+        resultColor = ambientLight;
+        resultColor = resultColor.add(emissionLight);
+        List<LightSource> lights = scene.get_lights();
+        Material material = geoPoint.geometry.getMaterial();
+        Vector v = geoPoint.point.subtract(scene.getCamera().getPlace()).normalize();
+        Vector n = geoPoint.geometry.getNormal(geoPoint.point).normalize();
+        int nShininess = material.get_nShininess();
+        double kd = material.get_kD();
+        double ks = material.get_kS();
+        if (lights != null) {
+            for (LightSource lightSource : lights) {
+                Vector l = lightSource.getL(geoPoint.point).normalize();
+                if (n.dotProduct(l)*n.dotProduct(v) > 0) {
+                    Color lightIntensity = lightSource.getIntensity(geoPoint.point);
+                    Color diffuse = calcDiffusive(kd, l, n, lightIntensity);
+                    Color specular = calcSpecular(ks, l, n, v, nShininess, lightIntensity);
+                    resultColor = resultColor.add(diffuse,specular);
+                }
+            }
+        }
+        return resultColor;
+    }
+    private Color calcDiffusive(double kd, Vector l, Vector n, Color lightIntensity) {
+        return lightIntensity.scale(kd * Math.abs(l.dotProduct(n)));
+    }
+    private Color calcSpecular(double ks, Vector l, Vector n, Vector v, double nShininess, Color lightIntensity) {
+        Vector r = l.substract(n.Scale(l.dotProduct(n) * 2));
+        return lightIntensity.scale(ks * Math.pow(Math.max(0, v.Scale(-1).dotProduct(r)), nShininess));
+    }
 
     /**
      * Printing the grid with a fixed interval between lines
@@ -71,22 +78,25 @@ public class Render {
     /**
      * Finding the closest point to the P0 of the camera.
      *
-     * @param intersectionsPoints list of points, the function should find from
+     * @param intersectionPoints list of points, the function should find from
      *                           this list the closet point to P0 of the camera in the scene.
      * @return the closest point to the camera
      */
-    private Point3D getClosestPoint(List<Intersectable.GeoPoint> intersectionsPoints){
-       double distance=Double.MAX_VALUE;
-       Point3D P0=scene.getCamera().getPlace();
-       Point3D minDistancePoint=null;
-       for (Intersectable.GeoPoint point:intersectionsPoints){
-           if(P0.distance(point.point)<distance)
-           {
-               minDistancePoint=new Point3D(point.point);
-               distance=P0.distance(point.point);
-           }
-       }
-       return minDistancePoint;
+
+    private Intersectable.GeoPoint getClosestPoint(List<Intersectable.GeoPoint> intersectionPoints) {
+        Intersectable.GeoPoint result = null;
+        double minDistance = Double.MAX_VALUE;
+        Point3D p0 = this.scene.getCamera().getPlace();
+        if (intersectionPoints == null)
+            return null;
+        for (Intersectable.GeoPoint geoPoint : intersectionPoints) {
+            double distance = p0.distance(geoPoint.point);
+            if (distance < minDistance) {
+                minDistance = distance;
+                result = geoPoint;
+            }
+        }
+        return result;
     }
     /**
      * Filling the buffer according to the geometries that are in the scene.
@@ -105,7 +115,7 @@ public class Render {
                     image.writePixel(j,i,scene.getBackground().getColor());
                 else
                 {
-                    Point3D closestPoint=getClosestPoint(intersectionPoints);
+                    Intersectable.GeoPoint closestPoint=getClosestPoint(intersectionPoints);
                     image.writePixel(j,i,calcColor(closestPoint).getColor());
                 }
             }
