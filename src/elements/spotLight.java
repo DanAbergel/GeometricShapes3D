@@ -17,16 +17,11 @@ public class spotLight extends PointLight {
         super(_intensity, a, _position, _kC, _kL, _kQ);
         this._direction = _direction;
     }
-    /**
-     * constructor
-     *
-     * @param _intensity
-     * @param _position
-     * @param _kC
-     * @param _kL
-     * @param _kQ
-     */
 
+    public spotLight(Color _intensity, Point3D _position, Vector _direction, double _kC, double _kL, double _kQ) {
+        super(_intensity, _position, _kC, _kL, _kQ);
+        this._direction = new Vector(_direction).normalized();
+    }
 
     /**
      * @param p

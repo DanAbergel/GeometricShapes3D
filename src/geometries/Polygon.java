@@ -82,6 +82,11 @@ public class Polygon extends Geometry {
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
     }
+    public Polygon(Color emission, Point3D... vertices) {
+        this(emission,new Material(0,0,0),vertices);
+    }
+
+
 
 
     public Polygon( Point3D... vertices){
