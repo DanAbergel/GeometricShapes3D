@@ -42,6 +42,7 @@ public class Polygon extends Geometry {
      *                                  <li>The polygon is concave (not convex)</li>
      *                                  </ul>
      */
+
     public Polygon(Color emission, Material material, Point3D... vertices) {
         super(emission, material);
         if (vertices.length < 3)

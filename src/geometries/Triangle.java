@@ -20,8 +20,7 @@ public class Triangle extends Polygon {
         this(Color.BLACK,new Material(0,0,0),_point1,_point2,_point3);
     }
 
-
-    //override method for toString method of triange
+    //override method for toString method of triangle
     @Override
     public String toString() {
         return "Triangle{}"+super.toString();
