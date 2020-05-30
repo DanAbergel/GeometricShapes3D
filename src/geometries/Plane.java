@@ -26,6 +26,9 @@ public class Plane extends Geometry {
         N.normalize();
         _normal = N;
     }
+    public Plane(Color emission,Point3D point1,Point3D point2,Point3D point3){
+        this(emission,new Material(0,0,0),point1,point2,point3);
+    }
     public Plane(Point3D point1,Point3D point2,Point3D point3){
         this(Color.BLACK,new Material(0,0,0),point1,point2,point3);
     }
@@ -34,6 +37,9 @@ public class Plane extends Geometry {
         super(color,material);
         this._p = _point;
         this._normal = _normal.normalize();
+    }
+    public Plane(Color color, Point3D _point, Vector _normal){
+        this(color,new Material(0,0,0),_point,_normal);
     }
 
     public Plane( Point3D _point, Vector _normal){

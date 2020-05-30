@@ -1,4 +1,4 @@
-package renderer;
+package unittests;
 
 import org.junit.Test;
 
@@ -128,7 +128,9 @@ public class LightsTests {
                 new Triangle(Color.BLACK, new Material(0.5, 0.5, 300),
                         new Point3D(-150, 150, 150), new Point3D(-70, -70, 50), new Point3D(75, -75, 150)));
 
-        scene.addLights(new PointLight(new Color(500, 250, 250), new Point3D(10, 10, 130), 1, 0.0005, 0.0005));
+        scene.addLights(new PointLight(new Color(500, 250, 250),
+                new Point3D(10, 10, 130),
+                1, 0.0005, 0.0005));
 
         ImageWriter imageWriter = new ImageWriter("trianglesPoint", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);

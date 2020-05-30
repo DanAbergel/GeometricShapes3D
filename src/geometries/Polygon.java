@@ -1,15 +1,19 @@
 package geometries;
 
+import primitives.Material;
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
+ * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
+ * system
  *
- * @author Dan Abergel and Joss Lalou
+ * @author Dan
  */
 public class Polygon extends Geometry {
     /**
@@ -42,9 +46,10 @@ public class Polygon extends Geometry {
      *                                  <li>The polygon is concave (not convex)</li>
      *                                  </ul>
      */
+    public Polygon(Color emissionLight, Material material, Point3D... vertices) {
 
-    public Polygon(Color emission, Material material, Point3D... vertices) {
-        super(emission, material);
+        super(emissionLight, material);
+
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -82,49 +87,50 @@ public class Polygon extends Geometry {
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
     }
-    public Polygon(Color emission, Point3D... vertices) {
-        this(emission,new Material(0,0,0),vertices);
+
+    public Polygon(Color emissionLight, Point3D... vertices) {
+        this(emissionLight, new Material(0, 0, 0), vertices);
     }
 
-
-
-
-    public Polygon( Point3D... vertices){
-        this(Color.BLACK,new Material(0,0,0),vertices);
+    public Polygon(Point3D... vertices) {
+        this(Color.BLACK, new Material(0, 0, 0), vertices);
     }
-
 
     @Override
     public Vector getNormal(Point3D point) {
-        return _plane.getNormal(point);
+        return _plane.getNormal(null);
     }
 
     @Override
     public List<GeoPoint> findIntersections(Ray ray) {
+        List<GeoPoint> palaneIntersections = _plane.findIntersections(ray);
+        if (palaneIntersections == null)
+            return null;
 
-            List<GeoPoint> intersections = _plane.findIntersections(ray);
-            if (intersections == null) return null;
+        Point3D p0 = ray.getPoint();
+        Vector v = ray.getVector();
 
-            Point3D p0 = ray.getPoint();
-            Vector v = ray.getVector();
+        Vector v1 = _vertices.get(1).subtract(p0);
+        Vector v2 = _vertices.get(0).subtract(p0);
+        double sign = v.dotProduct(v1.crossProduct(v2));
+        if (isZero(sign))
+            return null;
 
-            Vector v1  = _vertices.get(1).subtract(p0);
-            Vector v2 = _vertices.get(0).subtract(p0);
-            double sign = v.dotProduct(v1.crossProduct(v2));
-            if (isZero(sign))
-                return null;
+        boolean positive = sign > 0;
 
-            boolean positive = sign > 0;
+        for (int i = _vertices.size() - 1; i > 0; --i) {
+            v1 = v2;
+            v2 = _vertices.get(i).subtract(p0);
+            sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
+            if (isZero(sign)) return null;
+            if (positive != (sign > 0)) return null;
+        }
 
-            for (int i = _vertices.size() - 1; i > 0; --i) {
-                v1 = v2;
-                v2 = _vertices.get(i).subtract(p0);
-                sign = alignZero(v.dotProduct(v1.crossProduct(v2)));
-                if (isZero(sign)) return null;
-                if (positive != (sign >0)) return null;
-            }
-
-            return intersections;
-
+        //for GeoPoint
+        List<GeoPoint> result = new LinkedList<>();
+        for (GeoPoint geo : palaneIntersections) {
+            result.add(new GeoPoint(this, geo.point));
+        }
+        return result;
     }
 }

@@ -1,37 +1,43 @@
 package geometries;
 
-import primitives.*;
+import primitives.Material;
+import primitives.Color;
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.isZero;
 
-/**
- * class representing a Triangle which is a polygon but have a restriction for having only three points and thats why is herits from polygon class
- * @author yeoshua and Dan
- */
 public class Triangle extends Polygon {
-    //Constructor of Triangle with parameters : 3 points Point3D
-    public Triangle(Color emission, Material material, Point3D _point1, Point3D _point2, Point3D _point3) {
-        super(emission, material, new Point3D[]{_point1, _point2, _point3});
+
+    public Triangle(Color emissionLight, Material material, Point3D p1, Point3D p2, Point3D p3) {
+        super(emissionLight,material,p1,p2,p3);
+    }
+    public Triangle(Color emissionLight, Point3D p1, Point3D p2, Point3D p3) {
+        super(emissionLight,p1, p2, p3);
     }
 
-    public Triangle( Point3D _point1, Point3D _point2, Point3D _point3) {
-        this(Color.BLACK,new Material(0,0,0),_point1,_point2,_point3);
+    public Triangle(Point3D p1, Point3D p2, Point3D p3) {
+        super(p1, p2, p3);
     }
-    public Triangle(Color emission, Point3D _point1, Point3D _point2, Point3D _point3) {
-        super(emission, new Point3D[]{_point1, _point2, _point3});
-    }
-    //override method for toString method of triangle
+
+
     @Override
     public String toString() {
-        return "Triangle{}"+super.toString();
+        String result = "";
+        for (Point3D p : _vertices) {
+            result += p.toString();
+        }
+        return result;
     }
 
     @Override
     public List<GeoPoint> findIntersections(Ray ray) {
-        List<GeoPoint> intersections = _plane.findIntersections(ray);
-        if (intersections == null) return null;
+        List<GeoPoint> planeIntersections = _plane.findIntersections(ray);
+        if (planeIntersections == null) return null;
 
         Point3D p0 = ray.getPoint();
         Vector v = ray.getVector();
@@ -47,7 +53,16 @@ public class Triangle extends Polygon {
         double s3 = v.dotProduct(v3.crossProduct(v1));
         if (isZero(s3)) return null;
 
-        return ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)) ? intersections : null;
+        if ((s1 > 0 && s2 > 0 && s3 > 0) || (s1 < 0 && s2 < 0 && s3 < 0)) {
+            //for GeoPoint
+            List<GeoPoint> result = new LinkedList<>();
+            for (GeoPoint geo : planeIntersections) {
+                result.add(new GeoPoint(this, geo.point));
+            }
+            return result;
+        }
+
+        return null;
 
     }
 }
