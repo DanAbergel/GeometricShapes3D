@@ -40,14 +40,16 @@ public class Render {
         int nShininess = material.get_nShininess();
         double kd = material.get_kD();
         double ks = material.get_kS();
-        if (lights != null) {
-            for (LightSource lightSource : lights) {
-                Vector l = lightSource.getL(geoPoint.point).normalize();
-                if (n.dotProduct(l)*n.dotProduct(v) > 0) {
-                    Color lightIntensity = lightSource.getIntensity(geoPoint.point);
-                    Color diffuse = calcDiffusive(kd, l, n, lightIntensity);
-                    Color specular = calcSpecular(ks, l, n, v, nShininess, lightIntensity);
-                    resultColor = resultColor.add(diffuse,specular);
+        if(unshaded(v,n,geoPoint)) {
+            if (lights != null) {
+                for (LightSource lightSource : lights) {
+                    Vector l = lightSource.getL(geoPoint.point).normalize();
+                    if (n.dotProduct(l) * n.dotProduct(v) > 0) {
+                        Color lightIntensity = lightSource.getIntensity(geoPoint.point);
+                        Color diffuse = calcDiffusive(kd, l, n, lightIntensity);
+                        Color specular = calcSpecular(ks, l, n, v, nShininess, lightIntensity);
+                        resultColor = resultColor.add(diffuse, specular);
+                    }
                 }
             }
         }
@@ -120,6 +122,24 @@ public class Render {
                 }
             }
         }
+    }
+    /**
+     *
+     * @param l
+     * @param n
+     * @param gp
+     * @return
+     */
+    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp){
+        //we inverse the direction of the ray which go out from the light
+        Vector LightDirection=l.Scale(-1);
+        Point3D geometryPoint=new Point3D(gp.point);
+        Ray lightRay=new Ray(geometryPoint,LightDirection);
+        List<Intersectable.GeoPoint> intersectionPoints=scene.getGeometries().findIntersections(lightRay);
+        if (intersectionPoints==null) {
+            return true;
+        }
+        return false;
     }
 
 }
