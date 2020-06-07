@@ -37,7 +37,16 @@ public class Ray
 
     }
     public Point3D getTargetPoint(double length) {
-        return isZero(length ) ? point : new Point3D(point).add(vector.Scale(length));
+        try{
+            if (isZero(length )){
+                return point;
+            }
+            Point3D newPoint=new Point3D(point).add(vector.Scale(length));
+            return newPoint;
+        }
+        catch (Exception exception){
+            return point;
+        }
     }
 
     /**
@@ -84,6 +93,15 @@ public class Ray
                 '}';
     }
     public Point3D getPoint(double length) {
-        return isZero(length ) ? point : new Point3D(point).add(vector.Scale(length));
+        try{
+            if (isZero(length )){
+                return point;
+            }
+            Point3D newPoint=new Point3D(point).add(vector.Scale(length));
+            return newPoint;
+        }
+        catch (Exception exception){
+            return point;
+        }
     }
 }
