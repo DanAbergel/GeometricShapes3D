@@ -40,9 +40,9 @@ public class Render {
         int nShininess = material.get_nShininess();
         double kd = material.get_kD();
         double ks = material.get_kS();
-        if(unshaded(v,n,geoPoint)) {
+        for (LightSource lightSource : lights) {
+            if(unshaded(v,n,geoPoint,lightSource)) {
             if (lights != null) {
-                for (LightSource lightSource : lights) {
                     Vector l = lightSource.getL(geoPoint.point).normalize();
                     if (n.dotProduct(l) * n.dotProduct(v) > 0) {
                         Color lightIntensity = lightSource.getIntensity(geoPoint.point);
@@ -130,7 +130,7 @@ public class Render {
      * @param gp
      * @return
      */
-    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp){
+    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp,LightSource lightSource){
         //we inverse the direction of the ray which go out from the light
         Vector LightDirection=l.Scale(-1);
         Point3D geometryPoint=new Point3D(gp.point);
