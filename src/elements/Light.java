@@ -11,12 +11,15 @@ public abstract class Light {
      * @return _intensity
      */
     public Light(Color _intensity,double a) {
+
         this._intensity = _intensity;
     }
     public Light(Color _intensity) {
+
         this._intensity = _intensity;
     }
     public Color getIntensity() {
+
         return new Color(_intensity);
     }
 }

@@ -1,5 +1,6 @@
 package primitives;
 import java.util.Objects;
+
 /**
  * class representing a vector on the 3D grid
  * @author yeoshua and Dan

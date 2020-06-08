@@ -31,9 +31,6 @@ public interface Intersectable {
             if (o == null || getClass() != o.getClass()) return false;
             GeoPoint geoPoint = (GeoPoint) o;
             return o.equals(geoPoint.point) && o.equals(geoPoint.geometry);
-
         }
-
-
     }
 }

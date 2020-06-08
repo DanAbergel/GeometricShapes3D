@@ -28,6 +28,7 @@ public class Camera {
      * @return vto
      */
     public Vector getVto() {
+
         return vto;
     }
 
@@ -37,6 +38,7 @@ public class Camera {
      * @return vup
      */
     public Vector getVup() {
+
         return vup;
     }
 
@@ -46,6 +48,7 @@ public class Camera {
      * @return vright
      */
     public Vector getVright() {
+
         return vright;
     }
 

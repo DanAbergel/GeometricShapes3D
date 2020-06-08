@@ -7,11 +7,9 @@ import static primitives.Util.isZero;
 /**
  * @author yeoshua and Dan
  */
-class VectorTest
-{
+class VectorTest {
      @Test
-     public void testConstructor()
-     {
+     public void testConstructor() {
          // ============ Boundary Value Analysis ==============
          // test zero vector c-tor with coordinates
          try
@@ -25,8 +23,7 @@ class VectorTest
      }
 
         @Test
-        void testadd()
-        {
+        void testadd() {
        Vector v1=new Vector(0.0,1.0,0.0);
        Vector v2=new Vector(1.0,0.0,0.0);
 
@@ -35,8 +32,7 @@ class VectorTest
         }
 
         @Test
-        void testScale()
-        {
+        void testScale() {
         Vector v1=new Vector(1.0,1.0,1.0);
         Vector v=v1.Scale(1);
         assertEquals(v,v1);
@@ -47,8 +43,7 @@ class VectorTest
         }
 
         @Test
-        void subtract()
-        {
+        void subtract() {
         Vector v1=new Vector(1.0,1.0,1.0);
         Vector v2=new Vector(-1.0,-1.0,-1.0);
         v1=v1.substract(v2);
@@ -57,8 +52,7 @@ class VectorTest
          }
 
         @Test
-        public void dotProduct()
-        {
+        public void dotProduct() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
         Vector v3 = new Vector(0, 3, -2);
@@ -71,8 +65,7 @@ class VectorTest
         }
 
     @Test
-    public void testCrossProduct()
-    {
+    public void testCrossProduct() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(-2, -4, -6);
 
@@ -96,22 +89,19 @@ class VectorTest
     }
 
     @Test
-    public void length()
-    {
+    public void length() {
        // Vector v1 = new Vector(1, 2, 3);
         // test length in main
         assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
 
     }
     @Test
-    public void lengthSquared()
-    {
+    public void lengthSquared() {
         Vector v1 = new Vector(1, 2, 3);
         assertTrue( isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
     }
     @Test
-    public void normalize()
-    {
+    public void normalize() {
         // test vector normalization vs vector length and cross-product
         Vector v2 = new Vector(1,2,3);
         assertEquals(v2.normalize(),new Vector(1/Math.sqrt(14),2/Math.sqrt(14),3/Math.sqrt(14)),"ERROR the function not work");
@@ -121,8 +111,7 @@ class VectorTest
 
     }
     @Test
-    public void normalized()
-    {
+    public void normalized() {
         //tests that normalized creates a new vector
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalized();

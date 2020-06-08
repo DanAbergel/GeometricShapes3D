@@ -1,25 +1,30 @@
 package renderer;
-
 import elements.LightSource;
 import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
 
 import java.util.List;
+
+import static primitives.Util.alignZero;
+
 /**
  * Dan Abergel and Joshua Lalou
  this class aims to represent the whole structure
  */
 public class Render {
+
+   private static final int MAX_CALC_COLOR_LEVEL = 10;
+   private static final double MIN_CALC_COLOR_K = 0.001;
    private Scene scene;
    private ImageWriter image;
-   public Render(ImageWriter _imageWriter, Scene _scene)
-   {
+   public Render(ImageWriter _imageWriter, Scene _scene) {
         this.image = _imageWriter;
         this.scene = _scene;
    }
     public void writeToImage() {
-        image.writeToImage();
+
+       image.writeToImage();
     }
     /**
      * Calculate the color intensity in a point
@@ -68,11 +73,9 @@ public class Render {
      *
      * @param _interval The interval between the lines.
      */
-    public void printGrid(int _interval, java.awt.Color _color)
-    {
+    public void printGrid(int _interval, java.awt.Color _color) {
         for (int i = 0; i < this.image.getNx(); ++i)
-            for (int j = 0; j < this.image.getNy(); ++j)
-            {
+            for (int j = 0; j < this.image.getNy(); ++j) {
                 if (j % _interval == 0 || i % _interval == 0)
                     image.writePixel(j, i, _color);
             }
@@ -104,8 +107,7 @@ public class Render {
      * Filling the buffer according to the geometries that are in the scene.
      * This function does not creating the picture file, but create the buffer pf pixels
      */
-    public void renderImage()
-    {
+    public void renderImage() {
         //pixels grid
         for (int i=0;i<image.getNx();i++)
         {
@@ -140,6 +142,49 @@ public class Render {
             return true;
         }
         return false;
+    }
+//    private boolean occluded(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {
+//        Point3D geometryPoint = geopoint.point;
+//        Vector lightDirection = light.getL(geometryPoint);
+//        lightDirection.Scale(-1);
+//
+//        Vector epsVector = geopoint.geometry.getNormal(geometryPoint);
+//        epsVector.Scale(epsVector.dotProduct(lightDirection) > 0 ? 2 : -2);
+//        geometryPoint.add(epsVector);
+//        Ray lightRay = new Ray(geometryPoint, lightDirection);
+//        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
+//
+//        // Flat geometry cannot self intersect
+//        if (geopoint.geometry instanceof FlatGeometry) {
+//            intersections.remove(geopoint);
+//        }
+//
+//        for (Intersectable.GeoPoint entry : intersections)
+//            if (entry.geometry.getMaterial().getKt() == 0)
+//                return true;
+//        return false;
+//    }
+
+    private double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {
+        Vector lightDirection = l.Scale(-1); // from point to light source
+        Ray lightRay = new Ray(geopoint.point, lightDirection, n);
+        Point3D pointGeo = geopoint.point;
+
+        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
+        if (intersections == null) {
+            return 1d;
+        }
+        double lightDistance = light.getDistance(pointGeo);
+        double ktr = 1d;
+        for (Intersectable.GeoPoint gp : intersections) {
+            if (alignZero(gp.point.distance(pointGeo) - lightDistance) <= 0) {
+                ktr *= gp.geometry.getMaterial().getKt();
+                if (ktr < MIN_CALC_COLOR_K) {
+                    return 0.0;
+                }
+            }
+        }
+        return ktr;
     }
 
 }

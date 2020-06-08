@@ -42,9 +42,11 @@ public abstract class Geometry implements Intersectable
      *  function to get the variable _emission
     */
     public Color get_emission() {
+
         return _emission;
     }
     public Material getMaterial() {
+
         return material;
     }
     public Color getEmission() {

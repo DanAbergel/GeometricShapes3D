@@ -11,10 +11,7 @@ import static org.junit.Assert.*;
 /**
  * @author yeoshua and Dan
  */
-public class SphereTest
-{
-
-
+public class SphereTest {
     @Test
    public void getNormalTest() {
         Sphere sp = new Sphere(1, new Point3D(0,0,1));
@@ -124,9 +121,6 @@ public class SphereTest
         // TC19: Ray's line is outside, ray is orthogonal to ray start to sphere's
         // center line
         assertNull("Ray orthogonal to ray head -> O line", sphere.findIntersections(new Ray(new Point3D(-1, 0, 0), new Vector(0, 0, 1))));
-
-
-
 
     }
 }

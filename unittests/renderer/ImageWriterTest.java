@@ -24,10 +24,8 @@ public class ImageWriterTest {
                 } else {
                     image.writePixel(i, j, Color.YELLOW);
                 }
-
             }
         }
         image.writeToImage();
     }
-
     }

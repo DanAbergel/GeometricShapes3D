@@ -32,8 +32,6 @@ class PlaneTest {
 
     @Test
     void TestFindIntersections() {
-
-
         //TC01 The ray cross the plane without passing by the center of axes
         Plane plane=new Plane(new Point3D(1,0,1),new Vector(1,1,1));
         Point3D trueResult1=new Point3D(1,0,1);
@@ -71,8 +69,6 @@ class PlaneTest {
         // TC08 : ray not parallel and not orthogonal to  the plane (0 points)
         Ray ray8=new Ray(new Point3D(1,0,0),new Vector(4,4,1));
         assertEquals(null, plane2.findIntersections(ray8));
-
-
 
     }
 }

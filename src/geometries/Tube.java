@@ -26,9 +26,11 @@ public class Tube extends RadialGeometry {
         this._axisRay = _axisRay;
     }
     public Tube(Color emission, double _radius, Ray _axisRay){
+
         this(emission,new Material(0,0,0),_radius,_axisRay);
     }
     public Tube(double _radius, Ray _ray) {
+
         this(Color.BLACK, new Material(0,0,0), _radius, _ray);
     }
 
@@ -46,8 +48,7 @@ public class Tube extends RadialGeometry {
                 '}';
     }
     @Override
-    public Vector getNormal(Point3D point)
-    {
+    public Vector getNormal(Point3D point) {
         //The vector from the point of the cylinder to the given point
         Point3D point1 = _axisRay.getPoint();
         Vector vector1 = _axisRay.getVector();

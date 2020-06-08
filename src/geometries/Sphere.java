@@ -10,17 +10,17 @@ import static primitives.Util.alignZero;
  */
 public class Sphere extends RadialGeometry {
     Point3D _center;
-    public Sphere(Color emission, Material material, double _radius, Point3D _center) {
-        super(emission, material, _radius);
-        this._center = _center;
+    public Sphere(Color emissionLight, Material material, double radius, Point3D center) {
+        super(emissionLight,radius);
+        this.material = material;
+        this._center = new Point3D(center);
     }
     public Sphere(Color emission, double _radius, Point3D _center){
         this(emission,new Material(0,0,0),_radius,_center);
     }
-    public Sphere(double _radius, Point3D _center) {
-        this(Color.BLACK,new Material(0,0,0),_radius,_center);
+    public Sphere(double radius, Point3D center) {
+        this(Color.BLACK,new Material(0,0,0),radius,center);
     }
-
     @Override
     public Vector getNormal(Point3D point){
 
@@ -29,6 +29,7 @@ public class Sphere extends RadialGeometry {
     }
 
     public Point3D get_center() {
+
         return _center;
     }
 
