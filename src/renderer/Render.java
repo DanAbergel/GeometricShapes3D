@@ -1,5 +1,6 @@
 package renderer;
 import elements.LightSource;
+import geometries.Geometry;
 import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
@@ -46,7 +47,7 @@ public class Render {
         double kd = material.get_kD();
         double ks = material.get_kS();
         for (LightSource lightSource : lights) {
-            if(unshaded(v,n,geoPoint,lightSource)) {
+            if(unshaded(n,geoPoint,lightSource)) {
             if (lights != null) {
                     Vector l = lightSource.getL(geoPoint.point).normalize();
                     if (n.dotProduct(l) * n.dotProduct(v) > 0) {
@@ -132,10 +133,12 @@ public class Render {
      * @param gp
      * @return
      */
-    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp,LightSource lightSource){
+    private boolean unshaded( Vector n, Intersectable.GeoPoint gp,LightSource lightSource ){
         //we inverse the direction of the ray which go out from the light
-        Vector LightDirection=l.Scale(-1);
+        Vector LightDirection=lightSource.getL(gp.point).Scale(-1);
         Point3D geometryPoint=new Point3D(gp.point);
+        n.Scale(2);
+        geometryPoint.add(n);
         Ray lightRay=new Ray(geometryPoint,LightDirection);
         List<Intersectable.GeoPoint> intersectionPoints=scene.getGeometries().findIntersections(lightRay);
         if (intersectionPoints==null) {
@@ -143,7 +146,6 @@ public class Render {
         }
         return false;
     }
-
 
     private double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {
         Vector lightDirection = l.Scale(-1); // from point to light source
@@ -165,25 +167,6 @@ public class Render {
             }
         }
         return ktr;
-    }
-
-    /**
-     * this function gets a point, a ray and a vector and return the reflected ray
-     *
-     * @param p   Point3D point
-     * @param ray Ray Ray
-     * @param n   Vector vector
-     * @return Ray reflected ray
-     */
-    private Ray constructReflectedRay(Point3D p, Ray ray, Vector n) {
-
-        Vector v = ray.getVector();
-        double vn = v.dotProduct(n);
-
-        if (vn == 0) return null;
-
-        Vector r = n.Scale(2 * vn).substract(v);
-        return new Ray(p, r, n);
     }
 
 }
