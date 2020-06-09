@@ -17,6 +17,7 @@ public class Render {
 
    private static final int MAX_CALC_COLOR_LEVEL = 10;
    private static final double MIN_CALC_COLOR_K = 0.001;
+   private static final double DELTA = 0.1;
    private Scene scene;
    private ImageWriter image;
    public Render(ImageWriter _imageWriter, Scene _scene) {
@@ -137,9 +138,9 @@ public class Render {
         //we inverse the direction of the ray which go out from the light
         Vector LightDirection=lightSource.getL(gp.point).Scale(-1);
         Point3D geometryPoint=new Point3D(gp.point);
-        n.Scale(2);
-        geometryPoint.add(n);
-        Ray lightRay=new Ray(geometryPoint,LightDirection);
+        n.Scale(DELTA);
+        Point3D newPoint=geometryPoint.add(n);
+        Ray lightRay=new Ray(newPoint,LightDirection);
         List<Intersectable.GeoPoint> intersectionPoints=scene.getGeometries().findIntersections(lightRay);
         if (intersectionPoints==null) {
             return true;
@@ -151,7 +152,6 @@ public class Render {
         Vector lightDirection = l.Scale(-1); // from point to light source
         Ray lightRay = new Ray(geopoint.point, lightDirection, n);
         Point3D pointGeo = geopoint.point;
-
         List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
         if (intersections == null) {
             return 1d;
