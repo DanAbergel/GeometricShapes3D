@@ -1,5 +1,4 @@
 package renderer;
-
 import org.junit.Test;
 
 import elements.*;
@@ -8,7 +7,6 @@ import primitives.*;
 import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
-
 /**
  * Test rendering abasic image
  *
