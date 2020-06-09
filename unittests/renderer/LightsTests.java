@@ -16,9 +16,13 @@ import scene.Scene;
 public class LightsTests {
 
     /**
-     * Produce a picture of a sphere lighted by a directional light
+     * Test for triangle  with all light in the scene
+     * 3 lights  directional ,point light and spot light
      */
-    @Test
+
+
+
+@Test
     public void sphereDirectional() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));

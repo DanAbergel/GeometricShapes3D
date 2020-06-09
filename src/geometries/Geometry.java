@@ -49,6 +49,16 @@ public abstract class Geometry implements Intersectable
 
         return material;
     }
+    /**
+     * Set goemetrie's material
+     *
+     * @param mat material
+     * @return geometry itself for chaining
+     */
+    public Geometry setMaterial(Material mat) {
+        material = mat;
+        return this;
+    }
     public Color getEmission() {
         return _emission;
     }

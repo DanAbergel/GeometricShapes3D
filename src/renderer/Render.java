@@ -143,27 +143,7 @@ public class Render {
         }
         return false;
     }
-//    private boolean occluded(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {
-//        Point3D geometryPoint = geopoint.point;
-//        Vector lightDirection = light.getL(geometryPoint);
-//        lightDirection.Scale(-1);
-//
-//        Vector epsVector = geopoint.geometry.getNormal(geometryPoint);
-//        epsVector.Scale(epsVector.dotProduct(lightDirection) > 0 ? 2 : -2);
-//        geometryPoint.add(epsVector);
-//        Ray lightRay = new Ray(geometryPoint, lightDirection);
-//        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-//
-//        // Flat geometry cannot self intersect
-//        if (geopoint.geometry instanceof FlatGeometry) {
-//            intersections.remove(geopoint);
-//        }
-//
-//        for (Intersectable.GeoPoint entry : intersections)
-//            if (entry.geometry.getMaterial().getKt() == 0)
-//                return true;
-//        return false;
-//    }
+
 
     private double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {
         Vector lightDirection = l.Scale(-1); // from point to light source
@@ -185,6 +165,25 @@ public class Render {
             }
         }
         return ktr;
+    }
+
+    /**
+     * this function gets a point, a ray and a vector and return the reflected ray
+     *
+     * @param p   Point3D point
+     * @param ray Ray Ray
+     * @param n   Vector vector
+     * @return Ray reflected ray
+     */
+    private Ray constructReflectedRay(Point3D p, Ray ray, Vector n) {
+
+        Vector v = ray.getVector();
+        double vn = v.dotProduct(n);
+
+        if (vn == 0) return null;
+
+        Vector r = n.Scale(2 * vn).substract(v);
+        return new Ray(p, r, n);
     }
 
 }

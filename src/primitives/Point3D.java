@@ -86,12 +86,11 @@ public class Point3D
         return new Point3D(newX,newY,newZ);
     }
 
-    public double distanceSquared(Point3D point2)
-    {
-        double doubleX=point2.x._coord*(point2.x._coord);
-        double doubleY=point2.y._coord*(point2.y._coord);
-        double doubleZ=point2.z._coord*(point2.z._coord);
-        return doubleX+doubleY+doubleZ;
+    public double distanceSquared(Point3D p) {
+        double dx = this.x.get() - p.x.get();
+        double dy = this.y.get() - p.y.get();
+        double dz = this.z.get() - p.z.get();
+        return dx * dx + dy * dy + dz * dz;
     }
 
     public double distance(Point3D point3)

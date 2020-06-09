@@ -23,6 +23,8 @@ public class spotLight extends PointLight {
         this._direction = new Vector(_direction).normalized();
     }
 
+
+
     /**
      * @param p
      * @return the intensity at the point p
