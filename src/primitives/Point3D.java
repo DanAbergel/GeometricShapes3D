@@ -95,6 +95,7 @@ public class Point3D
 
     public double distance(Point3D point3)
     {
+
         return Math.sqrt(distanceSquared(point3));
     }
 

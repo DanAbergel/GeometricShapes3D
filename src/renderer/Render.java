@@ -127,9 +127,10 @@ public class Render {
             }
         }
     }
+
     /**
      *
-     * @param l
+     * @param lightSource
      * @param n
      * @param gp
      * @return
@@ -146,6 +147,29 @@ public class Render {
             return true;
         }
         return false;
+    }
+    private Intersectable.GeoPoint findCLosestIntersection(Ray ray){
+
+            if (ray == null) {
+                return null;
+            }
+
+            Intersectable.GeoPoint closestPoint = null;
+            double closestDistance = Double.MAX_VALUE;
+            Point3D ray_p0 = ray.getPoint();
+
+            List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(ray);
+            if (intersections == null)
+                return null;
+
+            for (Intersectable.GeoPoint geoPoint : intersections) {
+                double distance = ray_p0.distance(geoPoint.point);
+                if (distance < closestDistance) {
+                    closestPoint = geoPoint;
+                    closestDistance = distance;
+                }
+            }
+            return closestPoint;
     }
 
     private double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {
@@ -168,5 +192,4 @@ public class Render {
         }
         return ktr;
     }
-
 }
