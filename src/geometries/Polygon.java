@@ -102,7 +102,7 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
         List<GeoPoint> palaneIntersections = _plane.findIntersections(ray);
         if (palaneIntersections == null)
             return null;

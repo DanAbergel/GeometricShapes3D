@@ -41,7 +41,7 @@ public class Sphere extends RadialGeometry {
     }
 
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
         Vector L=_center.subtract(ray.getPoint());
         Vector V=ray.getVector();
         double tm=(L.dotProduct(V));
@@ -53,23 +53,40 @@ public class Sphere extends RadialGeometry {
         double t2=alignZero(tm+th);
         Point3D point1=ray.getTargetPoint(t1);
         Point3D point2=ray.getTargetPoint(t2);
+        double t1MaxDistance=alignZero(t1-max);
+        double t2MaxDistance=alignZero(t2-max);
         if (t1>0 && t2>0 ){
-            if (ray.getPoint()!=point1 && ray.getPoint()!=point2)
-                return List.of(new GeoPoint(this,point1),new GeoPoint(this,point2));
+            if (t1MaxDistance<=0 && t2MaxDistance<=0) { //verify if the t1 and t2 are behind the light for calculate shadow
+                if (ray.getPoint() != point1 && ray.getPoint() != point2){
+                    return List.of(new GeoPoint(this, point1), new GeoPoint(this, point2));
+                }
+                else //if t1 and t2 both are behind the light return null
+                    return null;
+            }
+            //if the t1
             else
                 return null;
         }
         if (t1<=0&&t2<=0)
             return null ;
-        if (t1 > 0 )
-            if (ray.getPoint()!=point1)
-                 return List.of(new GeoPoint(this,(ray.getTargetPoint(t1))));
+        if (t1 > 0)
+            if(t1MaxDistance<=0) {
+                if (ray.getPoint() != point1)
+                    return List.of(new GeoPoint(this, (ray.getTargetPoint(t1))));
+                else
+                    return null;
+            }
             else
                 return null;
-        else
-            if (ray.getPoint()!=point2)
-                return List.of(new GeoPoint(this,ray.getTargetPoint(t2)));
+        else {// t2>0
+            if (t2MaxDistance <= 0) {
+                if (ray.getPoint() != point2)
+                    return List.of(new GeoPoint(this, ray.getTargetPoint(t2)));
+                else
+                    return null;
+            }
             else
                 return null;
+        }
     }
 }

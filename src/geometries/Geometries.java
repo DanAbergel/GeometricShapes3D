@@ -35,7 +35,7 @@ public class Geometries implements Intersectable {
     2) we will checked at each shape intersections's points
     finally return the list of points resulted by this research
     * */
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
         List<GeoPoint> intersections = null;
 
         for (Intersectable geometry : list) {

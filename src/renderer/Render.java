@@ -136,12 +136,12 @@ public class Render {
      */
     private boolean unshaded( Vector n, Intersectable.GeoPoint gp,LightSource lightSource ){
         //we inverse the direction of the ray which go out from the light
-        Vector LightDirection=lightSource.getL(gp.point).Scale(-1);
+        Vector l=lightSource.getL(gp.point).Scale(-1);
         Point3D geometryPoint=new Point3D(gp.point);
-        n.Scale(DELTA);
-        Point3D newPoint=geometryPoint.add(n);
-        Ray lightRay=new Ray(newPoint,LightDirection);
-        List<Intersectable.GeoPoint> intersectionPoints=scene.getGeometries().findIntersections(lightRay);
+        Vector epsVector=n.Scale(n.dotProduct(l)>0?DELTA:-DELTA);
+        Point3D newPoint=geometryPoint.add(epsVector);
+        Ray lightRay=new Ray(newPoint,l);
+        List<Intersectable.GeoPoint> intersectionPoints=scene.getGeometries().findIntersections(lightRay,lightSource.getDistance(gp.point));
         if (intersectionPoints==null) {
             return true;
         }
