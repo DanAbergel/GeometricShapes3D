@@ -12,15 +12,6 @@ public class Ray
     Vector vector;
     Point3D point;
 
-    public Ray(Point3D point, Vector direction, Vector normal) {
-        //point + normal.scale(±DELTA)
-        vector = new Vector(direction).normalized();
-
-        double nv = normal.dotProduct(direction);
-
-        Vector normalDelta = normal.Scale((nv > 0 ? DELTA : -DELTA));
-        point = point.add(normalDelta);
-    }
     @Override
     public boolean equals(Object obj) {
         if (obj == null){

@@ -20,8 +20,6 @@ public class LightsTests {
      * 3 lights  directional ,point light and spot light
      */
 
-
-
 @Test
     public void sphereDirectional() {
         Scene scene = new Scene("Test scene");
