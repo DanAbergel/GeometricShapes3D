@@ -285,31 +285,31 @@ public class Render {
                 scene.getAmbientLight().getIntensity());
     }
 
-    /**
-     *
-     * @param lightSource
-     * @param n
-     * @param gp
-     * @return
-     */
-    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp, LightSource lightSource) {
-        Vector lightDirection = l.Scale(-1); // from point to light source
-        Ray lightRay = new Ray(gp.point, lightDirection, n);
-
-        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-
-        if(intersections == null) return true;
-
-        double distance = lightSource.getDistance(gp.point);
-        for(Intersectable.GeoPoint geoP : intersections){
-            if(alignZero(geoP.point.distance(gp.point) - distance) <= 0 &&
-                    geoP.geometry.getMaterial().getKt() == 0) return false;
-
-        }
-
-        return true;
-
-    }
+//    /**
+//     *
+//     * @param lightSource
+//     * @param n
+//     * @param gp
+//     * @return
+//     */
+//    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp, LightSource lightSource) {
+//        Vector lightDirection = l.Scale(-1); // from point to light source
+//        Ray lightRay = new Ray(gp.point, lightDirection, n);
+//
+//        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
+//
+//        if(intersections == null) return true;
+//
+//        double distance = lightSource.getDistance(gp.point);
+//        for(Intersectable.GeoPoint geoP : intersections){
+//            if(alignZero(geoP.point.distance(gp.point) - distance) <= 0 &&
+//                    geoP.geometry.getMaterial().getKt() == 0) return false;
+//
+//        }
+//
+//        return true;
+//
+//    }
     private Intersectable.GeoPoint findCLosestIntersection(Ray ray){
 
             if (ray == null) {
@@ -345,16 +345,19 @@ public class Render {
     private double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {// transparency(l,n,gp,lightSource);
 
         Vector lightDirection = l.Scale(-1); // from point to light source
-        Ray lightRay = new Ray(geopoint.point, lightDirection, n);
-        Point3D pointGeo = geopoint.point;
+        Vector epsVector=n.Scale(n.dotProduct(lightDirection)>0?DELTA:-DELTA);
+        Point3D point=geopoint.point.add(epsVector);
+        Ray lightRay = new Ray(point, lightDirection);
+
+
         List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
         if (intersections == null) {
             return 1d;
         }
-        double lightDistance = light.getDistance(pointGeo);
+        double lightDistance = light.getDistance(geopoint.point);
         double ktr = 1d;
         for (Intersectable.GeoPoint gp : intersections) {
-            if (alignZero(gp.point.distance(pointGeo) - lightDistance) <= 0) {
+            if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0) {
                 ktr *= gp.geometry.getMaterial().getKt();
                 if (ktr < MIN_CALC_COLOR_K) {
                     return 0.0;

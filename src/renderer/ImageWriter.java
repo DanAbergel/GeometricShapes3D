@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.*;
 import javax.imageio.stream.*;
@@ -25,7 +27,9 @@ public class ImageWriter {
 
     private String _imageName;
 
-    // ***************** Constructors ********************** //
+    private Logger _logger = Logger.getLogger("ImageWriter");
+
+    // ****** Constructors ********* //
     /**
      * Image Writer constructor accepting image name and View Plane parameters,
      * @param imageName the name of jpeg file
@@ -44,7 +48,7 @@ public class ImageWriter {
         _image = new BufferedImage(_nX, _nY, BufferedImage.TYPE_INT_RGB);
     }
 
-    // ***************** Getters/Setters ********************** //
+    // ****** Getters/Setters ********* //
     /**
      * View Plane width getter
      * @return the width
@@ -67,7 +71,7 @@ public class ImageWriter {
      */
     public int getNx() { return _nX; }
 
-    // ***************** Operations ******************** //
+    // ****** Operations ******* //
 
     /**
      * Function writeToImage produces unoptimized jpeg file of
@@ -75,17 +79,11 @@ public class ImageWriter {
      * of the project
      */
     public void writeToImage(){
-        File ouFile = new File(PROJECT_PATH + "/" + _imageName + ".jpg");
         try {
-            javax.imageio.ImageWriter jpgWriter = ImageIO.getImageWritersByFormatName("jpg").next();
-            ImageWriteParam jpgWriteParam = jpgWriter.getDefaultWriteParam();
-            jpgWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-            jpgWriteParam.setCompressionQuality(1f);
-            jpgWriter.setOutput(new FileImageOutputStream(ouFile));
-            jpgWriter.write(null,new IIOImage(_image, null, null), jpgWriteParam);
-            //ImageIO.write(_image, "jpg", ouFile);
+            File file = new File(PROJECT_PATH + '/' + _imageName + ".png");
+            ImageIO.write(_image, "png", file);
         } catch (IOException e) {
-            e.printStackTrace();
+            _logger.log(Level.SEVERE, "I/O error", e);
         }
     }
 
@@ -96,8 +94,7 @@ public class ImageWriter {
      * @param yIndex Y axis index of the pixel
      * @param color final color of the pixel
      */
-    public void writePixel(int xIndex, int yIndex, Color color)
-    {
+    public void writePixel(int xIndex, int yIndex, Color color){
         _image.setRGB(xIndex, yIndex, color.getRGB());
     }
 
