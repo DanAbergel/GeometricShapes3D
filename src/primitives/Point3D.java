@@ -78,6 +78,7 @@ public class Point3D
         return new Vector(newX,newY,newZ);
     }
 
+
     public Point3D add(Vector vector)
     {
         Coordinate newX=new Coordinate(this.x._coord+vector.Point.x._coord);

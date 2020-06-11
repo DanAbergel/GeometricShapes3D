@@ -83,7 +83,7 @@ public class Camera {
      * @return ray
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i,
-                                        double screenDistance, double screenWidth, double screenHeight) {
+                                        double screenDistance, double screenWidth, double screenHeight,boolean isRandom) {
         if (isZero(screenDistance)) {
             throw new IllegalArgumentException("distance from cam cannot be 0");
         }

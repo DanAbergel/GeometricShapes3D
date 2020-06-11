@@ -31,7 +31,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = sphere.findIntersections(camera1.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = sphere.findIntersections(camera1.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -49,7 +49,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -67,7 +67,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -85,7 +85,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -103,7 +103,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = sphere.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -122,7 +122,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = plane.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = plane.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -140,7 +140,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = plane.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = plane.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -158,7 +158,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = plane.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = plane.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -177,7 +177,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = triangle.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = triangle.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
@@ -195,7 +195,7 @@ public class IntegrationTest {
         int Ny = 3;
         for (int i = 0; i < Ny; ++i) {
             for (int j = 0; j < Nx; ++j) {
-                results = triangle.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3));
+                results = triangle.findIntersections(camera2.constructRayThroughPixel(Nx, Ny, j, i, 1, 3, 3,false));
                 if (results != null)
                     count += results.size();
             }
