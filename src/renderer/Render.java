@@ -341,7 +341,8 @@ public class Render {
         Point3D point=gp.point.add(epsVector);
         Ray lightRay = new Ray(point, lightDirection);
         List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-        if (intersections == null) return 1.0;
+        if (intersections == null)
+            return 1.0;
         double lightDistance = lightSource.getDistance(point);
         double ktr = 1.0;
         for (Intersectable.GeoPoint geoP : intersections) {
@@ -361,15 +362,14 @@ public class Render {
      * @return Ray reflected ray
      */
     private Ray constructReflectedRay(Point3D p, Ray ray, Vector n) {
-
         Vector v = ray.getVector();
         double vn = v.dotProduct(n);
         if (vn == 0) {
             return null;
         }
-
         Vector r = n.Scale(2 * vn).substract(v);
-        return new Ray(p, r);
+        Ray newRay=new Ray(p,r);
+        return newRay;
     }
     /**
      * this function gets a point and a ray and return the refracted ray
