@@ -94,7 +94,7 @@ public class Render {
                 double nv = alignZero(n.dotProduct(v));
 
                 if (sign(nl) == sign(nv)) {
-                    double ktr = transparency(lightSource,l,n,gp);
+                    double ktr =  transparency(l,n,gp,lightSource);
                     if (ktr * k > MIN_CALC_COLOR_K) {
                         Color ip = lightSource.getIntensity(gp.point).scale(ktr);
                         result = result.add(
@@ -334,39 +334,26 @@ public class Render {
             return closestPoint;
     }
 
-    /**
-     *
-     * @param light
-     * @param l
-     * @param n
-     * @param geopoint
-     * @return
-     */
-    private double transparency(LightSource light, Vector l, Vector n, Intersectable.GeoPoint geopoint) {// transparency(l,n,gp,lightSource);
 
+    private double transparency(Vector l, Vector n, Intersectable.GeoPoint gp, LightSource lightSource) {
         Vector lightDirection = l.Scale(-1); // from point to light source
-        Vector epsVector=n.Scale(n.dotProduct(lightDirection)>0?DELTA:-DELTA);
-        Point3D point=geopoint.point.add(epsVector);
+
+        Point3D point = gp.point;// get one for fast performance
+
         Ray lightRay = new Ray(point, lightDirection);
-
-
         List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-        if (intersections == null) {
-            return 1d;
-        }
-        double lightDistance = light.getDistance(geopoint.point);
-        double ktr = 1d;
-        for (Intersectable.GeoPoint gp : intersections) {
-            if (alignZero(gp.point.distance(geopoint.point) - lightDistance) <= 0) {
-                ktr *= gp.geometry.getMaterial().getKt();
-                if (ktr < MIN_CALC_COLOR_K) {
-                    return 0.0;
-                }
+        if (intersections == null) return 1.0;
+        double lightDistance = lightSource.getDistance(point);
+        double ktr = 1.0;
+        for (Intersectable.GeoPoint geoP : intersections) {
+            if (alignZero(geoP.point.distance(point) - lightDistance) <= 0) {
+                ktr *= geoP.geometry.getMaterial().getKt();
+                if (ktr < MIN_CALC_COLOR_K) return 0.0;
             }
         }
         return ktr;
-    }
-    /**
+
+    }    /**
      * this function gets a point, a ray and a vector and return the reflected ray
      *
      * @param p   Point3D point
