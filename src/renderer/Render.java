@@ -339,7 +339,7 @@ public class Render {
         Vector lightDirection = l.Scale(-1); // from point to light source
         Vector epsVector=n.Scale(n.dotProduct(lightDirection)>0?DELTA:-DELTA);
         Point3D point=gp.point.add(epsVector);
-        Ray lightRay = new Ray(point, lightDirection);
+        Ray lightRay = new Ray(point, lightDirection);//
         List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
         if (intersections == null) return 1.0;
         double lightDistance = lightSource.getDistance(point);

@@ -94,11 +94,7 @@ public class SphereTest {
                 sphere.findIntersections(new Ray(new Point3D(1, 0.5, 0), new Vector(0, 1, 0))).get(0).point);
 
         // TC16: Ray starts at the center (1 points)
-        Point3D p16=new Point3D(2,0,0);
-        Ray ray16=new Ray(new Point3D(1,0,0),new Vector(1,0,0));
-        List<Intersectable.GeoPoint> result16=sphere.findIntersections(ray16);
-        assertEquals("don't have the correct number of points",1,result16.size());
-        assertEquals("uncorrect Intersection points ",p16,result16.get(0).point);
+        assertEquals(  "Line through O, ray from O", List.of(new Intersectable.GeoPoint(sphere,new Point3D(1, 1, 0))), sphere.findIntersections(new Ray(new Point3D(1, 0, 0), new Vector(0, 1, 0))));
 
 
         // TC17: Ray starts at sphere and goes outside (0 points)

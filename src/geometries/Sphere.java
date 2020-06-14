@@ -42,53 +42,38 @@ public class Sphere extends RadialGeometry {
     }
 
     @Override
-    public List<GeoPoint> findIntersections(Ray ray,double max) {
-        Vector L=_center.subtract(ray.getPoint());
-        Vector V=ray.getVector();
-        double tm=(L.dotProduct(V));
-        double d=Math.sqrt(Math.pow(L.getLenght(),2) - Math.pow(tm,2));
-        if (d>this.get_radius())
-            return null;
-        double th=Math.sqrt(Math.pow(this.get_radius(),2) - Math.pow(d,2));
-        double t1=alignZero(tm-th);
-        double t2=alignZero(tm+th);
-        Point3D point1=ray.getTargetPoint(t1);
-        Point3D point2=ray.getTargetPoint(t2);
-        double t1MaxDistance=alignZero(t1-max);
-        double t2MaxDistance=alignZero(t2-max);
-        if (t1>0 && t2>0 ){
-            if (t1MaxDistance<=0 && t2MaxDistance<=0) { //verify if the t1 and t2 are behind the light for calculate shadow
-                if (ray.getPoint() != point1 && ray.getPoint() != point2){
-                    return List.of(new GeoPoint(this, point1), new GeoPoint(this, point2));
-                }
-                else //if t1 and t2 both are behind the light return null
-                    return null;
-            }
-            //if the t1
-            else
-                return null;
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
+        Point3D p0 = ray.getPoint();
+        Vector v = ray.getVector();
+        Vector u;
+        try {
+            u = _center.subtract(p0); // p0 == _center
+       } catch (IllegalArgumentException e) {
+           return List.of(new GeoPoint(this, ray.getTargetPoint(get_radius())));
         }
-        if (t1<=0&&t2<=0)
-            return null ;
-        if (t1 > 0)
-            if(t1MaxDistance<=0) {
-                if (ray.getPoint() != point1)
-                    return List.of(new GeoPoint(this, (ray.getTargetPoint(t1))));
-                else
-                    return null;
-            }
-            else
-                return null;
-        else {// t2>0
-            if (t2MaxDistance <= 0) {
-                if (ray.getPoint() != point2)
-                    return List.of(new GeoPoint(this, ray.getTargetPoint(t2)));
-                else
-                    return null;
-            }
-            else
-                return null;
-        }
+        double tm = alignZero(v.dotProduct(u));
+        double dSquared = (tm == 0) ? u.lengthSquared() : u.lengthSquared() - tm * tm;
+        double thSquared = alignZero(get_radius() * get_radius() - dSquared);
+
+        if (thSquared <= 0) return null;
+
+        double th = alignZero(Math.sqrt(thSquared));
+        if (th == 0) return null;
+
+        double t1 = alignZero(tm - th);
+        double t2 = alignZero(tm + th);
+
+        double t1MaxDistance = alignZero(max-t1);
+        double t2MaxDistance = alignZero(max-t2);
+
+        List<GeoPoint> geoPoints = new ArrayList<GeoPoint>();
+        if (t1 > 0 && t1MaxDistance > 0)//if t1 and distance of t1 positive
+            geoPoints.add(new GeoPoint(this, ray.getTargetPoint(t1)));
+        if (t2 > 0 && t2MaxDistance > 0)//if t1 and distance of t2 positive
+            geoPoints.add(new GeoPoint(this, ray.getTargetPoint(t2)));
+
+        //return geo points if exists or null otherwise
+        return geoPoints.size() > 0 ? geoPoints : null;
     }
 
 

@@ -73,13 +73,19 @@ public class Ray
      * @param pointe point that ray starts from
      */
 
+    public Ray(Point3D point, Vector direction, Vector normal) {
+        vector = new Vector(direction).normalized();
 
+        double nv = normal.dotProduct(direction);
+
+        Vector normalDelta = normal.Scale((nv > 0 ? DELTA : -DELTA));
+        point = point.add(normalDelta);
+    }
     public Ray(Point3D pointe, Vector direction)
     {
         point = new Point3D(pointe);
         vector = new Vector(direction).normalize();
     }
-
     /**
      *
      *

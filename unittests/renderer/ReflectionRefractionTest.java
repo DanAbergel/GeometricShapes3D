@@ -3,6 +3,7 @@
  */
 package renderer;
 
+import geometries.Plane;
 import org.junit.Test;
 
 import elements.*;
@@ -19,7 +20,10 @@ import scene.Scene;
  * @author dzilb
  *
  */
-public class ReflectionRefractionTests {
+public class ReflectionRefractionTest {
+
+
+
 
     /**
      * Produce a picture of a sphere lighted by a spot light
@@ -33,8 +37,7 @@ public class ReflectionRefractionTests {
         scene.setAmbientLight(new AmbientLight(Color.BLACK, 0));
 
         scene.addGeometries(
-                new Sphere(new Color(java.awt.Color.BLUE), new Material(0.4, 0.3, 100, 0.3, 0), 50,
-                        new Point3D(0, 0, 50)),
+                new Sphere(new Color(java.awt.Color.BLUE), new Material(0.4, 0.3, 100, 0.3, 0), 50, new Point3D(0, 0, 50)),
                 new Sphere(new Color(java.awt.Color.RED), new Material(0.5, 0.5, 100), 25, new Point3D(0, 0, 50)));
 
         scene.addLights(new spotLight(new Color(1000, 600, 0), new Point3D(-100, 100, -500), new Vector(-1, 1, 2), 1,
@@ -66,8 +69,8 @@ public class ReflectionRefractionTests {
                 new Triangle(new Color(20, 20, 20), new Material(0, 0, 0, 0, 0.5), new Point3D(1500, 1500, 1500),
                         new Point3D(-1500, -1500, 1500), new Point3D(-1500, 1500, 2000)));
 
-        scene.addLights(new spotLight(new Color(1020, 400, 400),  new Point3D(-750, 750, 150),
-                new Vector(-1, 1, 4), 1, 0.00001, 0.000005));
+        scene.addLights(new spotLight(new Color(1020, 400, 400), new Point3D(-750, 750, 150),new Vector(-1, 1, 4),
+                1, 0.00001, 0.000005));
 
         ImageWriter imageWriter = new ImageWriter("twoSpheresMirrored", 2500, 2500, 500, 500);
         Render render = new Render(imageWriter, scene);
@@ -97,7 +100,7 @@ public class ReflectionRefractionTests {
                         30, new Point3D(60, -50, 50)));
 
         scene.addLights(new spotLight(new Color(700, 400, 400), //
-                new Point3D(60, -50, 0), new Vector(0, 0, 1), 1, 4E-5, 2E-7));
+                new Point3D(60, -50, 0),new Vector(0, 0, 1), 1, 4E-5, 2E-7));
 
         ImageWriter imageWriter = new ImageWriter("shadow with transparency", 200, 200, 600, 600);
         Render render = new Render(imageWriter, scene);
