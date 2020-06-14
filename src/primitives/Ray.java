@@ -82,6 +82,7 @@ public class Ray
 
     /**
      *
+     *
      * @return ray's head and direction
      */
     @Override
