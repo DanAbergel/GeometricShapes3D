@@ -19,7 +19,7 @@ public class Geometries implements Intersectable {
     }
 
     public Geometries(Intersectable... geometries) {
-
+        list = new ArrayList<>();
         add(geometries);
     }
 
@@ -29,13 +29,12 @@ public class Geometries implements Intersectable {
             list.add(geometry);
         }
     }
-    @Override
     /*
     in first we create a list which will contain the points of intersection with the plane which composed by all these shapes
     2) we will checked at each shape intersections's points
     finally return the list of points resulted by this research
     * */
-    public List<GeoPoint> findIntersections(Ray ray,double max) {
+    /**public List<GeoPoint> findIntersections(Ray ray,double max) {
         List<GeoPoint> intersections = null;
 
         for (Intersectable geometry : list) {
@@ -48,6 +47,24 @@ public class Geometries implements Intersectable {
         }
         return intersections;
 
+    }*/
+    @Override
+    public List<GeoPoint> findIntersections(Ray ray, double f) {
+        if(list.size() == 0)
+            return null;
+        else
+        {
+            List<GeoPoint> point3DS = new ArrayList<GeoPoint>();
+            for(int i = 0; i< list.size(); i++) {
+                var points = list.get(i).findIntersections(ray);
+                if(points != null) {
+                    for (int j = 0; j < points.size(); j++) {
+                        point3DS.add(points.get(j));
+                    }
+                }
+            }
+            return point3DS.size() == 0 ? null : point3DS;
+        }
     }
 
 
