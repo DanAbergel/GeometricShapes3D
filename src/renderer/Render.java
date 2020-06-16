@@ -368,7 +368,7 @@ public class Render {
             return null;
         }
         Vector r = n.Scale(2 * vn).substract(v);
-        Ray newRay=new Ray(p,r);
+        Ray newRay=new Ray(p,r,n);
         return newRay;
     }
     /**
@@ -379,7 +379,7 @@ public class Render {
      * @return Ray the refracted ray
      */
     private Ray constructRefractedRay(Point3D p, Ray inRay, Vector n) {
-        return new Ray(p, inRay.getVector());
+        return new Ray(p, inRay.getVector(),n);
     }
 
 }

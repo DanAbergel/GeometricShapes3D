@@ -70,7 +70,7 @@ public class Ray
     /**
      * builds ray from point and directon
      * @param direction ray's direction
-     * @param pointe point that ray starts from
+     * @param point point that ray starts from
      */
 
     public Ray(Point3D point, Vector direction, Vector normal) {
@@ -79,7 +79,7 @@ public class Ray
         double nv = normal.dotProduct(direction);
 
         Vector normalDelta = normal.Scale((nv > 0 ? DELTA : -DELTA));
-        point = point.add(normalDelta);
+        this.point = point.add(normalDelta);
     }
     public Ray(Point3D pointe, Vector direction)
     {
