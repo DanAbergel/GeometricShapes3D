@@ -60,6 +60,7 @@ public abstract class Geometry implements Intersectable
         return this;
     }
     public Color getEmission() {
+
         return _emission;
     }
     public abstract Vector getNormal(Point3D pt);

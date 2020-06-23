@@ -68,7 +68,7 @@ public class ShadowTests {
     }
 
 
-    /**
+     /**
      * Sphere-Triangle shading - move triangle up-right
      */
     @Test

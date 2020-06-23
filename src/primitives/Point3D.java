@@ -5,8 +5,7 @@ import java.util.Objects;
  *
  * @author Dan Abergel and Joss Lalou
  */
-public class Point3D
-{
+public class Point3D {
     //static public final Point3D ZERO = new Point3D(0.0,0.0,0.0);
 
     Coordinate x;
@@ -23,10 +22,10 @@ public class Point3D
     }
 
     public Point3D(Coordinate x,Coordinate y,Coordinate z)
-    { this.x=x;
+    {
+        this.x=x;
         this.y=y;
         this.z=z;
-
     }
 
     public Point3D(Point3D point)
@@ -38,16 +37,19 @@ public class Point3D
 
     public Coordinate getX()
     {
+
         return new Coordinate(x) ;
     }
 
     public Coordinate getY()
     {
+
         return new Coordinate(y);
     }
 
     public Coordinate getZ()
     {
+
         return new Coordinate(z);
     }
 
@@ -96,7 +98,6 @@ public class Point3D
 
     public double distance(Point3D point3)
     {
-
         return Math.sqrt(distanceSquared(point3));
     }
 

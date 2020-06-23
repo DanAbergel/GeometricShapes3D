@@ -18,8 +18,6 @@ public class Material {
         this._kr = kr;
     }
 
-
-
     /**
      * getter
      * @return _kD
@@ -35,6 +33,7 @@ public class Material {
      */
     public double get_kS()
     {
+
         return _kS;
     }
 
@@ -47,10 +46,12 @@ public class Material {
         return _nShininess;
     }
     public double getKr() {
+
         return _kr;
     }
 
     public double getKt() {
+
         return _kt;
     }
 

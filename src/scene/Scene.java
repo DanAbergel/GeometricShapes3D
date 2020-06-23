@@ -26,6 +26,7 @@ public class Scene {
         _lights = new LinkedList<LightSource>();
     }
     public List<LightSource> get_lights() {
+
         return _lights;
     }
     public String getName() {
@@ -79,10 +80,12 @@ public class Scene {
     }
 
     public void addGeometries(Intersectable...geometries){
+
         _geometries.add(geometries);
     }
 
     public void addLights(LightSource... lights) {
+
         _lights.addAll(Arrays.asList(lights));
     }
 

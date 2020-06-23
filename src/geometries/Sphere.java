@@ -1,7 +1,6 @@
 package geometries;
 
 import primitives.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import static primitives.Util.alignZero;
@@ -16,12 +15,16 @@ public class Sphere extends RadialGeometry {
         this.material = material;
         this._center = new Point3D(center);
     }
+
     public Sphere(Color emission, double _radius, Point3D _center){
         this(emission,new Material(0,0,0),_radius,_center);
     }
+
     public Sphere(double radius, Point3D center) {
+
         this(Color.BLACK,new Material(0,0,0),radius,center);
     }
+
     @Override
     public Vector getNormal(Point3D point){
 

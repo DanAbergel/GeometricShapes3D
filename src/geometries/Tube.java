@@ -3,13 +3,10 @@ package geometries;
 import primitives.*;
 
 import java.util.List;
-
-
 /**
  * class representing a vector on a Tube
  * @author yeoshua and Dan
  */
-
 
 public class Tube extends RadialGeometry {
     Ray _axisRay;
@@ -47,6 +44,7 @@ public class Tube extends RadialGeometry {
                 "_axisRay=" + _axisRay + "_center"+super.toString()+
                 '}';
     }
+
     @Override
     public Vector getNormal(Point3D point) {
         //The vector from the point of the cylinder to the given point

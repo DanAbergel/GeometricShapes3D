@@ -13,10 +13,11 @@ import static primitives.Util.isZero;
  */
 
 public class Camera {
-    private Point3D place;
-    private Vector vto;
-    private Vector vup;
-    private Vector vright;
+
+    private  Point3D place;
+    private  Vector vto;
+    private  Vector vup;
+    private  Vector vright;
 
     // ****************************** Getters *****************************/
     /**
@@ -86,7 +87,7 @@ public class Camera {
      * @param screenDistance dst from view plane
      * @param screenWidth    screen width
      * @param screenHeight   screen height
-     * @return ray
+     * @return Ray
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i,
                                         double screenDistance, double screenWidth, double screenHeight,boolean isRandom) {
@@ -146,8 +147,7 @@ public class Camera {
                 dX = r.nextDouble() * Rx / 2d;
                 dY = r.nextDouble() * Ry / 2d;
                 // find random point on this pixel to create new ray from camera
-                Point3D randomPoint = new Point3D(Pij.add(new Vector
-                        (vright.Scale(k * dX).substract(vup.Scale(h * dY)))));
+                Point3D randomPoint = new Point3D(Pij.add(new Vector(vright.Scale(k * dX).substract(vup.Scale(h * dY)))));
                 // the other Rays
                 beam.add(new Ray(place,new Vector(randomPoint.subtract(place)).normalize()));
             }
@@ -158,8 +158,7 @@ public class Camera {
             dX = -1 + (2 * r.nextDouble() * Rx / 2d);
             dY = -1 + (2 * r.nextDouble() * Ry / 2d);
             // find random point on this pixel to create new ray from camera
-            Point3D randomPoint = new Point3D(Pij.add(new Vector
-                    (vright.Scale(dX).substract(vup.Scale(dY)))));
+            Point3D randomPoint = new Point3D(Pij.add(new Vector(vright.Scale(dX).substract(vup.Scale(dY)))));
             // the other Rays
             beam.add(new Ray(place,new Vector(randomPoint.subtract(place)).normalize()));
         }

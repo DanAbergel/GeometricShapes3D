@@ -25,7 +25,7 @@ class PlaneTest {
        // System.out.println(v.toString());
         Plane p3=new Plane(new Point3D(1,0,0),new Point3D(0,0,1),new Point3D(0,1,0));
         Vector v3=p1.getNormal(null);
-        assertEquals(v1,v3);//pas la meme direction
+        assertEquals(v1,v3);
         assertNotEquals(v1,v2);
     }
 

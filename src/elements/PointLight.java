@@ -1,5 +1,6 @@
 package elements;
 
+import geometries.Intersectable;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;

@@ -12,8 +12,8 @@ import java.util.List;
 public class Geometries implements Intersectable {
 
     List<Intersectable> list;
-/**
- * Constructor of the class Geometries**/
+    /**
+     * Constructor of the class Geometries**/
     public Geometries() {
         list = new ArrayList<Intersectable>();
     }
@@ -35,19 +35,19 @@ public class Geometries implements Intersectable {
     finally return the list of points resulted by this research
     * */
     /**public List<GeoPoint> findIntersections(Ray ray,double max) {
-        List<GeoPoint> intersections = null;
+     List<GeoPoint> intersections = null;
 
-        for (Intersectable geometry : list) {
-            List<GeoPoint> tmpIntersections = geometry.findIntersections(ray);
-            if (tmpIntersections != null) {
-                if (intersections == null)
-                    intersections = new ArrayList<GeoPoint>();
-                intersections.addAll(tmpIntersections);
-            }
-        }
-        return intersections;
+     for (Intersectable geometry : list) {
+     List<GeoPoint> tmpIntersections = geometry.findIntersections(ray);
+     if (tmpIntersections != null) {
+     if (intersections == null)
+     intersections = new ArrayList<GeoPoint>();
+     intersections.addAll(tmpIntersections);
+     }
+     }
+     return intersections;
 
-    }*/
+     }*/
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double f) {
         if(list.size() == 0)

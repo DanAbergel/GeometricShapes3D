@@ -29,6 +29,7 @@ public final class Coordinate {
      * @param other
      */
     public Coordinate(Coordinate other) {
+
         _coord = other._coord;
     }
 
@@ -38,6 +39,7 @@ public final class Coordinate {
      * @return coordinate value
      */
     public double get() {
+
         return _coord;
     }
 
@@ -52,6 +54,7 @@ public final class Coordinate {
 
     @Override
     public String toString() {
+
         return "" + _coord;
     }
 }

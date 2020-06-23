@@ -1,15 +1,12 @@
 package renderer;
-
 import elements.Camera;
 import elements.LightSource;
+import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import static primitives.Util.alignZero;
 
 /**
@@ -78,6 +75,7 @@ public class Render {
      * @param k     double value to scale
      * @return Color the calculated color
      */
+
     private Color calcColor(Intersectable.GeoPoint gp, Ray inRay, int level, double k) {
 
         if (level == 0 || k < MIN_CALC_COLOR_K) return Color.BLACK;
@@ -137,7 +135,7 @@ public class Render {
     /**
      * Calculate Specular component of light reflection.
      *
-     * @param ks         specular component coef
+     * @param ks         specular component coefficient
      * @param l          direction from light to point
      * @param n          normal to surface at the point
      * @param nl         dot-product n*l
@@ -154,7 +152,6 @@ public class Render {
      */
     private Color calcSpecular(double ks, Vector l, Vector n, double nl, Vector v, int nShininess, Color ip) {
         double p = nShininess;
-
         Vector R = l.add(n.Scale(-2 * nl)); // nl must not be zero!
         double minusVR = -alignZero(R.dotProduct(v));
         if (minusVR <= 0) {
@@ -225,34 +222,25 @@ public class Render {
      * This function does not creating the picture file, but create the buffer pf pixels
      */
     public void renderImage() {
-        double sumColorR, sumColorG, sumColorB;// sum rgb colors to do averages
-        double colorR, colorG, colorB; //rgb colors
+        Camera camera=scene.getCamera();
+        Geometries geometries=scene.getGeometries();
+        java.awt.Color background= scene.getBackground().getColor();
+        double distance=scene.getDistance();
+        int Nx=image.getNx();
+        int Ny=image.getNy();
 
-        Camera camera = scene.getCamera();
-        double screenDistance = scene.getDistance();
-        double screenWidth = image.getWidth();
-        double screenHeight = image.getHeight();
-        Intersectable geometries = scene.getGeometries();
-        Color background = scene.getBackground();
-        int nX = image.getNx();
-        int nY = image.getNy();
+        double width =image.getWidth();
+        double height=image.getHeight();
+        for(int row=0;row<Ny;row++){
+            for(int collumn=0;collumn<Nx;collumn++){
+                Ray ray =camera.constructRayThroughPixel(Nx,Ny,collumn,row,distance,width,height,false);
+                Intersectable.GeoPoint closestPoint=findCLosestIntersection(ray);
+                if(closestPoint==null){
+                    image.writePixel(collumn,row,background);
 
-        List<Ray> rays = new LinkedList<>();
-        for (int j = 0; j < nY; j++) {
-            for (int i = 0; i < nX; i++) {
-                rays.clear();
-                rays.add(camera.constructRayThroughPixel(nX, nY, j, i, screenDistance, screenWidth, screenHeight, false));
-
-                for (int k = COUNT_RAYS - 1; k > 0; --k)
-                    rays.add(camera.constructRayThroughPixel(nX, nY, j, i, screenDistance, screenWidth, screenHeight, true));
-
-                Color tempColor = Color.BLACK;
-                for (Ray ray : rays) {
-                    Intersectable.GeoPoint closestPoint = findCLosestIntersection(ray);
-                    tempColor = closestPoint == null ? background : tempColor.add(calcColor(closestPoint, ray));
+                }else{
+                    image.writePixel(collumn,row,calcColor(closestPoint,ray).getColor());
                 }
-                tempColor = tempColor.reduce(COUNT_RAYS);
-                image.writePixel(j, i, tempColor.getColor());
             }
         }
     }
