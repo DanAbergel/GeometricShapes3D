@@ -1,12 +1,15 @@
 package renderer;
+
 import elements.Camera;
 import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
+
 import java.util.LinkedList;
 import java.util.List;
+
 import static primitives.Util.alignZero;
 
 /**
@@ -21,6 +24,8 @@ public class Render {
     private static final int COUNT_RAYS = 1;//numbers of rays per pixel
     private Scene scene;
     private ImageWriter image;
+    boolean superSamplingActivate = false;
+    int numOfRays=50;
 
     public Render(ImageWriter _imageWriter, Scene _scene) {
         this.image = _imageWriter;
@@ -77,6 +82,7 @@ public class Render {
      */
 
     private Color calcColor(Intersectable.GeoPoint gp, Ray inRay, int level, double k) {
+
 
         if (level == 0 || k < MIN_CALC_COLOR_K) return Color.BLACK;
 
@@ -222,24 +228,43 @@ public class Render {
      * This function does not creating the picture file, but create the buffer pf pixels
      */
     public void renderImage() {
-        Camera camera=scene.getCamera();
-        Geometries geometries=scene.getGeometries();
-        java.awt.Color background= scene.getBackground().getColor();
-        double distance=scene.getDistance();
-        int Nx=image.getNx();
-        int Ny=image.getNy();
+        Camera camera = scene.getCamera();
+        Geometries geometries = scene.getGeometries();
+        java.awt.Color background = scene.getBackground().getColor();
+        double distance = scene.getDistance();
+        int Nx = image.getNx();
+        int Ny = image.getNy();
+        double width = image.getWidth();
+        double height = image.getHeight();
+        if (!superSamplingActivate) {
+            for (int row = 0; row < Ny; row++) {
+                for (int collumn = 0; collumn < Nx; collumn++) {
+                    Ray ray = camera.constructRayThroughPixel(Nx, Ny, collumn, row, distance, width, height, false);
+                    Intersectable.GeoPoint closestPoint = findCLosestIntersection(ray);
+                    if (closestPoint == null) {
+                        image.writePixel(collumn, row, background);
 
-        double width =image.getWidth();
-        double height=image.getHeight();
-        for(int row=0;row<Ny;row++){
-            for(int collumn=0;collumn<Nx;collumn++){
-                Ray ray =camera.constructRayThroughPixel(Nx,Ny,collumn,row,distance,width,height,false);
-                Intersectable.GeoPoint closestPoint=findCLosestIntersection(ray);
-                if(closestPoint==null){
-                    image.writePixel(collumn,row,background);
-
-                }else{
-                    image.writePixel(collumn,row,calcColor(closestPoint,ray).getColor());
+                    } else {
+                        image.writePixel(collumn, row, calcColor(closestPoint, ray).getColor());
+                    }
+                }
+            }
+        } else {
+            List<Ray> beamOfRays = new LinkedList<>();
+            Color average = new Color(Color.BLACK);
+            for (int row = 0; row < Ny; row++) {
+                for (int collumn = 0; collumn < Nx; collumn++) {
+                    beamOfRays.addAll(camera.constructRayBeamThroughPixel(collumn, row, numOfRays, Nx, Ny, width, height, distance));
+                    for (Ray ray : beamOfRays) {
+                        Intersectable.GeoPoint closestPoint = findCLosestIntersection(ray);
+                        if (closestPoint == null) {
+                            average.add(scene.getBackground());
+                        } else {
+                            average.add(calcColor(closestPoint, ray));
+                        }
+                    }
+                    average=average.scale(1d / numOfRays);
+                    image.writePixel(collumn, row, average.getColor());
                 }
             }
         }

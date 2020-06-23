@@ -109,16 +109,21 @@ public class Camera {
         return new Ray(place, Vij.normalize());
     }
 
-    public List<Ray> constructRayBeamThroughPixel(int j, int i ,int numOfRays, int Nx,int Ny, double screenWidth, double screenHeight) {
+    public List<Ray> constructRayBeamThroughPixel(int j, int i ,int numOfRays, int Nx,int Ny, double screenWidth, double screenHeight,double screenDistance) {
         //the list of rays that we create
         List<Ray> beam = new LinkedList<>();
 
+        if (isZero(screenDistance)) {
+            throw new IllegalArgumentException("distance from cam cannot be 0");
+        }
+        // pixel of image center
+        Point3D Pc = place.add(vto.Scale(screenDistance));
         double Ry = screenHeight / Ny;
         double Rx = screenWidth / Nx;
         double yi = ((i - Ny / 2d) * Ry + Ry / 2d);
         double xj = ((j - Nx / 2d) * Rx + Rx / 2d);
         // Pixel[i,j] center:
-        Point3D Pij = new Point3D(place);
+        Point3D Pij = new Point3D(Pc);
         if (!isZero(xj)) {
             Pij = Pij.add(vright.Scale(xj));
         }
