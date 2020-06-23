@@ -269,31 +269,7 @@ public class Render {
                 scene.getAmbientLight().getIntensity());
     }
 
-    //    /**
-//     *
-//     * @param lightSource
-//     * @param n
-//     * @param gp
-//     * @return
-//     */
-//    private boolean unshaded(Vector l, Vector n, Intersectable.GeoPoint gp, LightSource lightSource) {
-//        Vector lightDirection = l.Scale(-1); // from point to light source
-//        Ray lightRay = new Ray(gp.point, lightDirection, n);
-//
-//        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-//
-//        if(intersections == null) return true;
-//
-//        double distance = lightSource.getDistance(gp.point);
-//        for(Intersectable.GeoPoint geoP : intersections){
-//            if(alignZero(geoP.point.distance(gp.point) - distance) <= 0 &&
-//                    geoP.geometry.getMaterial().getKt() == 0) return false;
-//
-//        }
-//
-//        return true;
-//
-//    }
+
     private Intersectable.GeoPoint findCLosestIntersection(Ray ray) {
         if (ray == null) return null;
 

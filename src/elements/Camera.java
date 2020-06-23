@@ -1,5 +1,11 @@
 package elements;
 import primitives.*;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+
 import static primitives.Util.isZero;
 /**
  * Dan Abergel and Joss lalou
@@ -100,5 +106,63 @@ public class Camera {
             Pij = Pij.add(vup.Scale(-yi));
         Vector Vij = Pij.subtract(place);
         return new Ray(place, Vij.normalize());
+    }
+
+    public List<Ray> constructRayBeamThroughPixel(int j, int i ,int numOfRays, int Nx,int Ny, double screenWidth, double screenHeight) {
+        //the list of rays that we create
+        List<Ray> beam = new LinkedList<>();
+
+        double Ry = screenHeight / Ny;
+        double Rx = screenWidth / Nx;
+        double yi = ((i - Ny / 2d) * Ry + Ry / 2d);
+        double xj = ((j - Nx / 2d) * Rx + Rx / 2d);
+        // Pixel[i,j] center:
+        Point3D Pij = new Point3D(place);
+        if (!isZero(xj)) {
+            Pij = Pij.add(vright.Scale(xj));
+        }
+        if (!isZero(yi)) {
+            Pij = Pij.add(vup.Scale((-yi)));
+        }
+        Vector Vij = Pij.subtract(place);
+        //the first ray is the ray from camera toward pixel(i,j) center
+        beam.add(new Ray(place,Vij));
+        numOfRays--;
+
+        Random r = new Random();
+
+        //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
+        double dX ,dY;
+        //the coefficient to calculate in which quadrant is random point on this pixel
+        int k, h ;
+        // the number of random point in each quadrant
+        int sum = numOfRays / 4;
+        // divide the random points evenly within the four quadrants
+        for (int t = 0; t < 4; t++) {
+            k = t != 1 && t != 2 ? 1 : -1;
+            h = t != 2 && t != 3 ? 1 : -1;
+            numOfRays -= sum;
+            for (int u = 0; u < sum; u++) {
+                dX = r.nextDouble() * Rx / 2d;
+                dY = r.nextDouble() * Ry / 2d;
+                // find random point on this pixel to create new ray from camera
+                Point3D randomPoint = new Point3D(Pij.add(new Vector
+                        (vright.Scale(k * dX).substract(vup.Scale(h * dY)))));
+                // the other Rays
+                beam.add(new Ray(place,new Vector(randomPoint.subtract(place)).normalize()));
+            }
+        }
+        //If the number of Rays requested by a customer - 1 does not divide by 4 without a remainder then
+        // we will find some more random points that need
+        for (; numOfRays > 0; numOfRays--) {
+            dX = -1 + (2 * r.nextDouble() * Rx / 2d);
+            dY = -1 + (2 * r.nextDouble() * Ry / 2d);
+            // find random point on this pixel to create new ray from camera
+            Point3D randomPoint = new Point3D(Pij.add(new Vector
+                    (vright.Scale(dX).substract(vup.Scale(dY)))));
+            // the other Rays
+            beam.add(new Ray(place,new Vector(randomPoint.subtract(place)).normalize()));
+        }
+        return beam;
     }
 }
