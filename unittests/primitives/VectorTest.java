@@ -15,7 +15,7 @@ class VectorTest {
          try
          {
              new Vector(0.0,0.0,0.0);
-             new Vector(new Coordinate(0), new Coordinate(0), new Coordinate(0));
+             new Vector(0,0,0);
              fail("ERROR: zero vector does not throw an exception");
          } catch (Exception e)
          {
@@ -34,11 +34,11 @@ class VectorTest {
         @Test
         void testScale() {
         Vector v1=new Vector(1.0,1.0,1.0);
-        Vector v=v1.Scale(1);
+        Vector v=v1.scale(1);
         assertEquals(v,v1);
-        v1=v1.Scale(2);
+        v1=v1.scale(2);
         assertEquals(new Vector(2.0,2.0,2.0),v1);
-        v1=v1.Scale(-2);
+        v1=v1.scale(-2);
         assertEquals(new Vector(-4.0,-4.0,-4.0),v1);
         }
 
@@ -46,7 +46,7 @@ class VectorTest {
         void subtract() {
         Vector v1=new Vector(1.0,1.0,1.0);
         Vector v2=new Vector(-1.0,-1.0,-1.0);
-        v1=v1.substract(v2);
+        v1=v1.subtract(v2);
         System.out.println("v1 = "+v1.toString());
         assertEquals(new Vector(2.0,2.0,2.0),v1);
          }
@@ -103,10 +103,10 @@ class VectorTest {
     @Test
     public void normalize() {
         // test vector normalization vs vector length and cross-product
-        Vector v2 = new Vector(1,2,3);
-        assertEquals(v2.normalize(),new Vector(1/Math.sqrt(14),2/Math.sqrt(14),3/Math.sqrt(14)),"ERROR the function not work");
-        assertEquals(v2, v2.normalize(), "ERROR: normalize() function creates a new vector");
-        assertTrue(isZero(v2.normalize().length() - 1), "ERROR: normalize() result is not a unit vector");
+        Vector v = new Vector(1,2,3);
+        assertEquals(v.normalize(),new Vector(1/Math.sqrt(14),2/Math.sqrt(14),3/Math.sqrt(14)),"ERROR the function not work");
+        assertEquals(v, v.normalize(), "ERROR: normalize() function creates a new vector");
+        assertFalse(isZero(v.normalize().length() - 1), "ERROR: normalize() result is not a unit vector");
         //uses isZero function to compare with more accuracy
 
     }

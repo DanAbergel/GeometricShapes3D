@@ -44,7 +44,7 @@ public class Cylinder extends Tube {
         @Override
         public Vector getNormal(Point3D point) {
             Point3D o = _axisRay.getPoint();
-            Vector v = _axisRay.getVector();
+            Vector v = _axisRay.getDir();
 
             // projection of P-O on the ray:
             double t;
@@ -58,7 +58,7 @@ public class Cylinder extends Tube {
             if (t == 0 || Util.isZero(_height - t)) // if it's close to 0, we'll get ZERO vector exception
                 return v;
 
-            o = o.add(v.Scale(t));
+            o = o.add(v.scale(t));
             return point.subtract(o).normalize();
         }
 

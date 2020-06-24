@@ -85,7 +85,7 @@ class PolygonTest {
         Vector expected =  new Vector(sqrt3, sqrt3, sqrt3);
         // at this point we are assuming that each palne can have
         // two opposite normals.
-        assertTrue(expected.equals(pl.getNormal(null)) || expected.equals(pl.getNormal(null).Scale(-1)));
+        assertTrue(expected.equals(pl.getNormal(null)) || expected.equals(pl.getNormal(null).scale(-1)));
 //        assertEquals( new Vector(sqrt3, sqrt3, sqrt3), pl.getNormal(new Point3D(0, 0, 1)),"Bad normal to trinagle");
     }
 

@@ -18,9 +18,9 @@ public class Plane extends Geometry {
     /**Constructor of Plane class with parameters : 3 points Point3D**/
     public Plane(Color emission, Material material,Point3D point1,Point3D point2,Point3D point3) {
         super(emission,material);
-        _p=new Point3D(point1);
-        Vector U =new Vector(point1,point2);
-        Vector V=new Vector(point1,point3);
+        _p=point1;
+        Vector U =point1.subtract(point2);
+        Vector V=point1.subtract(point3);
         Vector N=U.crossProduct(V);
         N.normalize();
         _normal = N;
@@ -77,11 +77,11 @@ public class Plane extends Geometry {
         } catch (IllegalArgumentException e) {
             return null; // ray starts from point Q - no intersections
         }
-        double nv = _normal.dotProduct(ray.getVector());
+        double nv = _normal.dotProduct(ray.getDir());
         if (isZero(nv)) // ray is parallel to the plane - no intersections
             return null;
         double t = alignZero(_normal.dotProduct(p0Q) / nv);
-        Point3D newPoint=ray.getTargetPoint(t);
+        Point3D newPoint=ray.getPoint(t);
         double tMaxDistance=alignZero(t-max);
         return t <= 0 || newPoint==ray.getPoint() || tMaxDistance>0 ? null : List.of(new GeoPoint(this,newPoint));//if the point of intersection is the same point than the point of ray return null
     }

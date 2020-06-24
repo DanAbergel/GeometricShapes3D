@@ -75,7 +75,7 @@ public class SphereTest {
         Point3D p13b = new Point3D(0, 0, 0);
         Ray ray13=new Ray(new Point3D(-1, 0, 0), new Vector(1, 0, 0));
         List<Intersectable.GeoPoint> result13 = sphere.findIntersections(ray13);
-        assertEquals(" don't goes through the center",ray13.getTargetPoint(2),sphere._center);
+        assertEquals(" don't goes through the center",ray13.getPoint(2),sphere._center);
         assertEquals("Wrong number of points", 2, result13.size());
         assertEquals("Ray crosses sphere two time", List.of(p13b,p13a), List.of(result13.get(0).point,result13.get(1).point));
 
@@ -83,7 +83,7 @@ public class SphereTest {
         Point3D p14 = new Point3D(2, 0, 0);
         Ray ray14=new Ray(new Point3D(0, 0, 0), new Vector(1, 0, 0));
         List<Intersectable.GeoPoint> result14 = sphere.findIntersections(ray14);
-        assertEquals(" don't goes through the center",ray14.getTargetPoint(1),sphere._center);
+        assertEquals(" don't goes through the center",ray14.getPoint(1),sphere._center);
         assertEquals("Wrong number of points", 1, result14.size());
         assertEquals("Ray crosses sphere two time", p14, result14.get(0).point);
 

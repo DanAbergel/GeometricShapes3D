@@ -1,12 +1,13 @@
 package elements;
+
 import primitives.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import static primitives.Util.isZero;
+
 /**
  * Dan Abergel and Joss lalou
  * this class is to realize the camera to determine how we will show the form
@@ -14,12 +15,13 @@ import static primitives.Util.isZero;
 
 public class Camera {
 
-    private  Point3D place;
-    private  Vector vto;
-    private  Vector vup;
-    private  Vector vright;
+    private Point3D place;
+    private Vector vto;
+    private Vector vup;
+    private Vector vright;
 
     // ****************************** Getters *****************************/
+
     /**
      * Camera getter
      *
@@ -60,6 +62,7 @@ public class Camera {
     }
 
     // ****************************** Constructors *****************************/
+
     /**
      * constructor for camera with params
      *
@@ -72,7 +75,7 @@ public class Camera {
             place = _place;
             vto = _vto.normalized();
             vup = _vup.normalized();
-            vright = new Vector(_vto.crossProduct(_vup));
+            vright = _vto.crossProduct(_vup);
         } else
             throw new IllegalArgumentException("Illegal args");
     }
@@ -90,26 +93,26 @@ public class Camera {
      * @return Ray
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i,
-                                        double screenDistance, double screenWidth, double screenHeight,boolean isRandom) {
+                                        double screenDistance, double screenWidth, double screenHeight, boolean isRandom) {
         if (isZero(screenDistance)) {
             throw new IllegalArgumentException("distance from cam cannot be 0");
         }
         // pixel of image center
-        Point3D Pc = place.add(vto.Scale(screenDistance));
+        Point3D Pc = place.add(vto.scale(screenDistance));
         double Ry = screenHeight / nY;
         double Rx = screenWidth / nX;
         double yi = ((i - nY / 2d) * Ry + Ry / 2d);
         double xj = ((j - nX / 2d) * Rx + Rx / 2d);
         Point3D Pij = Pc;
         if (!isZero(xj))
-            Pij = Pij.add(vright.Scale(xj));
+            Pij = Pij.add(vright.scale(xj));
         if (!isZero(yi))
-            Pij = Pij.add(vup.Scale(-yi));
+            Pij = Pij.add(vup.scale(-yi));
         Vector Vij = Pij.subtract(place);
         return new Ray(place, Vij.normalize());
     }
 
-    public List<Ray> constructRayBeamThroughPixel(int j, int i ,int numOfRays, int Nx,int Ny, double screenWidth, double screenHeight,double screenDistance) {
+    public List<Ray> constructRayBeamThroughPixel(int j, int i, int numOfRays, int Nx, int Ny, double screenWidth, double screenHeight, double screenDistance) {
         //the list of rays that we create
         List<Ray> beam = new LinkedList<>();
 
@@ -117,55 +120,58 @@ public class Camera {
             throw new IllegalArgumentException("distance from cam cannot be 0");
         }
         // pixel of image center
-        Point3D Pc = place.add(vto.Scale(screenDistance));
+        Point3D Pc = place.add(vto.scale(screenDistance));
         double Ry = screenHeight / Ny;
         double Rx = screenWidth / Nx;
         double yi = ((i - Ny / 2d) * Ry + Ry / 2d);
         double xj = ((j - Nx / 2d) * Rx + Rx / 2d);
         // Pixel[i,j] center:
-        Point3D Pij = new Point3D(Pc);
+        Point3D Pij = Pc;
         if (!isZero(xj)) {
-            Pij = Pij.add(vright.Scale(xj));
+            Pij = Pij.add(vright.scale(xj));
         }
         if (!isZero(yi)) {
-            Pij = Pij.add(vup.Scale((-yi)));
+            Pij = Pij.add(vup.scale((-yi)));
         }
         Vector Vij = Pij.subtract(place);
         //the first ray is the ray from camera toward pixel(i,j) center
-        beam.add(new Ray(place,Vij));
+        beam.add(new Ray(place, Vij));
         numOfRays--;
 
-        Random r = new Random();
-
         //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
-        double dX ,dY;
+        double dX, dY;
         //the coefficient to calculate in which quadrant is random point on this pixel
-        int k, h ;
+        double k, h;
         // the number of random point in each quadrant
         int sum = numOfRays / 4;
         // divide the random points evenly within the four quadrants
         for (int t = 0; t < 4; t++) {
-            k = t != 1 && t != 2 ? 1 : -1;
-            h = t != 2 && t != 3 ? 1 : -1;
+            k = Rx / 2d * (t != 1 && t != 2 ? 1 : -1);
+            h = Ry / 2d * (t != 2 && t != 3 ? 1 : -1);
             numOfRays -= sum;
             for (int u = 0; u < sum; u++) {
-                dX = r.nextDouble() * Rx / 2d;
-                dY = r.nextDouble() * Ry / 2d;
+                dX = Math.random() * k;
+                dY = Math.random() * h;
                 // find random point on this pixel to create new ray from camera
-                Point3D randomPoint = new Point3D(Pij.add(new Vector(vright.Scale(k * dX).substract(vup.Scale(h * dY)))));
+                Point3D randomPoint = Pij;
+                if (!isZero(dX)) randomPoint = randomPoint.add(vright.scale(dX));
+                if (!isZero(dY)) randomPoint = randomPoint.subtract(vup.scale(dY));
                 // the other Rays
-                beam.add(new Ray(place,new Vector(randomPoint.subtract(place)).normalize()));
+                beam.add(new Ray(place, randomPoint.subtract(place)));
             }
         }
+
         //If the number of Rays requested by a customer - 1 does not divide by 4 without a remainder then
         // we will find some more random points that need
         for (; numOfRays > 0; numOfRays--) {
-            dX = -1 + (2 * r.nextDouble() * Rx / 2d);
-            dY = -1 + (2 * r.nextDouble() * Ry / 2d);
+            dX = -1 + (Math.random() * Rx);
+            dY = -1 + (Math.random() * Ry);
             // find random point on this pixel to create new ray from camera
-            Point3D randomPoint = new Point3D(Pij.add(new Vector(vright.Scale(dX).substract(vup.Scale(dY)))));
+            Point3D randomPoint = Pij;
+            if (!isZero(dX)) randomPoint = randomPoint.add(vright.scale(dX));
+            if (!isZero(dY)) randomPoint = randomPoint.subtract(vup.scale(dY));
             // the other Rays
-            beam.add(new Ray(place,new Vector(randomPoint.subtract(place)).normalize()));
+            beam.add(new Ray(place, randomPoint.subtract(place)));
         }
         return beam;
     }
