@@ -47,10 +47,10 @@ public class Point3D {
                 " z:" + z;
     }
 
-    public Vector subtract(Point3D point2) {
-        double newX = this.x._coord - point2.x._coord;
-        double newY = this.y._coord - point2.y._coord;
-        double newZ = this.z._coord - point2.z._coord;
+    public Vector subtract(Point3D point) {
+        double newX = this.x._coord - point.x._coord;
+        double newY = this.y._coord - point.y._coord;
+        double newZ = this.z._coord - point.z._coord;
         return new Vector(newX, newY, newZ);
     }
 
@@ -68,8 +68,8 @@ public class Point3D {
         return dx * dx + dy * dy + dz * dz;
     }
 
-    public double distance(Point3D point3) {
-        return Math.sqrt(distanceSquared(point3));
+    public double distance(Point3D point) {
+        return Math.sqrt(distanceSquared(point));
     }
 
     public Point3D subtract(Vector v) {
