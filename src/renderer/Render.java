@@ -5,8 +5,10 @@ import elements.LightSource;
 import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.*;
+import primitives.Color;
 import scene.Scene;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.alignZero;
@@ -23,8 +25,8 @@ public class Render {
     private static final int COUNT_RAYS = 1;//numbers of rays per pixel
     private Scene scene;
     private ImageWriter image;
-    boolean superSamplingActivate = true;
-    int numOfRays = 200;
+    int numOfRaysSuperSampling = 200;
+    int numOfRaysSoftShadow=100;
 
     public Render(ImageWriter _imageWriter, Scene _scene) {
         this.image = _imageWriter;
@@ -243,7 +245,8 @@ public class Render {
         int Ny = image.getNy();
         double width = image.getWidth();
         double height = image.getHeight();
-        if (!superSamplingActivate) {
+        //if numOfRaysSuperSampling ==1 that's means it's not activate
+        if (numOfRaysSuperSampling ==1) {
             for (int row = 0; row < Ny; row++) {
                 for (int collumn = 0; collumn < Nx; collumn++) {
                     Ray ray = camera.constructRayThroughPixel(Nx, Ny, collumn, row, distance, width, height, false);
@@ -256,12 +259,13 @@ public class Render {
                     }
                 }
             }
-        } else {
-            ;
+        }
+        //else if numOfRaysSuperSampling >1 it is activate and we have to calculate for all the rays
+        else {
             Color average = Color.BLACK;
             for (int row = 0; row < Ny; row++) {
                 for (int collumn = 0; collumn < Nx; collumn++) {
-                    List<Ray> beamOfRays = (camera.constructRayBeamThroughPixel(collumn, row, numOfRays, Nx, Ny, width, height, distance));
+                    List<Ray> beamOfRays = (camera.constructRayBeamThroughPixel(collumn, row, numOfRaysSuperSampling, Nx, Ny, width, height, distance));
                     for (Ray ray : beamOfRays) {
                         Intersectable.GeoPoint closestPoint = findCLosestIntersection(ray);
                         if (closestPoint == null) {
@@ -270,7 +274,7 @@ public class Render {
                             average = average.add(calcColor(closestPoint, ray));
                         }
                     }
-                    average = average.reduce(numOfRays);
+                    average = average.reduce(numOfRaysSuperSampling);
                     image.writePixel(collumn, row, average.getColor());
                     average = new Color(Color.BLACK);
                 }
@@ -315,21 +319,39 @@ public class Render {
     private double transparency(Vector l, Vector n, Intersectable.GeoPoint gp, LightSource lightSource) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Vector epsVector = n.scale(n.dotProduct(lightDirection) > 0 ? DELTA : -DELTA);
-        Point3D point = gp.point.add(epsVector);
-        Ray lightRay = new Ray(point, lightDirection);//
-        List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(lightRay);
-        if (intersections == null)
-            return 1.0;
-        double lightDistance = lightSource.getDistance(point);
-        double ktr = 1.0;
-        for (Intersectable.GeoPoint geoP : intersections) {
-            if (alignZero(geoP.point.distance(point) - lightDistance) <= 0) {
-                ktr *= geoP.geometry.getMaterial().getKt();
-                if (ktr < MIN_CALC_COLOR_K) return 0.0;
-            }
-        }
-        return ktr;
+        Point3D newPoint = gp.point.add(epsVector);
+        //shadowRay is the main ray of shadow
+        Ray shadowRay = new Ray(newPoint, lightDirection);
+        //offset is the distance between the point and lightSource
+        double offset=lightSource.getDistance(newPoint);
+        //Pij represent the center of the lightSource
+        Point3D Pij = shadowRay.getPoint(offset);
+        int numOfRays=numOfRaysSoftShadow;
 
+        //initialize a new list for calculate soft shadow rays
+        List<Ray> rays=new LinkedList<>();
+
+        //add the first ray in center of light to the list
+        rays.add(shadowRay);
+        //calculate all others rays to light
+        lightSource.findBeamRaysLight(rays, newPoint,--numOfRays);
+        double averageKtr=0;
+        for (Ray ray : rays) {
+            double ktr=1.0;
+            List<Intersectable.GeoPoint> intersections = scene.getGeometries().findIntersections(ray);
+            if (intersections != null){
+                double lightDistance = lightSource.getDistance(newPoint);
+                for (Intersectable.GeoPoint geoP : intersections) {
+                    if (alignZero(geoP.point.distance(newPoint) - lightDistance) <= 0) {
+                        ktr *= geoP.geometry.getMaterial().getKt();
+                        if (ktr < MIN_CALC_COLOR_K)
+                            ktr= 0.0;
+                    }
+                }
+            }
+            averageKtr+= ktr;
+        }
+        return averageKtr/ numOfRaysSoftShadow;
     }
 
     /**

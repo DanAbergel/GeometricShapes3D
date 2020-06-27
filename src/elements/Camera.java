@@ -4,7 +4,6 @@ import primitives.*;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import static primitives.Util.isZero;
 
@@ -127,12 +126,10 @@ public class Camera {
         double xj = ((j - Nx / 2d) * Rx + Rx / 2d);
         // Pixel[i,j] center:
         Point3D Pij = Pc;
-        if (!isZero(xj)) {
+        if (!isZero(xj))
             Pij = Pij.add(vright.scale(xj));
-        }
-        if (!isZero(yi)) {
+        if (!isZero(yi))
             Pij = Pij.add(vup.scale((-yi)));
-        }
         Vector Vij = Pij.subtract(place);
         //the first ray is the ray from camera toward pixel(i,j) center
         beam.add(new Ray(place, Vij));
@@ -160,19 +157,9 @@ public class Camera {
                 beam.add(new Ray(place, randomPoint.subtract(place)));
             }
         }
-
-        //If the number of Rays requested by a customer - 1 does not divide by 4 without a remainder then
-        // we will find some more random points that need
-        for (; numOfRays > 0; numOfRays--) {
-            dX = -1 + (Math.random() * Rx);
-            dY = -1 + (Math.random() * Ry);
-            // find random point on this pixel to create new ray from camera
-            Point3D randomPoint = Pij;
-            if (!isZero(dX)) randomPoint = randomPoint.add(vright.scale(dX));
-            if (!isZero(dY)) randomPoint = randomPoint.subtract(vup.scale(dY));
-            // the other Rays
-            beam.add(new Ray(place, randomPoint.subtract(place)));
-        }
         return beam;
     }
+
+
+
 }

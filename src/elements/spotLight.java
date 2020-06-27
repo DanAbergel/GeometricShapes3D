@@ -3,6 +3,9 @@ package elements;
 import primitives.*;
 public class spotLight extends PointLight {
     private Vector _direction;
+    private Vector vRight;
+    private Vector vUp;
+
 
     /**
      * constructor
