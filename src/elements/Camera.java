@@ -81,7 +81,7 @@ public class Camera {
 
     /**
      * func constructRayThroughPixel
-     *
+     * this func is only used in tests because i replaced it by the beam function
      * @param nX             pixels on width
      * @param nY             pixels on height
      * @param j              Pixel column
@@ -111,7 +111,7 @@ public class Camera {
         return new Ray(place, Vij.normalize());
     }
 
-    public List<Ray> constructRayBeamThroughPixel(int j, int i, int numOfRays, int Nx, int Ny, double screenWidth, double screenHeight, double screenDistance) {
+    public List<Ray> constructRayBeamThroughPixel(int x, int y, int numOfRays, int Nx, int Ny, double screenWidth, double screenHeight, double screenDistance) {
         //the list of rays that we create
         List<Ray> beam = new LinkedList<>();
 
@@ -122,8 +122,8 @@ public class Camera {
         Point3D Pc = place.add(vto.scale(screenDistance));
         double Ry = screenHeight / Ny;
         double Rx = screenWidth / Nx;
-        double yi = ((i - Ny / 2d) * Ry + Ry / 2d);
-        double xj = ((j - Nx / 2d) * Rx + Rx / 2d);
+        double yi = ((y - Ny / 2d) * Ry + Ry / 2d);
+        double xj = ((x - Nx / 2d) * Rx + Rx / 2d);
         // Pixel[i,j] center:
         Point3D Pij = Pc;
         if (!isZero(xj))
@@ -134,27 +134,28 @@ public class Camera {
         //the first ray is the ray from camera toward pixel(i,j) center
         beam.add(new Ray(place, Vij));
         numOfRays--;
-
-        //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
-        double dX, dY;
-        //the coefficient to calculate in which quadrant is random point on this pixel
-        double k, h;
-        // the number of random point in each quadrant
-        int sum = numOfRays / 4;
-        // divide the random points evenly within the four quadrants
-        for (int t = 0; t < 4; t++) {
-            k = Rx / 2d * (t != 1 && t != 2 ? 1 : -1);
-            h = Ry / 2d * (t != 2 && t != 3 ? 1 : -1);
-            numOfRays -= sum;
-            for (int u = 0; u < sum; u++) {
-                dX = Math.random() * k;
-                dY = Math.random() * h;
-                // find random point on this pixel to create new ray from camera
-                Point3D randomPoint = Pij;
-                if (!isZero(dX)) randomPoint = randomPoint.add(vright.scale(dX));
-                if (!isZero(dY)) randomPoint = randomPoint.subtract(vup.scale(dY));
-                // the other Rays
-                beam.add(new Ray(place, randomPoint.subtract(place)));
+        if(numOfRays>0) {
+            //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
+            double dX, dY;
+            //the coefficient to calculate in which quadrant is random point on this pixel
+            double k, h;
+            // the number of random point in each quadrant
+            int sum = numOfRays / 4;
+            // divide the random points evenly within the four quadrants
+            for (int t = 0; t < 4; t++) {
+                k = Rx / 2d * (t != 1 && t != 2 ? 1 : -1);
+                h = Ry / 2d * (t != 2 && t != 3 ? 1 : -1);
+                numOfRays -= sum;
+                for (int u = 0; u < sum; u++) {
+                    dX = Math.random() * k;
+                    dY = Math.random() * h;
+                    // find random point on this pixel to create new ray from camera
+                    Point3D randomPoint = Pij;
+                    if (!isZero(dX)) randomPoint = randomPoint.add(vright.scale(dX));
+                    if (!isZero(dY)) randomPoint = randomPoint.subtract(vup.scale(dY));
+                    // the other Rays
+                    beam.add(new Ray(place, randomPoint.subtract(place)));
+                }
             }
         }
         return beam;

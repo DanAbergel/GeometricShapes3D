@@ -17,7 +17,7 @@ public class PointLight extends Light implements LightSource {
     protected double _kC;
     protected double _kL;
     protected double _kQ;
-    double radiusOfLight=5;
+    double radiusOfLight=10;
 
 
     /**
