@@ -42,11 +42,9 @@ public class Material {
      * @return _nShininess
      */
     public int get_nShininess() {
-
         return _nShininess;
     }
     public double getKr() {
-
         return _kr;
     }
 

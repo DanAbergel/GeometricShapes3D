@@ -50,7 +50,7 @@ public class Sphere extends RadialGeometry {
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         Point3D p0 = ray.getPoint();
-        Vector v = ray.getDir();
+        Vector v = ray.getDirection();
         Vector u;
         try {
             u = _center.subtract(p0); // p0 == _center
