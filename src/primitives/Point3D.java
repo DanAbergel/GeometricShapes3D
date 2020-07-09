@@ -89,8 +89,8 @@ public class Point3D {
     public Point3D add(Vector vector) {
 
         return new Point3D(this.x._coord + vector.head.x._coord,
-        this.y._coord + vector.head.y._coord,
-        this.z._coord + vector.head.z._coord);
+                this.y._coord + vector.head.y._coord,
+                this.z._coord + vector.head.z._coord);
     }
 
     /**
@@ -105,10 +105,10 @@ public class Point3D {
         return dx * dx + dy * dy + dz * dz;
     }
 
-     /**
+    /**
      * function distance take as parameter a Point3D and calculate the distance between actual instance Point3D and this point
      *          The function use the distanceSquared function for calculate this distance by get the returned value by distanceSquared
-                function and put it in the function Math.sqrt for remover the power
+     function and put it in the function Math.sqrt for remover the power
      * @param point is the second point for calculate the distance
      * @return a double value of the distance between those two points
      * */
