@@ -1,5 +1,7 @@
 package elements;
 import primitives.*;//equivalent
+
+import java.util.List;
 //import primitives.Color;
 //import primitives.Point3D;
 //import primitives.Vector;
@@ -9,12 +11,13 @@ import primitives.*;//equivalent
  */
 
 public interface LightSource {
-        /**
-         * Get light source intensity as it reaches a point
-         *
-         * @param p the lighted point
-         * @return intensity
-         */
+        public List<Ray> findBeamRaysLight(List<Ray> allRays,Point3D point, int numOfRays);
+                /**
+                 * Get light source intensity as it reaches a point
+                 *
+                 * @param p the lighted point
+                 * @return intensity
+                 */
         public Color getIntensity(Point3D p);
 
         /**

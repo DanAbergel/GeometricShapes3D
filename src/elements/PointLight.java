@@ -3,15 +3,22 @@ package elements;
 import geometries.Intersectable;
 import primitives.Color;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+import java.util.Random;
+
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class PointLight extends Light implements LightSource {
     protected Point3D _position;
     protected double _kC;
     protected double _kL;
     protected double _kQ;
+    double radiusOfLight=10;
+
 
     /**
      * constructor
@@ -63,4 +70,32 @@ public class PointLight extends Light implements LightSource {
     public double getDistance(Point3D point) {
         return alignZero(_position.distance(point));
     }
+
+    public List<Ray> findBeamRaysLight(List<Ray> allRays,Point3D point,int numOfRays){
+        Vector vTo=getL(point);
+         Vector vRight=new Vector(-vTo.getHead().getZ().get(),0,vTo.getHead().getX().get()).normalize();
+         Vector vUp=vRight.crossProduct(vTo);
+        //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
+        double dX, dY;
+
+
+       for (int i=numOfRays;i>0;i--){
+           Random r=new Random();
+           double cos=-1+2*r.nextDouble();
+           double sin=Math.sqrt(1-Math.pow(cos,2));
+           double d=-radiusOfLight+2*radiusOfLight*r.nextDouble();
+           dX=d*cos;
+           dY=d*sin;
+           Point3D pC=new Point3D(_position.getX().get(),_position.getY().get(),_position.getZ().get());
+           if (!isZero(dX))
+                pC=pC.add(vRight.scale(dX));
+           if (!isZero(dY))
+               pC=pC.add(vUp.scale(dY));
+           Vector v=pC.subtract(point);
+           Ray ray=new Ray(point,v);
+           allRays.add(ray);
+       }
+        return allRays;
+    }
+
 }

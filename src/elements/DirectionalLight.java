@@ -2,10 +2,14 @@ package elements;
 
 import primitives.Color;
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 public class DirectionalLight extends Light implements LightSource {
     private Vector direction;
+    private double radiusOfLight=1;
 
     public DirectionalLight(Color _intensity, double a, Vector direction) {
         super(_intensity, a);
@@ -43,4 +47,6 @@ public class DirectionalLight extends Light implements LightSource {
     public double getDistance(Point3D point) {
         return Double.POSITIVE_INFINITY;
     }
-}
+
+    public List<Ray> findBeamRaysLight(List<Ray> allRays,Point3D point, int numOfRays) {return null; }
+    }
