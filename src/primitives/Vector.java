@@ -3,16 +3,15 @@ package primitives;
 /**
  * class representing a vector on the 3D grid
  *
- * @author yeoshua and Dan
+ * @author joss lalou and Dan abergel
  */
 public class Vector {
     Point3D head;//vector's head
-    private double length = 0;
+    //private double length = 0;//length vector
     private double lengthSquared = 0;
 
     /**
-     * builds a vector's head with the coordinates
-     *
+     * Constructor of Vector class with three parameters double for the three coordinates of head's vector
      * @param x point on x axel
      * @param y point on y axel
      * @param z point on z axel
@@ -24,17 +23,17 @@ public class Vector {
     }
 
     /**
+     * Constructor of Vector class with one parameter Point3D for the head's vector
      * @param head vector's head is set to head received
      */
     public Vector(Point3D head) {
+        //check if the parameter is equals to the Point3D.ZERO
         if (head.equals(Point3D.ZERO))
+            //if it's equals to , throw an Exception
             throw new IllegalArgumentException("Point3D(0.0,0.0,0.0) not valid for vector head");
         this.head = head;
     }
 
-    /**
-     * @return head of vector as new point so it can't be modified
-     */
     public Point3D getHead() {
         return head;
     }
@@ -47,58 +46,70 @@ public class Vector {
         return getHead().equals(vector.getHead());
     }
 
-    /**
-     * @return vector's head coordinates
-     */
     @Override
     public String toString() {
         return "Vector{" + head.toString() + '}';
     }
 
     /**
-     * @param other vector to substract from currect vector
-     * @return new vector that's this vector minus v
+     * Function subtract calculate the subtract of the vector's parameter from the actual instance Vector <br/>
+     * It is use the principle of DRY and delegate the calculation to the Point3D class
+     * @param other vector to subtract from actual vector instance
+     * @return a new instance of Vector which is the result of the subtract
      */
     public Vector subtract(Vector other) {
         return this.head.subtract(other.head);
     }
 
     /**
-     * @param other vector to add to current
-     * @return new vector with addition of two vectors
+     * Function add calculate the addition of the vector's parameter to the actual instance Vector <br/>
+     * It is use the principle of DRY and delegate the calculation to the Point3D class
+     * @param other vector to add to actual instance Vector
+     * @return a new instance of Vector which the result of the addition
      */
     public Vector add(Vector other) {
         return new Vector(head.add(other));
     }
 
     /**
-     * @param n number of times to multiply vector
-     * @return new vector times num
+     * Function scale takes the parameter n to multiply in a scalar multiplication it to the vector
+     * @param n is the scalar which will be multiplies to actual instance Vector
+     * @return na new instance of Vector which is the result of scalar multiplication
      */
     public Vector scale(double n) {
         return new Vector(head.x._coord * n, head.y._coord * n, head.z._coord * n);
     }
 
     /**
-     * @param vect3 other vector to calculate with
-     * @return dot product between the two vectors
+     * Function dotProduct takes a Vector parameter and calculates the dotProduct between actual instance and the parameter
+     * If both are perpendicular the result will be 0
+     * @param v is the second Vector
+     * @return a double value which is the result of this operation
      */
-    public double dotProduct(Vector vect3) {
-        return (this.head.x._coord * vect3.head.x._coord + this.head.y._coord * vect3.head.y._coord + this.head.z._coord * vect3.head.z._coord);
+    public double dotProduct(Vector v) {
+        return (this.head.x._coord * v.head.x._coord + this.head.y._coord * v.head.y._coord + this.head.z._coord * v.head.z._coord);
     }
 
     /**
-     * @param vect4 other vector
-     * @return cross product between the two vectors.
+     * Function crossProduct takes an other instance of Vector as parameter and calculate the dotProduct between them
+     * The formula is X= y1 * z2 - z1 * y2
+     *                Y= z1 * x2 - x1 * z2
+     *                Z= x1 * y2 - y1 * x2
+     * @param v is the second vector
+     * @return a new instance of Vector which is the result of crossProduct operation
      */
-    public Vector crossProduct(Vector vect4) {
-        double newX = this.head.y._coord * vect4.head.z._coord - this.head.z._coord * vect4.head.y._coord;
-        double newY = this.head.z._coord * vect4.head.x._coord - this.head.x._coord * vect4.head.z._coord;
-        double newZ = this.head.x._coord * vect4.head.y._coord - this.head.y._coord * vect4.head.x._coord;
+    public Vector crossProduct(Vector v) {
+        double newX = this.head.y._coord * v.head.z._coord - this.head.z._coord * v.head.y._coord;
+        double newY = this.head.z._coord * v.head.x._coord - this.head.x._coord * v.head.z._coord;
+        double newZ = this.head.x._coord * v.head.y._coord - this.head.y._coord * v.head.x._coord;
         return new Vector(newX, newY, newZ);
     }
 
     /**
+     * Function calculate the length of the Vector instance
+     * If the variable lengthSquared equals zero it's means that this variable had never been initialized
+     *    and then it's calculate here , but if it's not equals zero it's means that this distance has already been calculated
+     *    and then the function only returns the value of squaredDistance
      * @return vector's length squared
      */
     public double lengthSquared() {
@@ -108,20 +119,17 @@ public class Vector {
     }
 
     /**
-     * @return and calculates vector's length
+     * Function length calculate  the length of this instance by the function lengthSquared
+     * @return vector length
      */
     public double length() {
-        if (length == 0) {
-            if (lengthSquared == 0)
-                lengthSquared = lengthSquared();
-            length = Math.sqrt(lengthSquared);
-        }
-        return length;
+        return Math.sqrt(lengthSquared);
     }
 
 
     /**
-     * @return current vector with normalized length.
+     * Function normalize calculate a new instance of Vector which will be the same vector but normalized
+     * @return the actual instance
      */
     public Vector normalize() {
         double length = this.length();
@@ -129,7 +137,10 @@ public class Vector {
         return this;
     }
 
-    //ask if to change original vector (this.normalize changes it)
+    /**
+     * Function normalized only return the result of the function normalize in a new instance Vector
+     * @return the new instance of Vector
+     * */
     public Vector normalized() {
         return new Vector(this.head).normalize();
     }

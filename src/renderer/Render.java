@@ -2,7 +2,6 @@ package renderer;
 
 import elements.Camera;
 import elements.LightSource;
-import geometries.Geometries;
 import geometries.Intersectable;
 import primitives.*;
 import primitives.Color;
@@ -26,7 +25,7 @@ public class Render {
     private Scene scene;
     private ImageWriter image;
     int numOfRaysSuperSampling = 100;
-    int numOfRaysSoftShadow = 1;
+    int numOfRaysSoftShadow = 100;
     private int numThreads = 1;//num of separate threads
     private final int SPARE_THREADS = 2;
     private boolean print = false;//says if it have to print percentage while processing
@@ -115,10 +114,10 @@ public class Render {
                 }
             if (percents >= 0)
                 return true;
-            if (Render.this.print) {
-                System.out.println();
-                System.out.printf("\r %02d%%", 100);
-            }
+//            if (Render.this.print) {
+//                System.out.println();
+//                System.out.printf("\r %02d%%", 100);
+//            }
             return false;
         }
     }
@@ -149,11 +148,40 @@ public class Render {
     }
 
 
+    /**
+     * Constructor of the class Render
+     * @param _imageWriter the image which will be used for draw the desired image
+     * @param _scene the scene which will appear in the image and it is needed for calculate all the
+     * intersections with the shapes within this scene
+     * */
     public Render(ImageWriter _imageWriter, Scene _scene) {
         this.image = _imageWriter;
         this.scene = _scene;
     }
 
+    /**
+     * function to define the number of desired rays in super sampling
+     * @param num the number of rays which will be calculated for super sampling
+     * @return the render object itself for call it at creation of the render object
+     * */
+    public Render setRaysSuperSampling(int num){
+        numOfRaysSuperSampling=num;
+        return this;
+    }
+
+    /**
+     * function to define the number of desired rays in soft shadow
+     * @param num the number of rays which will be calculated for soft shadow
+     * @return the render object itself for call it at creation of render object
+     * */
+    public Render setRaysSoftShadow(int num){
+        numOfRaysSoftShadow=num;
+        return this;
+    }
+
+    /**
+     * this function call the same function in the class of ImageWriter to draw the desired image
+     * */
     public void writeToImage() {
         image.writeToImage();
     }
@@ -392,22 +420,6 @@ public class Render {
             }
         if (print)
             System.out.printf("\r100%%\n"); //print 100%
-
-//        for (int row = 0; row < pixel.Ny; row++) {
-//            for (int collumn = 0; collumn < pixel.Nx; collumn++) {
-//                List<Ray> beamOfRays = (camera.constructRayBeamThroughPixel(collumn, row, numOfRaysSuperSampling, Nx, Ny, width, height, distance));
-//                for (Ray ray : beamOfRays) {
-//                    Intersectable.GeoPoint closestPoint = findCLosestIntersection(ray);
-//                    if (closestPoint == null) {
-//                        average = average.add(scene.getBackground());
-//                    } else {
-//                        average = average.add(calcColor(closestPoint, ray));
-//                    }
-//                }
-//                average = average.reduce(numOfRaysSuperSampling);
-//                image.writePixel(collumn, row, average.getColor());
-//                average = new Color(Color.BLACK);
-//            }
     }
 
     /**
@@ -486,7 +498,7 @@ public class Render {
      * @return Ray reflected ray
      */
     private Ray constructReflectedRay(Point3D p, Ray ray, Vector n) {
-        Vector v = ray.getDir();
+        Vector v = ray.getDirection();
         double vn = v.dotProduct(n);
         if (Util.isZero(vn)) return null;
         Vector r = v.add(n.scale(-2 * vn));
@@ -502,7 +514,7 @@ public class Render {
      */
     private Ray constructRefractedRay(Point3D p, Ray inRay, Vector n) {
 
-        return new Ray(p, inRay.getDir(), n);
+        return new Ray(p, inRay.getDirection(), n);
     }
 
 }

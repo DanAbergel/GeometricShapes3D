@@ -103,7 +103,7 @@ public class ReflectionRefractionTest {
                 new Point3D(60, -50, 0),new Vector(0, 0, 1), 1, 4E-5, 2E-7));
 
         ImageWriter imageWriter = new ImageWriter("shadow with Transparency", 200, 200, 800, 800);
-        Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();
+        Render render = new Render(imageWriter, scene).setMultithreading(1).setDebugPrint().setRaysSoftShadow(50).setRaysSuperSampling(100);
 
         render.renderImage();
         render.writeToImage();
