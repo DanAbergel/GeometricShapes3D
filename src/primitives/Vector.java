@@ -123,7 +123,7 @@ public class Vector {
      * @return vector length
      */
     public double length() {
-        return Math.sqrt(lengthSquared);
+        return Math.sqrt(lengthSquared());
     }
 
 
