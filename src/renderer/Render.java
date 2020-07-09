@@ -24,7 +24,7 @@ public class Render {
     private Scene scene;
     private ImageWriter image;
     boolean superSamplingActivate = true;
-    int numOfRays = 200;
+    int numOfRays = 50;
 
     public Render(ImageWriter _imageWriter, Scene _scene) {
         this.image = _imageWriter;
