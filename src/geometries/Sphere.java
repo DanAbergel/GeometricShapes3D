@@ -77,7 +77,7 @@ public class Sphere extends RadialGeometry {
      * Function findIntersections implements the function which already exists in Intersectable interface
      * It calculates all points of intersection between a given ray and the actual instance of sphere
      * @param ray is the given ray which may cross the sphere
-     * @param max is the max distance between the light and the sphere
+     * @param max is the max distance between the camera and the sphere
      * */
     @Override
     public List<GeoPoint> findIntersections(Ray ray, double max) {
