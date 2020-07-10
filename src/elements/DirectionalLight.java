@@ -44,6 +44,12 @@ public class DirectionalLight extends Light implements LightSource {
     }
 
     @Override
+    public LightSource setRadiusOfLight(int r){
+        radiusOfLight=r;
+        return this;
+    }
+
+    @Override
     public double getDistance(Point3D point) {
         return Double.POSITIVE_INFINITY;
     }

@@ -1,6 +1,7 @@
 package renderer;
 
 import elements.Camera;
+import elements.Light;
 import elements.LightSource;
 import geometries.Intersectable;
 import primitives.*;
