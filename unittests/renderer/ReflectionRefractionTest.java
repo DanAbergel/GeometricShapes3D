@@ -73,7 +73,7 @@ public class ReflectionRefractionTest {
                 1, 0.00001, 0.000005));
 
         ImageWriter imageWriter = new ImageWriter("twoSpheresMirrored", 2500, 2500, 500, 500);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();

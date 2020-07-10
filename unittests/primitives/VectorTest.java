@@ -47,7 +47,6 @@ class VectorTest {
         Vector v1=new Vector(1.0,1.0,1.0);
         Vector v2=new Vector(-1.0,-1.0,-1.0);
         v1=v1.subtract(v2);
-        System.out.println("v1 = "+v1.toString());
         assertEquals(new Vector(2.0,2.0,2.0),v1);
          }
 
@@ -115,7 +114,7 @@ class VectorTest {
         //tests that normalized creates a new vector
         Vector v = new Vector(1, 2, 3);
         Vector u = v.normalized();
-        assertFalse(u == v, "ERROR: normalizated() function does not create a new vector");
+        assertFalse(u == v, "ERROR: normalized() function does not create a new vector");
 
     }
 

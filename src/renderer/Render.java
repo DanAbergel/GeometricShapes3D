@@ -24,8 +24,8 @@ public class Render {
     private static final int COUNT_RAYS = 1;//numbers of rays per pixel
     private Scene scene;
     private ImageWriter image;
-    int numOfRaysSuperSampling = 100;
-    int numOfRaysSoftShadow = 100;
+    int numOfRaysSuperSampling = 1;
+    int numOfRaysSoftShadow = 1;
     private int numThreads = 1;//num of separate threads
     private final int SPARE_THREADS = 2;
     private boolean print = false;//says if it have to print percentage while processing
