@@ -58,6 +58,7 @@ public class Tube extends RadialGeometry {
     /**
      * Function getNormal overrides the function in Geometry class
      * It calculates the rays which is normal to the Tube
+     * This normal is perpendicular to the direction of axis ray
      * @param point is the point of intersection between the normal and the Tube
      * @return a vector which is the normal to the Tube
      * */
