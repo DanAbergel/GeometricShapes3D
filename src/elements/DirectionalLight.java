@@ -11,10 +11,6 @@ public class DirectionalLight extends Light implements LightSource {
     private Vector direction;
     private double radiusOfLight=1;
 
-    public DirectionalLight(Color _intensity, double a, Vector direction) {
-        super(_intensity, a);
-        this.direction = direction;
-    }
     /**
      * constructor
      * @param _intensity
