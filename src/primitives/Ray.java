@@ -12,6 +12,8 @@ public class Ray {
     /**
      * Constructor of the Ray class which takes as parameters a Point3D and 2 Vectors :
      *            one for the direction vector and other for normal vector
+     * The veritable aim of this function is to determinate the precise position of the point with delta between two vectors (vector dir with his vector normal)
+     * it is important for 3 criteria : Shadow Ray / Reflection Ray / Refraction Ray
      * It's copy the direction vector after have been normalized
      * @param dir ray's direction
      * @param normal ray's normal

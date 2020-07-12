@@ -13,6 +13,7 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 public class PointLight extends Light implements LightSource {
+
     protected Point3D _position;
     protected double _kC;
     protected double _kL;
@@ -21,7 +22,7 @@ public class PointLight extends Light implements LightSource {
 
 
     /**
-     * constructor
+     * -------------Constructors-----------------
      * @param _intensity
      * @param _position
      * @param _kC
@@ -77,11 +78,18 @@ public class PointLight extends Light implements LightSource {
         return alignZero(_position.distance(point));
     }
 
+    /**
+     * The purpose of this function is to return all rays of lights of point in the space
+     * @param allRays
+     * @param point
+     * @param numOfRays
+     * @return
+     */
     public List<Ray> findBeamRaysLight(List<Ray> allRays,Point3D point,int numOfRays){
-        Vector vTo=getL(point);
+         Vector vTo=getL(point);
          Vector vRight=new Vector(-vTo.getHead().getZ().get(),0,vTo.getHead().getX().get()).normalize();
          Vector vUp=vRight.crossProduct(vTo);
-        //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
+        // the parameter to calculate the coefficient of the _vRight and _vUp vectors
         double dX, dY;
 
 

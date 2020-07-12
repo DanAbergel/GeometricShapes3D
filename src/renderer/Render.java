@@ -211,6 +211,16 @@ public class Render {
         return averageColor;
     }
 
+    /**
+     *this function calculates the color according to phong model
+     *Calculate the color intensity in the point
+     *recursive function
+     * @param geoPoint the point to calculate the color
+     * @param inRay
+     * @param level the recursion level
+     * @param k the intensity of the color (0 to 1)
+     * @return the color intensity
+     */
     private Color calcColor(Intersectable.GeoPoint geoPoint, Ray inRay, int level, double k) {
         // to recursion stop
         if (level == 1 || k < MIN_CALC_COLOR_K) {
@@ -425,7 +435,6 @@ public class Render {
 
     /**
      * Calculating the color by a Point
-     *
      * @param gp  Point3D the point that in the calculation
      * @param ray Ray ray
      * @return Color the calculated color
@@ -492,7 +501,7 @@ public class Render {
 
     /**
      * this function gets a point, a ray and a vector and return the reflected ray
-     *
+     * 𝒓=𝒗 −𝟐∙(𝒗∙𝒏)∙𝒏
      * @param p   Point3D point
      * @param ray Ray Ray
      * @param n   Vector vector

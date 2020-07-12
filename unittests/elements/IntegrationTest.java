@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * testing the intersection between the view plane and the differents forms
+ * testing the intersection between the view plane and the different forms
  */
 
 public class IntegrationTest {
@@ -23,7 +23,7 @@ public class IntegrationTest {
     //======================================SPHERE CAMERA TEST===============================================================
     @Test
     public void WithSphere1() {
-        //TC01 first cast of maavada we need to find 3 intection with the sphere with radius 1
+        //TC01 first cast of maavada we need to find 3 intersections with the sphere with radius 1
         Sphere sphere = new Sphere(1, new Point3D(0, 0, 3));
         List<Intersectable.GeoPoint> results;
         int count = 0;
@@ -59,7 +59,7 @@ public class IntegrationTest {
     }
     @Test
     public void WithSphere3() {
-        //TC03 third  cast of maavada we need to find 10 intections with the sphere with radius 2
+        //TC03 third  cast of maavada we need to find 10 intersections with the sphere with radius 2
         Sphere sphere = new Sphere(2, new Point3D(0, 0, 2));
         List<Intersectable.GeoPoint> results;
         int count = 0;
@@ -77,7 +77,7 @@ public class IntegrationTest {
     }
     @Test
     public void Withsphere4() {
-        //TC04 fourth   cast of maavada we need to find  intections with the sphere with radius 4
+        //TC04 fourth   cast of maavada we need to find  intersections with the sphere with radius 4
         Sphere sphere = new Sphere(4, new Point3D(0, 0, 2));
         List<Intersectable.GeoPoint> results;
         int count = 0;
@@ -95,7 +95,7 @@ public class IntegrationTest {
     }
     @Test
     public void Withsphere5() {
-        //TC05 fifth   cast of maavada we need to find  intections with the sphere with radius 0.5
+        //TC05 fifth   cast of maavada we need to find  intersections with the sphere with radius 0.5
         Sphere sphere = new Sphere(0.5, new Point3D(0, 0, -1));
         List<Intersectable.GeoPoint> results;
         int count = 0;
@@ -132,7 +132,7 @@ public class IntegrationTest {
     }
     @Test
     public void WithPlane3() {
-        //TC03 Third  cast of maavada we need to find  intections with the plane
+        //TC03 Third  cast of maavada we need to find  intersections with the plane
         Plane plane = new Plane(new Point3D(0,0,1),new Point3D(1,1,-1),new Point3D(1,0,1));
         List<Intersectable.GeoPoint> results;
         int count = 0;

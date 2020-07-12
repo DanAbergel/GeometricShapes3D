@@ -11,14 +11,10 @@ public class DirectionalLight extends Light implements LightSource {
     private Vector direction;
     private double radiusOfLight=1;
 
-    public DirectionalLight(Color _intensity, double a, Vector direction) {
-        super(_intensity, a);
-        this.direction = direction;
-    }
     /**
-     * constructor
-     * @param _intensity
-     * @param _direction
+     * constructor of DirectionalLight
+     * @param _intensity the Color intensity
+     * @param _direction the vector
      */
     public DirectionalLight(Color _intensity, Vector _direction) {
         super(_intensity);
@@ -34,10 +30,13 @@ public class DirectionalLight extends Light implements LightSource {
     @Override
     public Color getIntensity(Point3D p) {
         return super.getIntensity();
-        //       return _intensity;
     }
 
-    //instead of getDirection()
+    /**
+     * return the instance of direction
+     * @param p the lighted point
+     * @return
+     */
     @Override
     public Vector getL(Point3D p) {
         return direction;
@@ -54,5 +53,13 @@ public class DirectionalLight extends Light implements LightSource {
         return Double.POSITIVE_INFINITY;
     }
 
+    /**
+     * This function contain all rays of lights
+     * @param allRays
+     * @param point
+     * @param numOfRays
+     * @return
+     */
     public List<Ray> findBeamRaysLight(List<Ray> allRays,Point3D point, int numOfRays) {return null; }
+
     }

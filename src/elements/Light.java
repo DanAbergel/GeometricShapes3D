@@ -6,10 +6,7 @@ public abstract class Light {
      * variable:_intensity value; type of variable: protected
      */
     protected Color _intensity;
-    /**
-     * the constructor of the class Light for the variable _intensity
-     * @return _intensity
-     */
+    //------Constructors------//
     public Light(Color _intensity,double a) {
 
         this._intensity = _intensity;
@@ -18,6 +15,7 @@ public abstract class Light {
 
         this._intensity = _intensity;
     }
+
     public Color getIntensity() {
 
         return new Color(_intensity);

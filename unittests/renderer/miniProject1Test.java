@@ -18,7 +18,7 @@ public class miniProject1Test {
      */
 
     @org.junit.Test
-    public void mp1Test() {
+    public void JossTest() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
         scene.setDistance(1000);
@@ -71,57 +71,12 @@ public class miniProject1Test {
                 //       new Vector(-1,1,-1))
         );
 
-        ImageWriter imageWriter = new ImageWriter("mp1", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene);
-        //render.set_softShadowDensity(3);
-        //render.set_superSampleDensity(0.33);
+        ImageWriter imageWriter = new ImageWriter("Josstest", 200, 200, 400, 400);
+        Render render = new Render(imageWriter, scene).setMultithreading(10).setDebugPrint().setRaysSuperSampling(100).setRaysSoftShadow(100);
         render.renderImage();
         render.writeToImage();
     }
-    @org.junit.Test
-    public void josstest() {
-        Scene scene = new Scene("Test scene");
-        scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
-        scene.setDistance(1000);
-        scene.setBackground(primitives.Color.BLACK);
-        scene.setAmbientLight(new AmbientLight(new primitives.Color(java.awt.Color.WHITE), 0.15));
-        scene.addGeometries(
-                new Triangle(primitives.Color.BLACK, new Material(5, 5, 300),
-                        new Point3D(-150, 150, 150), new Point3D(150, 150, 150), new Point3D(75, -75, 150)),
-                new Triangle(primitives.Color.BLACK, new Material(5, 5, 300),
-                        new Point3D(-150, 150, 150), new Point3D(-70, -70, 50), new Point3D(75, -75, 150)));
 
-        scene.addGeometries(
-                new Sphere(new primitives.Color(new primitives.Color(0,0,255)),new Material(0, 5, 200, 0.02, 1),10,new Point3D(-40,30,150)),
-                new Sphere(new primitives.Color(new primitives.Color(0,0,255)),new Material(0, 5, 200, 0.02, 1),10,new Point3D(-20,30,150)),
-                new Sphere(new primitives.Color(new primitives.Color(0,0,255)),new Material(0, 5, 200, 0.02, 1),10,new Point3D(0,30,150)),
-                new Sphere(new primitives.Color(new primitives.Color(0,0,255)),new Material(0, 5, 200, 0.02, 1),10,new Point3D(20,30,150)),
-                new Sphere(new primitives.Color(new primitives.Color(0,0,255)),new Material(0, 5, 200, 0.02, 1),10,new Point3D(40,30,150)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(-30,13,0)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(-10,13,0)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(10,13,0)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(30,13,0)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(-20,-4.7,-50)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(0,-4.7,-50)),
-                new Sphere(new primitives.Color(Color.green),new Material(0, 5, 200, 0.02, 1),10,new Point3D(20,-4.7,-50)),
-                new Sphere(new primitives.Color(Color.red),new Material(0, 5, 200, 0.02, 1),10,new Point3D(11,-22.5,-150)),
-                new Sphere(new primitives.Color(Color.red),new Material(0, 5, 200, 0.02, 1),10,new Point3D(-9.5,-22.5,-150)),
-                new Sphere(new primitives.Color(Color.red),new Material(0, 5, 200, 0.02, 1),10,new Point3D(0,-40.5,-300))
-
-        );
-
-
-//              new Triangle(new primitives.Color(Color.red),new Material(2, 0.2, 200, 0.02, 1),new Point3D(-30,0,0),new Point3D(-30,-10,0),new Point3D(30,0,0)),new Triangle(new primitives.Color(Color.red),new Material(2, 0.2, 200, 0.02, 1),new Point3D(-30,-10,0),new Point3D(30,-10,0),new Point3D(30,0,0)));
-        scene.addLights(new PointLight(new primitives.Color(500, 250, 250),
-                new Point3D(0, 0, -200),
-                1, 0.0005, 0.0005));
-
-        ImageWriter imageWriter = new ImageWriter("josstest", 200, 200, 500, 500);
-        Render render = new Render(imageWriter, scene);
-
-        render.renderImage();
-        render.writeToImage();
-    }
 
 }
 
