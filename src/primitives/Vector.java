@@ -30,7 +30,7 @@ public class Vector {
         //check if the parameter is equals to the Point3D.ZERO
         if (head.equals(Point3D.ZERO))
             //if it's equals to , throw an Exception
-            throw new IllegalArgumentException("Point3D(0.0,0.0,0.0) not valid for vector head");
+            throw new IllegalArgumentException("Point3D(0,0,0) not valid for vector head");
         this.head = head;
     }
 
@@ -87,7 +87,7 @@ public class Vector {
      * @return a double value which is the result of this operation
      */
     public double dotProduct(Vector v) {
-        return (this.head.x._coord * v.head.x._coord + this.head.y._coord * v.head.y._coord + this.head.z._coord * v.head.z._coord);
+        return this.head.x._coord * v.head.x._coord + this.head.y._coord * v.head.y._coord + this.head.z._coord * v.head.z._coord;
     }
 
     /**
@@ -123,7 +123,9 @@ public class Vector {
      * @return vector length
      */
     public double length() {
-        return Math.sqrt(lengthSquared());
+        if (lengthSquared==0)
+            this.lengthSquared=lengthSquared();
+        return Math.sqrt(lengthSquared);
     }
 
 

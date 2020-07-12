@@ -35,7 +35,7 @@ public class ShadowTests {
                 new Point3D(-100, 100, -200),new Vector(1, -1, 3),  1, 1E-5, 1.5E-7));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleInitial", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();
@@ -61,7 +61,7 @@ public class ShadowTests {
                 new Point3D(-100, 100, -200), new Vector(1, -1, 3),1, 1E-5, 1.5E-7));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleMove1", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();
@@ -88,7 +88,7 @@ public class ShadowTests {
                 new Point3D(-100, 100, -200),new Vector(1, -1, 3), 1, 1E-5, 1.5E-7));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleMove2", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();
@@ -114,7 +114,7 @@ public class ShadowTests {
                 new Point3D(-90, 90, -150),new Vector(1, -1, 3), 1, 1E-5, 1.5E-7));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleSpot1", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();
@@ -140,7 +140,7 @@ public class ShadowTests {
                 new Point3D(-75, 75, -60),new Vector(1, -1, 3), 1, 1E-5, 1.5E-7));
 
         ImageWriter imageWriter = new ImageWriter("sphereTriangleSpot2", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();
@@ -169,7 +169,7 @@ public class ShadowTests {
                 new Point3D(40, -40, -115),new Vector(-1, 1, 4), 1, 4E-4, 2E-5));
 
         ImageWriter imageWriter = new ImageWriter("trianglesSphere", 200, 200, 600, 600);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();

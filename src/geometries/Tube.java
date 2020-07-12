@@ -4,40 +4,50 @@ import primitives.*;
 
 import java.util.List;
 /**
- * class representing a vector on a Tube
  * @author yeoshua and Dan
+ * Class Tube represents a Tube in 3D model
+ * Because it has a radius this class herits from RadialGeometry as Sphere
  */
 
 public class Tube extends RadialGeometry {
     Ray _axisRay;
 
     /**
-     * builds tube out of a ray
-     * @param _axisRay ray
-     */
-
-
-    //Constructor of class Tube with parameters of double and Ray
+     * Constructor Tube with parameters Color,Material,radius and a Ray
+     * @param emission is the color of the Tube
+     * @param material is the material of the Tube
+     * @param _radius is the radius of the Tube
+     * @param _axisRay is the ray which determine the direction of the Tube in the 3D model
+     * */
     public Tube(Color emission, Material material, double _radius, Ray _axisRay) {
         super(emission, material, _radius);
         this._axisRay = _axisRay;
     }
-    public Tube(Color emission, double _radius, Ray _axisRay){
 
-        this(emission,new Material(0,0,0),_radius,_axisRay);
+    /**
+     * Constructor Tube with parameters Color,radius and a ray
+     * Per default it takes a new Material(0,0,0)
+     * @param emission is the color of the Tube
+     * @param radius is the radius of the Tube
+     * @param axisRay is the ray which determine the direction of the Tube in the 3D model
+     * */
+    public Tube(Color emission, double radius, Ray axisRay){
+        this(emission,new Material(0,0,0),radius,axisRay);
     }
-    public Tube(double _radius, Ray _ray) {
 
-        this(Color.BLACK, new Material(0,0,0), _radius, _ray);
+    /**
+     *Constructor Tube with parameters radius and ray
+     * @param radius is the radius od the Tube
+     * @param ray is the ray which determine the direction of the Tube in 3D model
+     *  */
+    public Tube(double radius, Ray ray) {
+        this(Color.BLACK, new Material(0,0,0), radius, ray);
     }
 
-    //function which return the ray _axisRay
     public Ray get_axisRay() {
         return _axisRay;
     }
 
-
-    //override method toString of Tube class
     @Override
     public String toString() {
         return "Tube{" +
@@ -45,26 +55,42 @@ public class Tube extends RadialGeometry {
                 '}';
     }
 
+    /**
+     * Function getNormal overrides the function in Geometry class
+     * It calculates the rays which is normal to the Tube
+     * This normal is perpendicular to the direction of axis ray
+     * @param point is the point of intersection between the normal and the Tube
+     * @return a vector which is the normal to the Tube
+     * */
     @Override
     public Vector getNormal(Point3D point) {
-        //The vector from the point of the cylinder to the given point
-        Point3D point1 = _axisRay.getPoint();
-        Vector vector1 = _axisRay.getDirection();
-        Vector vector2 = point.subtract(point1);
 
-        //We need the projection to multiply the _direction unit vector
-        double projection = vector2.dotProduct(vector1);
+        Point3D p0 = _axisRay.getPoint();
+        Vector v = _axisRay.getDirection();
+        Vector u = point.subtract(p0);
+
+        //We need the projection to multiply v vector by it for get the point O which is the start point to the normal
+        double projection = u.dotProduct(v);
+
+        //only if the projection different than zero multiply v by the projection
         if(!Util.isZero(projection))
         {
-            // projection of P-O on the ray:
-            point1.add(vector1.scale(projection));
+            // projection of O-P on the ray:
+            p0.add(v.scale(projection));
         }
 
-        //This vector is orthogonal to the _direction vector.
-        Vector check = point.subtract(point1);
+        //This vector is the normal to the Tube.
+        Vector check = point.subtract(p0);
         return check.normalize();
     }
 
+    /**
+     * Function findIntersections overrides the function in Intersectable interface
+     * It gets the list of all intersection points
+     * @param ray is the ray which may cross the Tube
+     * @param max is the max distance between the camera and the Tube
+     * @return a list of intersection points
+     * */
     @Override
     public List<GeoPoint> findIntersections(Ray ray,double max)
     {

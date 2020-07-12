@@ -73,7 +73,7 @@ public class ReflectionRefractionTest {
                 1, 0.00001, 0.000005));
 
         ImageWriter imageWriter = new ImageWriter("twoSpheresMirrored", 2500, 2500, 500, 500);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();
@@ -100,10 +100,10 @@ public class ReflectionRefractionTest {
                         30, new Point3D(60, -50, 50)));
 
         scene.addLights(new spotLight(new Color(700, 400, 400), //
-                new Point3D(60, -50, 0),new Vector(0, 0, 1), 1, 4E-5, 2E-7));
+                new Point3D(60, -50, 0),new Vector(0, 0, 1), 1, 4E-5, 2E-7).setRadiusOfLight(5));
 
         ImageWriter imageWriter = new ImageWriter("shadow with Transparency", 200, 200, 800, 800);
-        Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint().setRaysSoftShadow(1).setRaysSuperSampling(1);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint().setRaysSoftShadow(1).setRaysSuperSampling(1);
 
         render.renderImage();
         render.writeToImage();

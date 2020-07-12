@@ -89,61 +89,101 @@ public class Camera {
         double Rx = screenWidth / nX;
         //yi is the wanted distance in direction of vRight
         double yi = ((i - nY / 2d) * Ry + Ry / 2d);
+        //xi is the wanted distance in direction of vUp
         double xj = ((j - nX / 2d) * Rx + Rx / 2d);
+        //initialize Pij at Pc which is the center of viewPlane
         Point3D Pij = Pc;
+        //check if we stay at Pc on vRight axis
         if (!isZero(xj))
             Pij = Pij.add(vRight.scale(xj));
+        //check if we stay at Pc on vUp axis
         if (!isZero(yi))
             Pij = Pij.add(vUp.scale(-yi));
+        //create a new Vector from camera to Pij
         Vector Vij = Pij.subtract(place);
         return new Ray(place, Vij.normalize());
     }
 
-    public List<Ray> constructRayBeamThroughPixel(int x, int y, int numOfRays, int Nx, int Ny, double screenWidth, double screenHeight, double screenDistance) {
-        //the list of rays that we create
+    /**
+     * Function constructRayBeamThroughPixel calculates for some i and j - indexes of view plane - rays which starts at camera
+     * and cross the view plane at indexes i and j
+     * It calculate predefined number of rays via the pixel i,j for make the principle of Super Sampling
+     * If the screen distance is 0 throws an exception
+     * @param nX pixels on width
+     * @param nY pixels on height
+     * @param numOfRaysSuperSampling is predefined number of Super Sampling rays
+     * @param j Pixel column
+     * @param i pixel row
+     * @param screenDistance dst from view plane
+     * @param screenWidth  screen width
+     * @param screenHeight screen height
+     * @return new instance of Ray which cross the pixel j,i
+     */
+    public List<Ray> constructRayBeamThroughPixel(int j, int i, int numOfRaysSuperSampling, int nX, int nY, double screenWidth, double screenHeight, double screenDistance) {
+        //initialize a new list for contain all rays for super sampling
         List<Ray> beam = new LinkedList<>();
 
         if (isZero(screenDistance)) {
             throw new IllegalArgumentException("distance from cam cannot be 0");
         }
-        // pixel of image center
+        // Pc is the pixel of view plane center
         Point3D Pc = place.add(vTo.scale(screenDistance));
-        double Ry = screenHeight / Ny;
-        double Rx = screenWidth / Nx;
-        double yi = ((y - Ny / 2d) * Ry + Ry / 2d);
-        double xj = ((x - Nx / 2d) * Rx + Rx / 2d);
-        // Pixel[i,j] center:
+        //Ry is the height size of one pixel
+        double Ry = screenHeight / nY;
+        //Rx is the width size of one pixel
+        double Rx = screenWidth / nX;
+        //yi is the wanted distance in direction of vRight
+        double yi = ((i - nY / 2d) * Ry + Ry / 2d);
+        //xi is the wanted distance in direction of vUp
+        double xj = ((j - nX / 2d) * Rx + Rx / 2d);
+        //initialize Pij at Pc which is the center of viewPlane
         Point3D Pij = Pc;
+        //check if we stay at Pc on vRight axis
         if (!isZero(xj))
             Pij = Pij.add(vRight.scale(xj));
+        //check if we stay at Pc on vUp axis
         if (!isZero(yi))
             Pij = Pij.add(vUp.scale((-yi)));
+        //create a new Vector from camera to Pij
         Vector Vij = Pij.subtract(place);
-        //the first ray is the ray from camera toward pixel(i,j) center
+        //the first ray added to the list is the ray from camera toward center of pixel(i,j)
         beam.add(new Ray(place, Vij));
-        numOfRays--;
-        if(numOfRays>0) {
-            //// the parameter to calculate the coefficient of the _vRight and _vUp vectors
+        //subtract 1 from requested number of rays of Super Sampling
+        numOfRaysSuperSampling--;
+        //if numOfRaysSuperSampling==0 it's means that it's no need to continue to calculate and then exit the func and return
+        //only with one ray by the center of pixel(i,j)
+        if(numOfRaysSuperSampling>0) {
+            //// initialize parameters to calculate the coefficients of the vRight and vUp vectors
             double dX, dY;
-            //the coefficient to calculate in which quadrant is random point on this pixel
+            //the limits of pixel in axis x and in axis y
             double maxLengthHorizontal, maxLengthVertical;
-            // the number of random point in each quadrant
-            int sum = numOfRays / 4;
-            // divide the random points evenly within the four quadrants
+            // number of rays which it have to create for each quadrant
+            int quadrantNumber = numOfRaysSuperSampling / 4;
+            // divide the random points within the four quadrants
             for (int t = 0; t < 4; t++) {
+                //if it is in quadrant 0 or 4 the limit in axis x will be positive and else - negative
                 maxLengthHorizontal = Rx / 2d * (t != 1 && t != 2 ? 1 : -1);
+                //if it is in quadrant 0 or 1 the limit in axis y will be positive and else - negative
                 maxLengthVertical = Ry / 2d * (t != 2 && t != 3 ? 1 : -1);
-                numOfRays -= sum;
-                for (int u = 0; u < sum; u++) {
+                for (int u = 0; u < quadrantNumber; u++) {
+                    //Math.random get a random number between 0 and 1
+                    //calculate dX by multiply a random number (0,1) to the limit in x for stay within the limits
                     dX = Math.random() * maxLengthHorizontal;
+                    //calculate dY by multiply a random number (0,1) to the limit in y for stay within the limits
                     dY = Math.random() * maxLengthVertical;
-                    // find random point on this pixel to create new ray from camera
+                    // randomPoint is initialized to the center of pixel(i,j)
                     Point3D randomPoint = Pij;
-                    if (!isZero(dX)) randomPoint = randomPoint.add(vRight.scale(dX));
-                    if (!isZero(dY)) randomPoint = randomPoint.subtract(vUp.scale(dY));
-                    // the other Rays
+                    //check if we stay at Pij on vRight axis
+                    if (!isZero(dX))
+                        randomPoint = randomPoint.add(vRight.scale(dX));
+                    //check if we stay at Pij on vUp axis
+                    if (!isZero(dY))
+                        randomPoint = randomPoint.subtract(vUp.scale(dY));
+                    //add to the list the new Ray from camera to randomPoint in pixel(i,j)
                     beam.add(new Ray(place, randomPoint.subtract(place)));
                 }
+                //after finish one quadrant subtract fourth of total number of rays from the total number
+                numOfRaysSuperSampling -= quadrantNumber;
             }
         }
         return beam;

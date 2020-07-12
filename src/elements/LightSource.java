@@ -32,4 +32,5 @@ public interface LightSource {
          * @return distance from light source
          */
         double getDistance(Point3D point);
+        public LightSource setRadiusOfLight(int r);
 }
