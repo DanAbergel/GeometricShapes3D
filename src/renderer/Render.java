@@ -116,10 +116,6 @@ public class Render {
                 }
             if (percents >= 0)
                 return true;
-//            if (Render.this.print) {
-//                System.out.println();
-//                System.out.printf("\r %02d%%", 100);
-//            }
             return false;
         }
     }
@@ -141,7 +137,6 @@ public class Render {
 
     /**
      * Set debug printing on
-     *
      * @return the Render object itself
      */
     public Render setDebugPrint() {
@@ -167,7 +162,10 @@ public class Render {
      * @return the render object itself for call it at creation of the render object
      * */
     public Render setRaysSuperSampling(int num){
-        numOfRaysSuperSampling=num;
+        if (numOfRaysSuperSampling>0)
+            numOfRaysSuperSampling=num;
+        else
+            numOfRaysSuperSampling=1;
         return this;
     }
 
@@ -177,7 +175,10 @@ public class Render {
      * @return the render object itself for call it at creation of render object
      * */
     public Render setRaysSoftShadow(int num){
-        numOfRaysSoftShadow=num;
+        if(numOfRaysSoftShadow>0)
+            numOfRaysSoftShadow=num;
+        else
+            numOfRaysSoftShadow=1;
         return this;
     }
 
@@ -186,30 +187,6 @@ public class Render {
      * */
     public void writeToImage() {
         image.writeToImage();
-    }
-
-
-    private Color calcColor(List<Ray> rays) {
-        Color averageColor = new Color(Color.BLACK);
-        Intersectable.GeoPoint closestPoint;
-
-        //calculate the color of every intersection point of every ray/
-        for (Ray ray : rays) {
-
-            closestPoint = findCLosestIntersection(ray);
-
-            //if there is no intersections for this ray
-            if (closestPoint == null) {
-                averageColor.add(scene.getBackground());
-            } else {
-                averageColor.add(calcColor(closestPoint, ray, MAX_CALC_COLOR_LEVEL, 1.0));
-            }
-        }
-        //the color of the pixel will be the average of all rays/
-        averageColor = averageColor.scale(1.0 / rays.size());
-
-        averageColor = averageColor.add(scene.getAmbientLight().getIntensity());
-        return averageColor;
     }
 
     /**
@@ -227,7 +204,6 @@ public class Render {
         if (level == 1 || k < MIN_CALC_COLOR_K) {
             return Color.BLACK;
         }
-
         Color result = geoPoint.geometry.get_emission();
         Point3D pointGeo = geoPoint.point;
         // direction of camera to the intersection point:
@@ -367,30 +343,6 @@ public class Render {
             }
     }
 
-    /**
-     * Finding the closest point to the P0 of the camera.
-     *
-     * @param intersectionPoints list of points, the function should find from
-     *                           this list the closet point to P0 of the camera in the scene.
-     * @return the closest point to the camera
-     */
-
-    private Intersectable.GeoPoint getClosestPoint(List<Intersectable.GeoPoint> intersectionPoints) {
-        Intersectable.GeoPoint result = null;
-        double mindist = Double.MAX_VALUE;
-
-        Point3D p0 = this.scene.getCamera().getPlace();
-
-        for (Intersectable.GeoPoint geo : intersectionPoints) {
-            Point3D pt = geo.point;
-            double distance = p0.distance(pt);
-            if (distance < mindist) {
-                mindist = distance;
-                result = geo;
-            }
-        }
-        return result;
-    }
 
     /**
      * Filling the buffer according to the geometries that are in the scene.
