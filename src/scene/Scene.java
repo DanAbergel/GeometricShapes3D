@@ -23,6 +23,7 @@ import java.util.List;
 public class Scene {
     String _name;
     Color _background;
+    double _distance;
     AmbientLight _ambientLight;
     Geometries _geometries;
     Camera _camera;
@@ -81,5 +82,12 @@ public class Scene {
 
     public void addLights(LightSource... lights) {
         _lights.addAll(Arrays.asList(lights));
+    }
+
+    public double getDistance() {
+        return _distance;
+    }
+    public void setDistance(double dist){
+        _distance=dist;
     }
 }
