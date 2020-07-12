@@ -6,12 +6,12 @@ public class spotLight extends PointLight {
 
     /**
      * constructor
-     * @param _intensity
-     * @param _position
+     * @param _intensity the color intensity
+     * @param _position the point3D in the space
+     * @param _direction the vector direction
      * @param _kC
      * @param _kL
      * @param _kQ
-     * @param _direction
      */
 
 
@@ -33,21 +33,5 @@ public class spotLight extends PointLight {
         return (pointlightIntensity.scale(factor));
     }
 
-    /**
-     * @param p
-     * @return the intensity at the point p
 
-    @Override
-    public Color getIntensity(Point3D p) {
-        return (super.getIntensity(p)).scale(Math.max(0, _direction.dotProduct(getL(p))));
-    }*/
-
-    /**
-     * @param p
-     * @return the direction vector from the light source to the point
-
-    @Override
-    public Vector getL(Point3D p) {
-        return p.subtract(_position).normalize();
-    }*/
 }

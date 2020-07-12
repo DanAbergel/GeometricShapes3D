@@ -20,7 +20,7 @@ public class LightsTests {
      * 3 lights  directional ,point light and spot light
      */
 
-@Test
+    @Test
     public void sphereDirectional() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
@@ -103,12 +103,9 @@ public class LightsTests {
                         new Point3D(-150, 150, 150), new Point3D(150, 150, 150), new Point3D(75, -75, 150)),
                 new Triangle(Color.BLACK, new Material(0.8, 0.2, 300),
                         new Point3D(-150, 150, 150), new Point3D(-70, -70, 50), new Point3D(75, -75, 150)));
-
         scene.addLights(new DirectionalLight(new Color(300, 150, 150), new Vector(0, 0, 1)));
-
         ImageWriter imageWriter = new ImageWriter("trianglesDirectional", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);
-
         render.renderImage();
         render.writeToImage();
     }
@@ -136,7 +133,6 @@ public class LightsTests {
 
         ImageWriter imageWriter = new ImageWriter("trianglesPoint", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);
-
         render.renderImage();
         render.writeToImage();
     }
@@ -168,8 +164,11 @@ public class LightsTests {
         render.renderImage();
         render.writeToImage();
     }
+    /**
+     * Produce a picture of triangles lighted by a spot light, a point light and a directional light.
+     */
     @Test
-    public void triangleMultiLights() {
+    public void triangleMulticolor() {
         Scene scene = new Scene("Test scene");
         scene.setCamera(new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, -1, 0)));
         scene.setDistance(1000);
@@ -182,13 +181,12 @@ public class LightsTests {
                 new Triangle(new Color(java.awt.Color.BLACK), new Material(0.7, 0.8, 300),
                         new Point3D(-150, 150, 150), new Point3D(-70, -70, 50), new Point3D(75, -75, 150)));
 
-        scene.addLights(new spotLight(new Color(java.awt.Color.magenta),
-                new Point3D(-40, 80, -100)  ,new Vector(-2, 2, 1),1, 0.0001, 0.00001));
-        scene.addLights(new PointLight(new Color(500, 0, 0),
-                new Point3D(90, -20, 100),
-                1, 0.0001, 0.001));
+        scene.addLights(new PointLight(new Color(0, 0, 200), new Point3D(5, 5, 100), 1, 0.000001, 0.0005),
+                new spotLight(new Color(255, 0, 0), new Point3D(10, 0, 130), new Vector(-2, 2, 1), 1, 0.0002, 0.00001),
+                new DirectionalLight(new Color(255, 255, 0), new Vector(1, -1, 1))
+        );
 
-        ImageWriter imageWriter = new ImageWriter("trianglesMultiLights", 200, 200, 500, 500);
+        ImageWriter imageWriter = new ImageWriter("triangleMulticolor", 200, 200, 500, 500);
         Render render = new Render(imageWriter, scene);
 
         render.renderImage();

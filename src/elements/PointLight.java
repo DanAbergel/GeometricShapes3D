@@ -25,9 +25,9 @@ public class PointLight extends Light implements LightSource {
      * -------------Constructors-----------------
      * @param _intensity
      * @param _position
-     * @param _kC
-     * @param _kL
-     * @param _kQ
+     * @param _kC this is the coefficient kC
+     * @param _kL this is the coefficient kL
+     * @param _kQ this is the coefficient kQ
      */
 
 
