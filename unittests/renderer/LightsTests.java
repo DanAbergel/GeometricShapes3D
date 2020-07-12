@@ -177,9 +177,9 @@ public class LightsTests {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.addGeometries(
-                new Triangle(new Color(java.awt.Color.PINK), new Material(0.5, 0.2, 500),
+                new Triangle(new Color(java.awt.Color.BLACK), new Material(0.5, 0.2, 500),
                         new Point3D(-150, 150, 150), new Point3D(150, 150, 150), new Point3D(75, -75, 150)),
-                new Triangle(new Color(java.awt.Color.CYAN), new Material(0.7, 0.8, 300),
+                new Triangle(new Color(java.awt.Color.BLACK), new Material(0.7, 0.8, 300),
                         new Point3D(-150, 150, 150), new Point3D(-70, -70, 50), new Point3D(75, -75, 150)));
 
         scene.addLights(new spotLight(new Color(java.awt.Color.magenta),
