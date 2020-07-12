@@ -71,8 +71,8 @@ public class miniProject1Test {
                 //       new Vector(-1,1,-1))
         );
 
-        ImageWriter imageWriter = new ImageWriter("Josstest", 200, 200, 400, 400);
-        Render render = new Render(imageWriter, scene).setMultithreading(10).setDebugPrint().setRaysSuperSampling(100).setRaysSoftShadow(100);
+        ImageWriter imageWriter = new ImageWriter("Josstest", 200, 200, 800, 800);
+        Render render = new Render(imageWriter, scene).setMultithreading(10).setDebugPrint().setRaysSuperSampling(100).setRaysSoftShadow(70);
         render.renderImage();
         render.writeToImage();
     }

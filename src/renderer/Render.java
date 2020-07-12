@@ -1,18 +1,13 @@
 package renderer;
-
 import elements.Camera;
-import elements.Light;
 import elements.LightSource;
 import geometries.Intersectable;
 import primitives.*;
 import primitives.Color;
 import scene.Scene;
-
 import java.util.LinkedList;
 import java.util.List;
-
 import static primitives.Util.alignZero;
-
 /**
  * Dan Abergel and Joshua Lalou
  * this class aims to represent the whole structure
@@ -31,6 +26,13 @@ public class Render {
     private final int SPARE_THREADS = 2;
     private boolean print = false;//says if it have to print percentage while processing
 
+    /**
+     * Pixel is an internal helper class whose objects are associated with a Render object that
+     * they are generated in scope of. It is used for multithreading in the Renderer and for follow up
+     * its progress.<br/>
+     * There is a main follow up object and several secondary objects - one in each thread.
+     * @author Dan Abergel and Joss Lalou
+     */
     private class Pixel {
         private long _maxRows = 0;
         private long _maxCols = 0;
@@ -43,7 +45,6 @@ public class Render {
 
         /**
          * The constructor for initializing the main follow up Pixel object
-         *
          * @param maxRows the amount of pixel rows
          * @param maxCols the amount of pixel columns
          */
@@ -523,7 +524,6 @@ public class Render {
      * @return Ray the refracted ray
      */
     private Ray constructRefractedRay(Point3D p, Ray inRay, Vector n) {
-
         return new Ray(p, inRay.getDirection(), n);
     }
 

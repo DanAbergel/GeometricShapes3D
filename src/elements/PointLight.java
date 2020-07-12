@@ -19,7 +19,6 @@ public class PointLight extends Light implements LightSource {
     protected double _kL;
     protected double _kQ;
     double radiusOfLight=10;
-//test
 
     /**
      * -------------Constructors-----------------
@@ -29,8 +28,6 @@ public class PointLight extends Light implements LightSource {
      * @param _kL this is the coefficient kL
      * @param _kQ this is the coefficient kQ
      */
-
-
     public PointLight(Color _intensity, Point3D _position, double _kC, double _kL, double _kQ) {
         super(_intensity);
         this._position = _position;
@@ -45,7 +42,7 @@ public class PointLight extends Light implements LightSource {
     @Override
     public Color getIntensity(Point3D p) {
         double distance = _position.distance(p);
-        double dsquared = p.distanceSquared(_position);
+        double dsquared = Math.pow(distance,2);
         return  _intensity.reduce(_kC + _kL*distance + _kQ*(dsquared));
     }
 
@@ -72,32 +69,37 @@ public class PointLight extends Light implements LightSource {
     }
 
     /**
-     * The purpose of this function is to return all rays of lights of point in the space
-     * @param allRays
-     * @param point
-     * @param numOfRays
-     * @return
-     */
+     * Function findBeamRaysLight is used for define several rays which touch the
+     * light for calculate the soft Shadow
+     * @param allRays is a list of all the rays which  touch the light , at start it is empty
+     * @param point is the point which create all those rays
+     * @param numOfRays is the num of rays we want to create
+     * @return the list allRays
+     * */
     public List<Ray> findBeamRaysLight(List<Ray> allRays,Point3D point,int numOfRays){
          Vector vTo=getL(point);
          Vector vRight=new Vector(-vTo.getHead().getZ().get(),0,vTo.getHead().getX().get()).normalize();
          Vector vUp=vRight.crossProduct(vTo);
+
         // the parameter to calculate the coefficient of the _vRight and _vUp vectors
         double dX, dY;
 
-
        for (int i=numOfRays;i>0;i--){
            Random r=new Random();
+           //the interval in a trigonometric Circle
            double cos=-1+2*r.nextDouble();
            double sin=Math.sqrt(1-Math.pow(cos,2));
+           //the interval of possibilities i the light
            double d=-radiusOfLight+2*radiusOfLight*r.nextDouble();
            dX=d*cos;
            dY=d*sin;
+           //Pc is the center of light
            Point3D pC=new Point3D(_position.getX().get(),_position.getY().get(),_position.getZ().get());
            if (!isZero(dX))
                 pC=pC.add(vRight.scale(dX));
            if (!isZero(dY))
                pC=pC.add(vUp.scale(dY));
+           //now Pc has changed and it is the new point random selected
            Vector v=pC.subtract(point);
            Ray ray=new Ray(point,v);
            allRays.add(ray);
